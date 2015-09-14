@@ -2,21 +2,19 @@
 
 ## Rails
 ### Models
-* User
-* Blog
-* Post
+* `User`
+
 
 ### Controllers
-* UsersController (create, new)
-* SessionsController (create, new, destroy)
-* BlogsController (create, new, show)
-* PostsController (create, new, show)
+* `UsersController` (create, new, edit, update, show, index, search)
+* `SessionsController` (create, new, destroy)
 
 ### Views
-* users/new.html.erb
-* session/new.html.erb
-* blogs/new.html.erb
-* blogs/show.html.erb
+* `users/new.html.erb`
+* `session/new.html.erb`
+* `users/show.html.erb`
+* `users/index.html.erb`
+* `users/search.html.erb`
 
 ## Backbone
 ### Models

@@ -2,19 +2,24 @@
 
 ## Rails
 ### Models
+* `Location`
 
 ### Controllers
-Api::PostsController (feed)
+* `Api::LocationsController` (create, show, search)
 
 ### Views
-posts/feed.json.jbuilder
+* `locations/show.json.jbuilder`
 
 ## Backbone
 ### Models
+* `Location`
 
 ### Collections
+* `Locations`
 
 ### Views
-* FeedShow (composite view, contains PostsIndex subview)
+* `LocationShow`(composite view, contains PhotosIndex using Location's `has_and_belongs_to_many` photos association)
+
 
 ## Gems/Libraries
+* `geokit`

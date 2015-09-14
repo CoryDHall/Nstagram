@@ -2,28 +2,35 @@
 
 ## Rails
 ### Models
+* `Photo`
+
 
 ### Controllers
-Api::BlogsController (create, destroy, index, show)
-Api::PostsController (create, destroy, show, update)
+* `Api::UsersController` (create, update, show)
+* `Api::PhotosController` (create, show, destroy)
 
 ### Views
-* blogs/show.json.jbuilder
+* `user/show.json.jbuilder`
+* `photo/show.json.jbuilder`
 
 ## Backbone
 ### Models
-* Blog (parses nested `posts` association)
-* Post
+* `User`
+* `Photo`
 
 ### Collections
-* Blogs
-* Posts
+* `Users`
+* `Photos`
 
 ### Views
-* BlogForm
-* BlogShow (composite view, contains PostsIndex subview)
-* PostsIndex (composite view, contains PostsIndexItem subviews)
-* PostsIndexItem
-* PostShow
+* `UserNew`
+* `UserShow` (composite view, contains PhotosIndex using User's `has_many` photos association)
+* `UserEdit`
+* `SessionNew`
+* `Feed` (composite view, contains PhotosIndex using `current_user`'s `has_many` photos, through `follows`')
+* `PhotoShow`
+* `PhotosIndex` (composite view, contains PhotoShow)
+* `PhotoNew`
 
 ## Gems/Libraries
+* `'paperclip'`

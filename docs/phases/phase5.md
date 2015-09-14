@@ -2,21 +2,25 @@
 
 ## Rails
 ### Models
+* `Interaction`
 
 ### Controllers
-Api::BlogsController (search)
-Api::PostsController (search)
+* `Api::InteractionsController` (create, index, show)
 
 ### Views
+* `interactions/show.json.jbuilder`
+* `interactions/index.json.jbuilder`
 
 ## Backbone
 ### Models
+* `Interaction`
 
 ### Collections
+* `Interactions`
 
 ### Views
-* BlogSearchItem
-* SearchShow (composite view, contains BlogsIndex and PostsIndex subviews)
+* InteractionsIndex **Notifications** (composite view, contains InteractionsShow)
+* InteractionsShow
+* NewInteractionsIndex
 
 ## Gems/Libraries
-

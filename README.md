@@ -1,91 +1,72 @@
-# Flux-capacitr
+# nstagram
 
 [Heroku link][heroku]
 
-[heroku]: http://flux-capacitr.herokuapp.com
+[heroku]: #
 
 ## Minimum Viable Product
-Flux-capacitr is a clone of Tumblr built on Rails and Backbone. Users can:
+nstagram is a clone of Instagram built on Rails and Backbone. Users can:
 
-<!-- This is a Markdown checklist. Use it to keep track of your progress! -->
 
-- [x] Create accounts
-- [x] Create sessions (log in)
-- [x] Create blogs
-- [x] Create blog posts
-- [ ] View blogs and posts
-- [ ] Subscribe to blogs
-- [ ] View a feed of subscribed blogs
-- [ ] Tag blog posts
-- [ ] Search for blogs by title
-- [ ] Search for posts by tag
+- [ ] Create accounts
+- [ ] Create sessions (log in)
+- [ ] Upload photos
+- [ ] View photos
+- [ ] Like photos
+- [ ] Leave comments on photos
+- [ ] Follow other users
+- [ ] View a feed of followed user's photos
+- [ ] Use user handles and hashtags in photo descriptions and comments as links
+- [ ] Search for photos by hashtag
+- [ ] Search for users by username
+- [ ] Tag users in a photo
+- [ ] Geotag their photos
+- [ ] View other photos uploaded/taken at the same location
+- [ ] Receive notifications
 
 ## Design Docs
-* [View Wireframes][views]
-* [DB schema][schema]
 
-[views]: ./docs/views.md
-[schema]: ./docs/schema.md
 
 ## Implementation Timeline
 
-### Phase 1: User Authentication, Blog Creation (~1 day)
-I will implement user authentication in Rails based on the practices learned at
-App Academy. By the end of this phase, users will be able to create blogs using
-a simple text form in a Rails view. The most important part of this phase will
-be pushing the app to Heroku and ensuring that everything works before moving on
-to phase 2.
+### Phase 1: User Authentication, Follow Users, User Search (~1 day)
+I will implement user authentication in Rails. This will establish the framework for all user interactions. By the end of this phase, users will be able to create accounts, log in, find other users, and follow/unfollow users.
 
 [Details][phase-one]
 
-### Phase 2: Viewing Blogs and Posts (~2 days)
-I will add API routes to serve blog and post data as JSON, then add Backbone
-models and collections that fetch data from those routes. By the end of this
-phase, users will be able to create blogs and view both blogs and posts, all
-inside a single Backbone app.
+### Phase 2: Uploading and Viewing Photos, User profile pages, Photo feed (~2 days)
+I will first integrate **Paperclip** for file upload and viewing. I will then add API routes to serve user and photo data as JSON, then add Backbone models and collections that fetch data from those routes. By the end of this phase, users will be able to upload photos, view photos, view other user's photos, and view their feed of followed users' photos, all inside a single Backbone app.
 
 [Details][phase-two]
 
-### Phase 3: Editing and Displaying Posts (~2 days)
-I plan to use third-party libraries to add functionality to the `PostForm` and
-`PostShow` views in this phase. First I'll need to add a Markdown editor to the
-`PostForm`, and make sure that the Markdown is properly escaped and formatted in
-the `PostShow` view. I also plan to integrate Filepicker for file upload so
-users can add images to blog posts.
+### Phase 3: Likes, Comments, Tagging (~2 days)
+I will add routes to retrieve and set the data that interconnects the app (likes, comments, phototags, '@username', and '#hashtag'). By the end of this phase the user will be able to interact with the content available to them.
 
 [Details][phase-three]
 
-### Phase 4: User Feeds (~1-2 days)
-I'll start by adding a `feed` route that uses the `current_user`'s
-`subscribed_blogs` association to serve a list of blog posts ordered
-chronologically. On the Backbone side, I'll make a `FeedShow` view whose `posts`
-collection fetches from the new route.  Ultimately, this will be the page users
-see after logging in.
+### Phase 4: Geotagging (~1-2 days)
+I will integrate **Geokit** to add real location data to uploaded photos. I will then add routes to link and retrieve those associations. By the end of this phase the user will be able to enter a geotag with their photo and view other photos with the same location name.
 
 [Details][phase-four]
 
-### Phase 5: Searching for Blogs and Posts (~2 days)
-I'll need to add `search` routes to both the Blogs and Posts controllers. On the
-Backbone side, there will be a `SearchResults` composite view has `BlogsIndex`
-and `PostsIndex` subviews. These views will use plain old `blogs` and `posts`
-collections, but they will fetch from the new `search` routes.
+### Phase 5: Receive notifications (~1-2 days)
+I will add routes to retrieve interaction activity (new table rows linking to a user's associations). In Backbone, I will display a list of notifications. By the end of this phase, the user will be able to view a list of all interactions with their content and receive live visual feedback of new interactions.
 
 [Details][phase-five]
 
 ### Bonus Features (TBD)
-- [ ] "Like" button and counter for posts
-- [ ] Custom blog urls
-- [ ] Pagination/infinite scroll
-- [ ] Activity history (e.g. likes, reblogs, taggings)
-- [ ] Post types (image posts, quote posts, etc)
-- [ ] Reblogging
-- [ ] Multiple sessions/session management
-- [ ] User avatars
-- [ ] Typeahead search bar
+- [ ] Filter/Edit Photos
+- [ ] View activity of followed users
+- [ ] View a map of their photos' location data
+- [ ] Make their accounts private
+- [ ] Embed a live view of public content
+- [ ] Admin
+- [ ] Block Users
+- [ ] Report content
+- [ ] Explore a collection of photos based upon followed users' activity
 
 [phase-one]: ./docs/phases/phase1.md
 [phase-two]: ./docs/phases/phase2.md
 [phase-three]: ./docs/phases/phase3.md
 [phase-four]: ./docs/phases/phase4.md
 [phase-five]: ./docs/phases/phase5.md
-
