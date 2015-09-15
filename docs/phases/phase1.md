@@ -1,13 +1,16 @@
-# Phase 1: User Authentication, Basic Blogs and Posts
+# Phase 1: User Authentication, Follow Users
 
 ## Rails
 ### Models
 * `User`
+* `UserSessions`
+* `Follows`
 
 
 ### Controllers
-* `UsersController` (create, new, edit, update, show, index)
+* `UsersController` (create, new, edit, update, show, index, destroy)
 * `SessionsController` (create, new, destroy)
+* `FollowsController` (create, new, destroy)
 
 ### Views
 * `users/new.html.erb`
