@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :require_log_in!, except: [:new]
+  before_action :prohibit_log_in!, only: [:new]
 
   # GET /users
   def index

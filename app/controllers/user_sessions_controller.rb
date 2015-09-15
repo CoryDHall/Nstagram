@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
   before_action :set_session, only: [:show, :edit, :update, :destroy]
-
+  before_action :prohibit_log_in!, only: [:new, :create]
   # GET /sessions
   def index
     @user_sessions = UserSession.all
