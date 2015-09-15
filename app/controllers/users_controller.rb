@@ -51,11 +51,9 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    require_ownership!(@user)
+    require_ownership!(@user) unless current_user.username == "admin"
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-    end
+    redirect_to users_url
   end
 
   private
