@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :require_log_in!, except: [:new]
   before_action :prohibit_log_in!, only: [:new]
 
+
   # GET /users
   def index
     puts current_user
@@ -20,6 +21,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    require_ownership!(@user)
   end
 
   # POST /users
@@ -37,6 +39,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
+    require_ownership!(@user)
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -48,6 +51,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
+    require_ownership!(@user)
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }

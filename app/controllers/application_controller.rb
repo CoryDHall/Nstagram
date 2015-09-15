@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :logged_in?
+  helper_method :current_user, :logged_in?, :owner?
 
 
   def log_in(user)
@@ -34,6 +34,13 @@ class ApplicationController < ActionController::Base
   def prohibit_log_in!
     redirect_to root_url if current_user
   end
-  
+
+  def owner?(id)
+    current_user.id == id
+  end
+
+  def require_ownership!(user)
+    redirect_to root_url unless owner?(user.id)
+  end
 
 end
