@@ -17,7 +17,7 @@
         <td><%= user_session.user %></td>
         <td><%= user_session.user_session_token %></td>
         <td><%= link_to 'Show', user_session %></td>
-        <td><%= link_to 'Edit', edit_user_session_path(user_session) %></td>
+        <td><%= link_to 'Edit', edit_session_url(user_session) %></td>
         <td><%= link_to 'Destroy', user_session, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New user_session', new_user_session_path %>
+<%= link_to 'New user_session', new_session_url %>

@@ -3,14 +3,20 @@ class UserSession < ActiveRecord::Base
 
   belongs_to :user
 
-  def reset
-    self.session_token = SecureRandom::urlsafe_base64
+  after_create :reset_token
+
+  def reset_token
+    token.replace SecureRandom::urlsafe_base64
     self.save
-    self.session_token
+    token
   end
 
-  def clear
-    self.session_token = nil
+  def clear_token
+    token.clear
     self.save
+  end
+
+  def token
+    self.session_token ||= ""
   end
 end

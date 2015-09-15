@@ -1,0 +1,13 @@
+<%= form_for(@user_session) do |f| %>
+  <div class="field">
+    <%= f.label :username %><br>
+    <%= text_field_tag 'session[username]' %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br>
+    <%= password_field_tag 'session[password]' %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
