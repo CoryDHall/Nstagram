@@ -6,7 +6,7 @@
 
 
 ### Controllers
-* `UsersController` (create, new, edit, update, show, index, search)
+* `UsersController` (create, new, edit, update, show, index)
 * `SessionsController` (create, new, destroy)
 
 ### Views

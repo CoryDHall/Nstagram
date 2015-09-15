@@ -1,26 +1,28 @@
-# Phase 5: Searching for Blogs and Posts
+# Phase 5: Search
 
 ## Rails
 ### Models
-* `Interaction`
+* `User`
+* `Hashtag`
+* `Location`
 
 ### Controllers
-* `Api::InteractionsController` (create, index, show)
+* `API::Controller` (search)
 
 ### Views
-* `interactions/show.json.jbuilder`
-* `interactions/index.json.jbuilder`
+* `users/search.json.jbuilder`
+* `hashtags/search.json.jbuilder`
+* `locations/search.json.jbuilder`
 
 ## Backbone
 ### Models
-* `Interaction`
 
 ### Collections
-* `Interactions`
 
 ### Views
-* InteractionsIndex **Notifications** (composite view, contains InteractionsShow)
-* InteractionsShow
-* NewInteractionsIndex
+* `HashtagSearch`(composite view, contains `_search` partial)
+* `UserSearch` (composite view, contains `_search` partial)
+* `LocationSearch` (composite view, contains `_search` partial)
+* `_search`
 
 ## Gems/Libraries

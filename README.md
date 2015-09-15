@@ -20,7 +20,7 @@ nstagram is a clone of Instagram built on Rails and Backbone. Users can:
 - [ ] Search for photos by hashtag
 - [ ] Search for users by username
 - [ ] Tag users in a photo
-- [ ] Geotag their photos
+- [ ] Name locations in their photos
 - [ ] View other photos uploaded/taken at the same location
 - [ ] Receive notifications
 
@@ -29,8 +29,8 @@ nstagram is a clone of Instagram built on Rails and Backbone. Users can:
 
 ## Implementation Timeline
 
-### Phase 1: User Authentication, Follow Users, User Search (~1 day)
-I will implement user authentication in Rails. This will establish the framework for all user interactions. By the end of this phase, users will be able to create accounts, log in, find other users, and follow/unfollow users.
+### Phase 1: User Authentication, Follow Users (~2 days)
+I will implement user authentication in Rails. This will establish the framework for all user interactions. By the end of this phase, users will be able to create accounts, log in, view other users, and follow/unfollow users.
 
 [Details][phase-one]
 
@@ -40,23 +40,29 @@ I will first integrate **Paperclip** for file upload and viewing. I will then ad
 [Details][phase-two]
 
 ### Phase 3: Likes, Comments, Tagging (~2 days)
-I will add routes to retrieve and set the data that interconnects the app (likes, comments, phototags, '@username', and '#hashtag'). By the end of this phase the user will be able to interact with the content available to them.
+I will add routes to retrieve and set the data that interconnects the app (likes, comments, phototags, '@username', and '#hashtag'). By the end of this phase the user will be able to interact with and set connections on the content available to them.
 
 [Details][phase-three]
 
-### Phase 4: Geotagging (~1-2 days)
-I will integrate **Geokit** to add real location data to uploaded photos. I will then add routes to link and retrieve those associations. By the end of this phase the user will be able to enter a geotag with their photo and view other photos with the same location name.
+### Phase 4: 'Locations' (~1 day)
+I will add routes to allow users to **name** a location with their uploaded photos. I will then add routes to link and retrieve those associations. By the end of this phase the user will be able to enter a location with their photo and view other photos with the same location name.
 
 [Details][phase-four]
 
-### Phase 5: Receive notifications (~1-2 days)
-I will add routes to retrieve interaction activity (new table rows linking to a user's associations). In Backbone, I will display a list of notifications. By the end of this phase, the user will be able to view a list of all interactions with their content and receive live visual feedback of new interactions.
+### Phase 5: User/Hashtag Search (~1-2 days)
+I will add routes to retrieve results of partial/fuzzy searching. By the end of this phase, the user will be able to directly search for a user/hashtagg, or implicitly and dynamically search while creating a new comment.
 
 [Details][phase-five]
+
+### Phase 6: Receive notifications (~1-2 days)
+I will add routes to retrieve interaction activity (new table rows linking to a user's associations). In Backbone, I will display a list of notifications. By the end of this phase, the user will be able to view a list of all interactions with their content and receive live visual feedback of new interactions.
+
+[Details][phase-six]
 
 ### Bonus Features (TBD)
 - [ ] Filter/Edit Photos
 - [ ] View activity of followed users
+- [ ] Add real Geotags their photos
 - [ ] View a map of their photos' location data
 - [ ] Make their accounts private
 - [ ] Embed a live view of public content
@@ -69,4 +75,5 @@ I will add routes to retrieve interaction activity (new table rows linking to a 
 [phase-two]: ./docs/phases/phase2.md
 [phase-three]: ./docs/phases/phase3.md
 [phase-four]: ./docs/phases/phase4.md
-[phase-five]: ./docs/phases/phase5.md
+[phase-four]: ./docs/phases/phase5.md
+[phase-six]: ./docs/phases/phase6.md

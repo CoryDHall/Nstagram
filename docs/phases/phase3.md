@@ -11,13 +11,12 @@
 * `Api::LikesController` (create, index, destroy)
 * `Api::CommentsController` (create, index, destroy)
 * `Api::PhotoTagController` (create, destroy)
-* `Api::Hashtag` (create, show, destroy, search)
+* `Api::Hashtag` (create, show, destroy)
 
 ### Views
 * `likes/index.json.jbuilder`
 * `comments/show.json.jbuilder`
 * `hashtags/show.json.jbuilder`
-* `hashtags/search.json.jbuilder`
 
 
 ## Backbone
@@ -40,6 +39,5 @@
 * `PhotoCommentsIndex` (uses photo's `has_many` comments association)
 * `PhotoTagsIndex` (uses user's `has_many` phototags association)
 * `HashtagShow` (uses hashtag's `has_many` photos through its `has_and_belongs_to_many` comments association)
-* `HashtagSearch`
 
 ## Gems/Libraries

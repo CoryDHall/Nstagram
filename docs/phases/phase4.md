@@ -1,11 +1,11 @@
-# Phase 4: User Feeds
+# Phase 4: Locations
 
 ## Rails
 ### Models
 * `Location`
 
 ### Controllers
-* `Api::LocationsController` (create, show, search)
+* `Api::LocationsController` (create, show)
 
 ### Views
 * `locations/show.json.jbuilder`
@@ -22,4 +22,4 @@
 
 
 ## Gems/Libraries
-* `geokit`
+* ~~`geokit`~~ Save for Bonus
