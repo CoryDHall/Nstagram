@@ -25,7 +25,9 @@ nstagram is a clone of Instagram built on Rails and Backbone. Users can:
 - [ ] Receive notifications
 
 ## Design Docs
+* [Schema][schema]
 
+[schema]: ./docs/schema.md
 
 ## Implementation Timeline
 
@@ -63,6 +65,7 @@ I will add routes to retrieve interaction activity (new table rows linking to a 
 - [ ] Filter/Edit Photos
 - [ ] View activity of followed users
 - [ ] Add real Geotags their photos
+- [ ] Have multiple sessions
 - [ ] View a map of their photos' location data
 - [ ] Make their accounts private
 - [ ] Embed a live view of public content
