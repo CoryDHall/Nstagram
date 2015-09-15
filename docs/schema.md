@@ -7,6 +7,7 @@ column      | data type | options
 ------------|-----------|---------------
 id | integer | null: false, primary key
 username | string | null: false, index
+email | string | null: false, index
 password_digest | string  | null: false
 full_name | string  | null: false, index
 bio | string  |
