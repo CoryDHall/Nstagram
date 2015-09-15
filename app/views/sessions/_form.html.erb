@@ -1,10 +1,10 @@
-<%= form_for(@session) do |f| %>
-  <% if @session.errors.any? %>
+<%= form_for(@user_session) do |f| %>
+  <% if @user_session.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@session.errors.count, "error") %> prohibited this session from being saved:</h2>
+      <h2><%= pluralize(@user_session.errors.count, "error") %> prohibited this user_session from being saved:</h2>
 
       <ul>
-      <% @session.errors.full_messages.each do |message| %>
+      <% @user_session.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -16,8 +16,8 @@
     <%= f.text_field :user_id %>
   </div>
   <div class="field">
-    <%= f.label :session_token %><br>
-    <%= f.text_field :session_token %>
+    <%= f.label :user_session_token %><br>
+    <%= f.text_field :user_session_token %>
   </div>
   <div class="actions">
     <%= f.submit %>

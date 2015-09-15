@@ -2,13 +2,13 @@
 
 <p>
   <strong>User:</strong>
-  <%= @session.user %>
+  <%= @user_session.user %>
 </p>
 
 <p>
-  <strong>Session token:</strong>
-  <%= @session.session_token %>
+  <strong>user_session token:</strong>
+  <%= @user_session.user_session_token %>
 </p>
 
-<%= link_to 'Edit', edit_session_path(@session) %> |
-<%= link_to 'Back', sessions_path %>
+<%= link_to 'Edit', edit_user_session_path(@user_session) %> |
+<%= link_to 'Back', user_sessions_path %>
