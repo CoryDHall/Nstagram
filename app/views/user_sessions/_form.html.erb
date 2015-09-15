@@ -1,10 +1,10 @@
 <%= form_tag user_session_url do %>
   <div class="field">
-    <%= label_tag 'session[username]' %><br>
+    <%= label_tag 'session[username]', 'username' %><br>
     <%= text_field_tag 'session[username]' %>
   </div>
   <div class="field">
-    <%= label_tag 'session[password]' %><br>
+    <%= label_tag 'session[password]', 'password' %><br>
     <%= password_field_tag 'session[password]'  %>
   </div>
   <div class="actions">
