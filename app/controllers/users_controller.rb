@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :require_log_in!, except: [:new, :show]
-  before_action :prohibit_log_in!, only: [:new]
+  before_action :require_log_in!, except: [:new, :show, :create]
+  before_action :prohibit_log_in!, only: [:new, :create]
 
 
   def index
@@ -23,23 +23,21 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-      else
-        format.html { render :new }
-      end
+    if @user.save
+      log_in @user
+      redirect_to root_url
+    else
+      render :new
     end
   end
 
   def update
     require_ownership!(@user)
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+
+    if @user.update(user_params)
+      redirect_to users_url(@user)
+    else
+      render :edit
     end
   end
 
