@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return @current_user if @current_user
-    # byebug
+
     user_session = UserSession.find_by(session_token: session[:token]);
     @current_user = user_session.user if user_session
   end
