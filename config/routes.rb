@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root 'users#index'
+
+  root to: 'static_page#root'
 
   namespace :api, as: '' do
     resources :users,
