@@ -10,9 +10,26 @@ class User < ActiveRecord::Base
 
   has_one :user_session, dependent: :destroy
 
+  has_many :follows,
+    foreign_key: :follower_id
+
+  has_and_belongs_to_many :followers,
+    class_name: "User",
+    join_table: :follows,
+    association_foreign_key: :follower_id
+
+  has_and_belongs_to_many :following,
+    class_name: "User",
+    join_table: :follows,
+    foreign_key: :follower_id
+
   after_create :ensure_session_token
 
   attr_reader :password
+
+  def follow (user)
+    self.follows.create(user: user)
+  end
 
   def password=(password)
     @password = password

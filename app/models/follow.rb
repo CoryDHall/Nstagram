@@ -3,15 +3,19 @@ class Follow < ActiveRecord::Base
   validates_uniqueness_of :user_id, scope: :follower_id
   validate :user_cannot_follow_self
 
-  has_one :follower,
+  belongs_to :follower,
     class_name: "User",
-    foreign_key: :id,
-    primary_key: :follower_id
+    primary_key: :id,
+    foreign_key: :follower_id
 
   belongs_to :user
 
   def follower=(follower)
     self.follower_id = follower.id
+  end
+
+  def user=(user)
+    self.user_id = user.id
   end
 
   private
