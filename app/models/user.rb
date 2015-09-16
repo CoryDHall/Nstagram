@@ -32,8 +32,12 @@ class User < ActiveRecord::Base
   end
 
   def unfollow (user)
-    unfollowing = self.following.find(user.id)
-    unfollowing && self.following.delete(unfollowing)
+    # unfollowing = self.following.find(user.id)
+    following?(user) && self.following.delete(user)
+  end
+
+  def following? (user)
+    self.following.exists?(id: user.id)
   end
 
   def password=(password)
