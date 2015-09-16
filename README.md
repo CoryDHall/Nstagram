@@ -14,7 +14,7 @@ nstagram is a clone of Instagram built on Rails and Backbone. Users can:
 - [ ] View photos
 - [ ] Like photos
 - [ ] Leave comments on photos
-- [ ] Follow other users
+- [x] Follow other users
 - [ ] View a feed of followed user's photos
 - [ ] Use user handles and hashtags in photo descriptions and comments as links
 - [ ] Search for photos by hashtag
@@ -31,7 +31,7 @@ nstagram is a clone of Instagram built on Rails and Backbone. Users can:
 
 ## Implementation Timeline
 
-### Phase 1: User Authentication, Follow Users (~2 days)
+### Phase 1: User Authentication, Follow Users (~2 days) [Completed]
 I will implement user authentication in Rails. This will establish the framework for all user interactions. By the end of this phase, users will be able to create accounts, log in, view other users, and follow/unfollow users.
 
 [Details][phase-one]

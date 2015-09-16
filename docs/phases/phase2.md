@@ -1,4 +1,4 @@
-# Phase 2: Viewing Blogs and Posts
+# Phase 2: Uploading and Viewing Photos, User profile pages, Photo feed
 
 ## Rails
 ### Models
@@ -6,6 +6,7 @@
 
 
 ### Controllers
+* `Api`
 * `Api::UsersController` (create, update, show)
 * `Api::PhotosController` (create, show, destroy)
 
@@ -33,4 +34,5 @@
 * `PhotoNew`
 
 ## Gems/Libraries
-* `'paperclip'`
+* `paperclip`
+* `ImageMagick`
