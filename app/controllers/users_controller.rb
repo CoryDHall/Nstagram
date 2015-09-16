@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :follow, :unfollow]
   before_action :require_log_in!, except: [:new, :show, :create]
   before_action :prohibit_log_in!, only: [:new, :create]
 
@@ -45,6 +45,16 @@ class UsersController < ApplicationController
     require_ownership!(@user) unless current_user.username == "admin"
     @user.destroy
     redirect_to users_url
+  end
+
+  def follow
+    current_user.follow(@user)
+    redirect_to user_url(@user)
+  end
+
+  def unfollow
+    current_user.unfollow(@user)
+    redirect_to user_url(@user)
   end
 
   private

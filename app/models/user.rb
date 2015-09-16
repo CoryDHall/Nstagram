@@ -32,7 +32,6 @@ class User < ActiveRecord::Base
   end
 
   def unfollow (user)
-    # unfollowing = self.following.find(user.id)
     following?(user) && self.following.delete(user)
   end
 
