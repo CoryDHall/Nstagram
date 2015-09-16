@@ -31,6 +31,11 @@ class User < ActiveRecord::Base
     self.follows.create(user: user)
   end
 
+  def unfollow (user)
+    unfollowing = self.following.find(user.id)
+    unfollowing && self.following.delete(unfollowing)
+  end
+
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create(password)
