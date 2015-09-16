@@ -5,7 +5,6 @@ class UsersController < ApplicationController
 
 
   def index
-    puts current_user
     @users = User.all
   end
 
