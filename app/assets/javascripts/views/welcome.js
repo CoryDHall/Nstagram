@@ -6,6 +6,7 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
     var content = this.template();
 
     this.$el.html(content);
+    this.addSubview('section.welcome', new Nstagram.Views.LogIn());
 
     return this;
   }

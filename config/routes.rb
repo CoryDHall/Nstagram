@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resource :user_session,
     only: [:new, :destroy, :create] do
       get 'current', to: 'user_sessions#get_current'
+      post 'current', to: 'user_sessions#create_session'
       delete 'current', to: 'user_sessions#destroy_current'
     end
 end

@@ -27,6 +27,15 @@ class UserSessionsController < ApplicationController
     redirect_to new_user_session_url
   end
 
+  def create_session
+    user = User.find_by_username_password(
+      session_params[:username],
+      session_params[:password]
+    );
+    log_in user if !!user
+    get_current
+  end
+
   def get_current
     render json: current_user
   end
