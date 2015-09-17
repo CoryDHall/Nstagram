@@ -7,7 +7,8 @@
 <ul>
   <% users.each(function (user) { %>
     <li>
-      <h4><%= user.escape("username") %></h4>
+      <a href="#users/<%= user.escape("username") %>">
+        <h4><%= user.escape("username") %></h4>
     </li>
   <% }); %>
 </ul>

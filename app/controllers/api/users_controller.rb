@@ -12,6 +12,12 @@ class Api::UsersController < UsersController
     render json: current_user
   end
 
+  def profile
+    @user = User.find_by({ username: params[:username] })
+
+    render :show
+  end
+
   def require_log_in!
     @login_status = logged_in?
   end

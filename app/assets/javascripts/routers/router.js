@@ -13,7 +13,8 @@
     routes: {
       '': 'root',
       'welcome': 'welcome',
-      'users': 'usersIndex'
+      'users': 'usersIndex',
+      'users/:username': 'userProfile'
     },
 
     root: function () {
@@ -43,6 +44,19 @@
         currentUser: this.currentUser()
       });
       this._swapView(userIndexView);
+    },
+
+    userProfile: function (username) {
+      var user = new Models.User({
+        url: '/api/users/:' + username
+      });
+      user.fetch();
+
+      var profileView = new Views.UserProfile({
+        model: user
+      });
+
+      this._swapView(profileView);
     },
 
     users: function () {

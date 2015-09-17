@@ -6,9 +6,12 @@ Rails.application.routes.draw do
     resources :users,
       except: [:destroy, :new, :edit],
       defaults: { format: :json } do
+
+      get '::username', to: 'users#profile', on: :collection
+
       member do
-        post 'follow', to: 'users#follow'
-        post 'unfollow', to: 'users#unfollow'
+        get 'followers', to: 'users#followers'
+        get 'following', to: 'users#following'
       end
     end
   end
@@ -16,9 +19,10 @@ Rails.application.routes.draw do
   resources :users, controller: 'users' do
     member do
       post 'follow', to: 'users#follow'
-      post 'unfollow', to: 'users#unfollow'
+      delete 'follow', to: 'users#unfollow'
     end
   end
+
   resource :user_session,
     only: [:new, :destroy, :create] do
       get 'current', to: 'user_sessions#get_current'
