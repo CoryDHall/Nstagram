@@ -4,6 +4,14 @@ class Api::UsersController < UsersController
     @users = @login_status ? User.all : nil
   end
 
+
+  def create
+    @user = User.new(user_params)
+
+    log_in @user if @user.save
+    render json: current_user
+  end
+
   def require_log_in!
     @login_status = logged_in?
   end

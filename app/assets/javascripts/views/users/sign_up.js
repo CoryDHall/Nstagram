@@ -1,20 +1,20 @@
-Nstagram.Views.LogIn = Backbone.View.extend({
+Nstagram.Views.SignUp = Backbone.View.extend({
   tagName: 'form',
-  template: JST['log_in_form'],
-  id: 'login-form',
+  template: JST['users/sign_up'],
+  id: 'signup-form',
   events: {
-    "submit":"logIn"
+    "submit":"signUp"
   },
   render: function () {
     this.$el.html(this.template());
     return this;
   },
-  logIn: function (e) {
+  signUp: function (e) {
     e.preventDefault();
 
     var formData = this.$el.serializeJSON();
-    var session = new Nstagram.Models.UserSession();
-    session.save(formData, {
+    var user = new Nstagram.Models.User();
+    user.save(formData, {
       success: function () {
         Backbone.history.navigate('', {
           trigger: true

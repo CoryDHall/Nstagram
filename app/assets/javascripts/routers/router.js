@@ -14,7 +14,6 @@
       '': 'root',
       'welcome': 'welcome',
       'users': 'usersIndex'
-
     },
 
     root: function () {

@@ -56,6 +56,7 @@ class UsersController < ApplicationController
     redirect_to user_url(@user)
   end
 
+
   private
 
     def set_user

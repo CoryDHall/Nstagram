@@ -97,6 +97,10 @@ tag-line.large {
    height: 25%;
  }
 
+ #welcome form.hidden-form {
+   display: none;
+ }
+
  /*USERS INDEX*/
 
  users-index header.user-index {

@@ -6,14 +6,12 @@ Rails.application.routes.draw do
     resources :users,
       except: [:destroy, :new, :edit],
       defaults: { format: :json } do
-
       member do
         post 'follow', to: 'users#follow'
         post 'unfollow', to: 'users#unfollow'
       end
     end
   end
-
 
   resources :users, controller: 'users' do
     member do
