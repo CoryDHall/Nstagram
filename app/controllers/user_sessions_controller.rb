@@ -22,9 +22,18 @@ class UserSessionsController < ApplicationController
 
   def destroy
     log_out
-    
+
     @user_session = UserSession.new
     redirect_to new_user_session_url
+  end
+
+  def get_current
+    render json: current_user
+  end
+
+  def destroy_current
+    log_out
+    render json: current_user
   end
 
   private

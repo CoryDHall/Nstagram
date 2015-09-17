@@ -21,5 +21,9 @@ Rails.application.routes.draw do
       post 'unfollow', to: 'users#unfollow'
     end
   end
-  resource :user_session, only: [:new, :destroy, :create]
+  resource :user_session,
+    only: [:new, :destroy, :create] do
+      get 'current', to: 'user_sessions#get_current'
+      delete 'current', to: 'user_sessions#destroy_current'
+    end
 end

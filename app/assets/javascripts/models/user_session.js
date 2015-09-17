@@ -1,3 +1,3 @@
 Nstagram.Models.UserSession = Backbone.Model.extend({
-  urlRoot: '/user_session'
+  url: '/user_session/current'
 });

@@ -2,7 +2,8 @@ Nstagram.Views.UsersIndex = Backbone.CompositeView.extend({
   tagName: 'users-index',
   template: JST['users/index'],
 
-  initialize: function () {
+  initialize: function (options) {
+    this.currentUser = options.currentUser;
     this.listenTo(this.collection, "reset", this.render);
   },
 
@@ -20,17 +21,11 @@ Nstagram.Views.UsersIndex = Backbone.CompositeView.extend({
   },
 
   logout: function (e) {
-    // $.ajax({
-    //   url: "/user_session",
-    //   method: "DELETE",
-    //   dataType: "html",
-    //   complete: function () {
-        // $('nstagram-content').attr("data-logged-in", false);
-        // Backbone.history.navigate('', {
-        //   trigger: true
-        // });
-    //   }
-    // });
+    this.currentUser.destroy();
+    this.currentUser.clear();
+    Backbone.history.navigate('', {
+      trigger: true
+    });
   }
 
 });

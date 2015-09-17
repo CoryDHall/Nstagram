@@ -5,13 +5,9 @@ window.Nstagram = {
   Routers: {},
   initialize: function() {
     this.router = new Nstagram.Routers.Router({
-      rootEl: "nstagram-content > div.temp"
+      rootEl: "nstagram-content"
     });
 
     Backbone.history.start();
   }
 };
-
-$(document).ready(function(){
-  Nstagram.initialize();
-});

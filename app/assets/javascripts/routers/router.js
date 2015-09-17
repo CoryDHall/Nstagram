@@ -2,6 +2,7 @@
 
   var Views = Nstagram.Views;
   var Collections = Nstagram.Collections;
+  var Models = Nstagram.Models;
 
   Nstagram.Routers.Router = Backbone.Router.extend({
 
@@ -10,18 +11,39 @@
     },
 
     routes: {
-      '': 'root'
+      '': 'root',
+      'welcome': 'welcome',
+      'users': 'usersIndex'
+
     },
 
     root: function () {
-      if (this.$rootEl.parent().attr("data-logged-in") === "true") {
-        var rootView = new Views.UsersIndex({
-          collection: this.users()
-        });
-      } else {
-        var rootView = new Views.Welcome();
-      }
-      this._swapView(rootView);
+      this.currentUser(function (user) {
+        if (user.id !== undefined) {
+          Backbone.history.navigate('/users', {
+            trigger: true
+          });
+        } else {
+          Backbone.history.navigate('/welcome', {
+            trigger: true
+          });
+        }
+      }.bind(this));
+    },
+
+    welcome: function () {
+      var welcomeView = new Views.Welcome();
+
+      this._swapView(welcomeView);
+    },
+
+    usersIndex: function () {
+      this.needsLogin();
+      var userIndexView = new Views.UsersIndex({
+        collection: this.users(),
+        currentUser: this.currentUser()
+      });
+      this._swapView(userIndexView);
     },
 
     users: function () {
@@ -30,6 +52,26 @@
         reset: true
       });
       return this._users;
+    },
+
+    currentUser: function (callback, wait) {
+      this._currentUser = this._currentUser ||
+        new Models.UserSession();
+      this._currentUser.fetch({
+        success: callback,
+        wait: wait
+      });
+      return this._currentUser;
+    },
+
+    needsLogin: function () {
+      this.currentUser(function (user) {
+        if (user.id === undefined) {
+          Backbone.history.navigate('welcome', {
+            trigger: true
+          });
+        }
+      });
     }
   });
 })();
