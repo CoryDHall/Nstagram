@@ -21,5 +21,5 @@ Rails.application.routes.draw do
       post 'unfollow', to: 'users#unfollow'
     end
   end
-  resource :user_session, only: [:new, :create, :destroy]
+  resource :user_session, only: [:new, :destroy, :create]
 end

@@ -1,1 +1,13 @@
-<nstagram-content></nstagram-content>
+<nstagram-content data-logged-in="<%= logged_in? %>">
+  <div class="temp">
+
+  </div>
+<footer>
+<% if logged_in? %>
+<h4>Hello <%= link_to current_user.full_name, user_url(current_user) %></h4>
+<%= link_to 'Log Out', current_user.user_session, method: :delete %>
+<% else %>
+<h4><%= link_to 'Sign Up', new_user_url %> or <%= link_to 'Log In', new_user_session_url %></h4>
+<% end %>
+</footer>
+</nstagram-content>

@@ -1,0 +1,127 @@
+ /*RESET*/
+
+html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, em, ul, li {
+  margin: 0;
+  border: 0;
+  padding: 0;
+
+  background: transparent;
+
+  font-family: sans-serif;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+ /*GLOBAL*/
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+header {
+  display: block;
+
+}
+
+
+/** CUSTOM-TAGS-FIX **/
+
+/** BLOCK ELEMENTS **/
+
+nstagram-content, nstagram-logo, tag-line, vert-box, top-box, users-index {
+  display: block;
+}
+
+nstagram-content {
+  position: relative;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+vert-box, top-box {
+  position: relative;
+}
+
+.large, .medium {
+  font-weight: bold;
+}
+
+nstagram-logo.large {
+  font-size: 50px;
+  line-height: 100px;
+}
+
+nstagram-logo.medium {
+  font-size: 30px;
+}
+
+tag-line.large {
+  font-size: 40px;
+}
+
+ /*WELCOME*/
+
+ #welcome {
+   height: 100%;
+ }
+
+ #welcome .welcome {
+   text-align: center;
+   min-height: 200px;
+ }
+
+ #welcome header.welcome {
+   background: hsl(206, 85%, 30%);
+   color: #fff;
+   height: 53.125%; /*17/16*/
+ }
+
+ #welcome header.welcome vert-box {
+   top: 50%;
+   transform: translateY(-50%);
+   height: 25%;
+ }
+
+ /*USERS INDEX*/
+
+ users-index header.user-index {
+   background: hsl(206, 85%, 30%);
+   color: #fff;
+   text-align: center;
+   padding: 10px 0;
+}
+
+users-index button.logout {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 10px;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  padding: 20px;
+  cursor: pointer;
+}
+
+users-index button.logout:hover {
+  text-shadow: 0 0 4px #fff;
+}
+
+users-index li {
+  border-bottom: 1px solid #ddd;
+}
