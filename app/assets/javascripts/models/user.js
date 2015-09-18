@@ -1,6 +1,7 @@
 Nstagram.Models.User = Backbone.Model.extend({
   urlRoot: '/api/users',
   initialize: function (options) {
-    this.url = options.url || this.url;
+    options = options || {}
+    this.url = options.url || Backbone.Model.prototype.url.bind(this);
   }
 });
