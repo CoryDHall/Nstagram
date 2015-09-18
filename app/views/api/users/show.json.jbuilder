@@ -7,3 +7,6 @@ json.extract! @user,
   :profile_photo_url,
   :num_followers,
   :num_following
+
+json.follow @follow
+json.is_following !!@follow if logged_in? && current_user != @user

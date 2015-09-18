@@ -7,7 +7,10 @@
 <p>
   Following <strong><%= user.escape("num_following") %></strong>
 </p>
-<button>Follow</button>
+<% if (user.has("is_following")) { %>
+  <button class="unfollow-button is-following-<%= user.get("is_following") %>">Unfollow</button>
+  <button class="follow-button is-following-<%= !user.get("is_following") %>">Follow</button>
+<% } %>
 <p>
   <strong><%= user.escape("full_name") %></strong>
 </p>

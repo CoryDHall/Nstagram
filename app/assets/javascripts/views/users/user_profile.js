@@ -3,9 +3,14 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
   template: JST['users/profile'],
   events: {
   },
-  
-  initialize: function () {
+
+  initialize: function (options) {
+    this.userSession = options.userSession;
     this.listenTo(this.model, 'sync', this.render);
+  },
+
+  events: {
+    "click button": "toggleFollow"
   },
 
   render: function () {
@@ -14,4 +19,21 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
     }));
     return this;
   },
+
+  toggleFollow: function (e) {
+    var thisUser = this.model;
+
+    switch ($(e.currentTarget).attr("class").split("-")[0]) {
+      case "follow":
+        this.userSession.fetch({
+          success: function (session) {
+            thisUser.follow();
+          }
+        });
+        break;
+      case "unfollow":
+          thisUser.unfollow();
+        break;
+    }
+  }
 });

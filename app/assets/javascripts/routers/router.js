@@ -41,7 +41,7 @@
 
     usersIndex: function () {
       this.needsLogin();
-      
+
       var userIndexView = new Views.UsersIndex({
         collection: this.users(),
         userSession: this.userSession()
@@ -56,7 +56,8 @@
       user.fetch();
 
       var profileView = new Views.UserProfile({
-        model: user
+        model: user,
+        userSession: this.userSession()
       });
 
       this._swapView(profileView);
@@ -70,12 +71,11 @@
       return this._users;
     },
 
-    userSession: function (callback, wait) {
+    userSession: function (callback) {
       this._userSession = this._userSession ||
         new Models.UserSession();
       this._userSession.fetch({
         success: callback,
-        wait: wait
       });
       return this._userSession;
     },

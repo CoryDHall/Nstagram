@@ -75,6 +75,25 @@ tag-line.large {
   font-size: 40px;
 }
 
+.follow-button, .unfollow-button {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border: 1px solid hsl(116, 85%, 30%);
+  color: hsl(116, 85%, 30%);
+  border-radius: 3px;
+  padding: 5px 20px;
+  text-transform: uppercase;
+}
+.follow-button {
+  background: hsl(116, 85%, 30%);
+  color: #fff;
+}
+button.is-following-false {
+  display: none;
+}
+
+
  /*WELCOME*/
 
  #welcome {
