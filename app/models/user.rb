@@ -8,6 +8,12 @@ class User < ActiveRecord::Base
     with: /(\S+)/
   }, allow_blank: true
 
+  validate :username_is_case_insensitive_unique
+
+  has_attached_file :profile_picture, default_url: "/missing.png"
+  validates_attachment_content_type :profile_picture, content_type: /\Aimage\/.*\Z/
+  validates_attachment_file_name :profile_picture, matches: [/png\Z/, /jpe?g\Z/, /gif\Z/]
+
   has_one :user_session, dependent: :destroy
 
   has_many :follows,
@@ -63,5 +69,14 @@ class User < ActiveRecord::Base
   def self.find_by_username_password(username, password)
     user = find_by(username: username)
     user && user.is_password?(password) ? user : nil
+  end
+
+  def username_is_case_insensitive_unique
+    if User.all.any? do |user|
+      user.username.downcase == self.username.downcase &&
+        user != self
+      end
+      errors.add(:username, "'@#{self.username}' is already taken!")
+    end
   end
 end

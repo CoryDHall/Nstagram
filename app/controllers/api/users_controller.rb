@@ -9,7 +9,7 @@ class Api::UsersController < UsersController
     @user = User.new(user_params)
 
     log_in @user if @user.save
-    render json: current_user
+    render :show
   end
 
   def profile

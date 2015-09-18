@@ -12,7 +12,7 @@ password_digest | string  | null: false
 full_name | string  | null: false, index
 bio | string  |
 website_url | string  |
-profile_photo_url | string  |
+profile_picture | string  |
 
 + sessions
 ---

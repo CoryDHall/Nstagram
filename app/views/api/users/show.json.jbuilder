@@ -1,10 +1,11 @@
+json.errors @user.errors.full_messages
 json.extract! @user,
   :id,
   :username,
   :full_name,
   :bio,
   :website_url,
-  :profile_photo_url,
+  :profile_picture,
   :num_followers,
   :num_following
 
