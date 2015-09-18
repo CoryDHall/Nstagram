@@ -18,8 +18,8 @@
     },
 
     root: function () {
-      this.currentUser(function (user) {
-        if (user.id !== undefined) {
+      this.userSession(function (session) {
+        if (!session.isNew()) {
           Backbone.history.navigate('/users', {
             trigger: true
           });
@@ -32,6 +32,8 @@
     },
 
     welcome: function () {
+      this.needsNoLogin();
+
       var welcomeView = new Views.Welcome();
 
       this._swapView(welcomeView);
@@ -39,9 +41,10 @@
 
     usersIndex: function () {
       this.needsLogin();
+      
       var userIndexView = new Views.UsersIndex({
         collection: this.users(),
-        currentUser: this.currentUser()
+        userSession: this.userSession()
       });
       this._swapView(userIndexView);
     },
@@ -67,20 +70,30 @@
       return this._users;
     },
 
-    currentUser: function (callback, wait) {
-      this._currentUser = this._currentUser ||
+    userSession: function (callback, wait) {
+      this._userSession = this._userSession ||
         new Models.UserSession();
-      this._currentUser.fetch({
+      this._userSession.fetch({
         success: callback,
         wait: wait
       });
-      return this._currentUser;
+      return this._userSession;
     },
 
     needsLogin: function () {
-      this.currentUser(function (user) {
-        if (user.id === undefined) {
-          Backbone.history.navigate('welcome', {
+      this.userSession(function (session) {
+        if (session.isNew()) {
+          Backbone.history.navigate('', {
+            trigger: true
+          });
+        }
+      });
+    },
+
+    needsNoLogin: function () {
+      this.userSession(function (session) {
+        if (!session.isNew()) {
+          Backbone.history.navigate('', {
             trigger: true
           });
         }

@@ -3,7 +3,7 @@ Nstagram.Views.UsersIndex = Backbone.CompositeView.extend({
   template: JST['users/index'],
 
   initialize: function (options) {
-    this.currentUser = options.currentUser;
+    this.userSession = options.userSession;
     this.listenTo(this.collection, "reset", this.render);
   },
 
@@ -21,8 +21,8 @@ Nstagram.Views.UsersIndex = Backbone.CompositeView.extend({
   },
 
   logout: function (e) {
-    this.currentUser.destroy();
-    this.currentUser.clear();
+    this.userSession.destroy();
+    this.userSession.clear();
     Backbone.history.navigate('', {
       trigger: true
     });
