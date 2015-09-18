@@ -18,6 +18,26 @@ class Api::UsersController < UsersController
     render :show
   end
 
+  def followers
+    user = User.find_by({ username: params[:id] })
+    if !!user
+      @users = user.followers
+      render :index
+    else
+      render json: {}, status: 422
+    end
+  end
+
+  def followers
+    user = User.find_by({ username: params[:id] })
+    if !!user
+      @users = user.following
+      render :index
+    else
+      render json: {}, status: 422
+    end
+  end
+
   def require_log_in!
     @login_status = logged_in?
   end

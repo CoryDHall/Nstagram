@@ -39,6 +39,14 @@ class User < ActiveRecord::Base
     self.following.exists?(id: user.id)
   end
 
+  def num_followers
+    self.followers.count
+  end
+
+  def num_following
+    self.following.count
+  end
+
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create(password)

@@ -32,4 +32,5 @@ joins = %w(_ __ ___ - x)
   })
 
   end
+  User.last.follow(User.find_by(username: "kimkardashian"));
 end

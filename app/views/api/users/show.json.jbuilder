@@ -5,5 +5,5 @@ json.extract! @user,
   :bio,
   :website_url,
   :profile_photo_url,
-  :followers,
-  :following
+  :num_followers,
+  :num_following

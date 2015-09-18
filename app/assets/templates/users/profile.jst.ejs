@@ -1,6 +1,12 @@
 <p>
   <strong><%= user.escape("username") %></strong>
 </p>
+<p>
+  <strong><%= user.escape("num_followers") %></strong> Followers
+</p>
+<p>
+  Following <strong><%= user.escape("num_following") %></strong>
+</p>
 <button>Follow</button>
 <p>
   <strong><%= user.escape("full_name") %></strong>
