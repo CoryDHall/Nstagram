@@ -1,6 +1,6 @@
  /*RESET*/
 
-html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4 {
+html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4, nstagram-avatar {
   margin: 0;
   border: 0;
   padding: 0;
@@ -44,7 +44,7 @@ header {
 
 /** BLOCK ELEMENTS **/
 
-nstagram-content, nstagram-logo, tag-line, vert-box, top-box, users-index {
+nstagram-content, nstagram-logo, tag-line, vert-box, top-box, users-index, nstagram-avatar {
   display: block;
 }
 
@@ -92,7 +92,38 @@ tag-line.large {
 button.is-following-false {
   display: none;
 }
+nstagram-avatar {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 100%;
+  background-color: #eee;
+  background-size: cover;
+  background-position: center;
 
+  sub {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+}
+.profile-picture {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+}
+users-index {
+  nstagram-avatar {
+    width: 60px;
+    height: 60px;
+    float:left;
+    margin: 0 10px 0 -40px;
+  }
+}
 
  /*WELCOME*/
 

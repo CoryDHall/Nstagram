@@ -2,6 +2,14 @@
   <strong><%= user.escape("username") %></strong>
 </p>
 <p>
+  <nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture") %>)">
+    <!-- <img class="profile-picture" src="<%= user.escape("profile_picture") %>" alt="<%= user.escape("username") %>" /> -->
+    <% if (user.escape("profile_picture") === "/missing.png") { %>
+    <sub>NO PHOTO</sub>
+    <% } %>
+  </nstagram-avatar>
+</p>
+<p>
   <strong><%= user.escape("num_followers") %></strong> Followers
 </p>
 <p>
@@ -20,5 +28,5 @@
 <p>
   <strong><%= user.escape("website_url") %></strong>
 </p>
-
+<br>
 <a href="#">All Users</a>
