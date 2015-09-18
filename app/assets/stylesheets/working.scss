@@ -1,6 +1,6 @@
  /*RESET*/
 
-html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, em, ul, li {
+html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4 {
   margin: 0;
   border: 0;
   padding: 0;
@@ -13,6 +13,7 @@ html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, em,
   color: inherit;
   text-decoration: inherit;
   text-align: inherit;
+  white-space: inherit;
 }
 
 ul {
@@ -89,6 +90,7 @@ tag-line.large {
    background: hsl(206, 85%, 30%);
    color: #fff;
    height: 53.125%; /*17/16*/
+   position: relative;
  }
 
  #welcome header.welcome vert-box {
@@ -99,6 +101,50 @@ tag-line.large {
 
  #welcome form.hidden-form {
    display: none;
+ }
+ #welcome nav {
+   font-size: 20px;
+   position: absolute;
+   width: 30%;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin: 0 auto 5px;
+   display: block;
+   text-align: center;
+   white-space: nowrap;
+ }
+ #welcome a.hidden-form {
+   opacity: 0.8;
+ }
+ #welcome a {
+   background: #fff;
+   color: hsl(206, 85%, 30%);
+   text-transform: uppercase;
+   padding: 10px 40px 5px;
+   border-radius: 5px;
+   line-height: 30px;
+ }
+ #welcome a.hidden-form:hover {
+   box-shadow: 0 1px 2px #000;
+ }
+
+ #welcome form label {
+   display: none;
+ }
+ #welcome form * {
+   font-size: 20px;
+   padding: 5px;
+   margin: 5px 0;
+   border-radius: 3px;
+   border-width: 0 0 2px;
+   border-color: #eee;
+   border-style: solid;
+ }
+
+ #welcome form :valid {
+   content: "✓";
+   color: hsl(116, 85%, 30%);
  }
 
  /*USERS INDEX*/
@@ -128,4 +174,22 @@ users-index button.logout:hover {
 
 users-index li {
   border-bottom: 1px solid #ddd;
+  height: 100px;
+  width: 100%;
+  padding: 0 0 0 40px;
+}
+users-index li a:link,
+users-index li a:visited,
+users-index li a:hover,
+users-index li a:focus {
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  display: block;
+}
+users-index li:hover {
+  background-color: hsla(206, 15%, 80%, 0.5);
+}
+users-index li h4 {
+  font-size: 30px;
 }
