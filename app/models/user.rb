@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
     styles: {
       square: '200x200#'
     },
-    default_url: "/assets/missing.png"
-    
+    default_url: "missing.png"
+
   validates_attachment_content_type :profile_picture, content_type: /\Aimage\/.*\Z/
   validates_attachment_file_name :profile_picture, matches: [/png\Z/, /jpe?g\Z/, /gif\Z/]
 

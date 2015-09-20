@@ -8,7 +8,7 @@
   <% users.each(function (user) { %>
     <li>
       <a href="#users/<%= user.escape("username") %>">
-        <nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture") %>)">
+        <nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture_url") %>)">
           <!-- <img class="profile-picture" src="<%= user.escape("profile_picture") %>" alt="<%= user.escape("username") %>" /> -->
           <% if (user.escape("profile_picture") === "/assets/missing.png") { %>
           <!-- <sub>NO PHOTO</sub> -->
