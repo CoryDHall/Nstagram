@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   validate :username_is_case_insensitive_unique
 
-  has_attached_file :profile_picture, default_url: "/missing.png"
+  has_attached_file :profile_picture, default_url: "/assets/missing.png"
   validates_attachment_content_type :profile_picture, content_type: /\Aimage\/.*\Z/
   validates_attachment_file_name :profile_picture, matches: [/png\Z/, /jpe?g\Z/, /gif\Z/]
 

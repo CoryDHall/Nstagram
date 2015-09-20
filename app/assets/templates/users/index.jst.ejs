@@ -10,8 +10,8 @@
       <a href="#users/<%= user.escape("username") %>">
         <nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture") %>)">
           <!-- <img class="profile-picture" src="<%= user.escape("profile_picture") %>" alt="<%= user.escape("username") %>" /> -->
-          <% if (user.escape("profile_picture") === "/missing.png") { %>
-          <sub>NO PHOTO</sub>
+          <% if (user.escape("profile_picture") === "/assets/missing.png") { %>
+          <!-- <sub>NO PHOTO</sub> -->
           <% } %>
         </nstagram-avatar>
         <h4><%= user.escape("username") %></h4>
