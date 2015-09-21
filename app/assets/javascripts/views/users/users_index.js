@@ -17,6 +17,16 @@ Nstagram.Views.UsersIndex = Backbone.CompositeView.extend({
     });
     this.$el.html(content);
 
+    this.collection.each(function (user) {
+      this.addSubview(
+        'ul',
+        new Nstagram.Views.UsersIndexItem({
+          model: user,
+          userSession: this.userSession
+        })
+      );
+    }.bind(this));
+
     return this;
   },
 

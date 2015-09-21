@@ -3,7 +3,6 @@
 </p>
 <p>
   <nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture_url") %>)">
-    <!-- <img class="profile-picture" src="<%= user.escape("profile_picture") %>" alt="<%= user.escape("username") %>" /> -->
     <% if (user.escape("profile_picture") === "/assets/missing.png") { %>
     <!-- <sub>NO PHOTO</sub> -->
     <% } %>
@@ -15,10 +14,8 @@
 <p>
   Following <strong><%= user.escape("num_following") %></strong>
 </p>
-<% if (user.has("is_following")) { %>
-  <button class="unfollow-button is-following-<%= user.get("is_following") %>">Unfollow</button>
-  <button class="follow-button is-following-<%= !user.get("is_following") %>">Follow</button>
-<% } %>
+<nstagram-follow-button>
+</nstagram-follow-button>
 <p>
   <strong><%= user.escape("full_name") %></strong>
 </p>

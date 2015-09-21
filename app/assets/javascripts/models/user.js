@@ -5,9 +5,15 @@ Nstagram.Models.User = Backbone.Model.extend({
     this.url = options.url || Backbone.Model.prototype.url.bind(this);
   },
   follow: function () {
+    // this.ensure_follow();
     this._follow.save({}, {
-      success: function () {
-        this.fetch()
+      success: function (follow) {
+        var attrs = _.clone(follow.attributes);
+        this._follow.clear();
+        this._follow.set(attrs.follow);
+        delete attrs.follow;
+        delete attrs.user;
+        this.set(attrs);
       }.bind(this)
     });
   },
@@ -15,7 +21,9 @@ Nstagram.Models.User = Backbone.Model.extend({
 
     this._follow.destroy({
       success: function () {
-        this.fetch();
+        this.fetch({
+          reset: true
+        });
       }.bind(this)
     });
   },
@@ -28,5 +36,10 @@ Nstagram.Models.User = Backbone.Model.extend({
       delete response.follow;
     }
     return response;
-  }
+  },
+  // follow: function () {
+  //   this._follow = this._follow || new Nstagram.Models.Follow({
+  //     following: response.id
+  //   });
+  // }
 });

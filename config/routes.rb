@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         get 'followers', to: 'users#followers'
         get 'following', to: 'users#following'
         post 'follow', to: 'users#follow'
+        put 'follow', to: 'users#follow'
         get 'follow', to: 'users#is_following'
         delete 'follow', to: 'users#unfollow'
       end
