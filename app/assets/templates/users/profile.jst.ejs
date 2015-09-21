@@ -9,10 +9,14 @@
   </nstagram-avatar>
 </p>
 <p>
-  <strong><%= user.escape("num_followers") %></strong> Followers
+  <a href="#users/<%= user.escape("username") %>/followers">
+    <strong><%= user.escape("num_followers") %></strong> Followers
+  </a>
 </p>
 <p>
-  Following <strong><%= user.escape("num_following") %></strong>
+  <a href="#users/<%= user.escape("username") %>/following">
+    Following <strong><%= user.escape("num_following") %></strong>
+  </a>
 </p>
 <nstagram-follow-button>
 </nstagram-follow-button>

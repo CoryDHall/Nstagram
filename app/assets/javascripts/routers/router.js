@@ -15,7 +15,9 @@
       'welcome': 'welcome',
       'users': 'usersIndex',
       'users/:username': 'userProfile',
-      'users/:username/edit': 'EditUserProfile'
+      'users/:username/edit': 'editUserProfile',
+      'users/:username/following': 'userFollowing',
+      'users/:username/followers': 'userFollowers'
     },
 
     root: function () {
@@ -37,7 +39,6 @@
       var welcomeView = new Views.Welcome();
 
       this.needsNoLogin(welcomeView);
-      // this._swapView(welcomeView);
     },
 
     usersIndex: function () {
@@ -47,7 +48,6 @@
         userSession: this.userSession()
       });
       this.needsLogin(userIndexView);
-      // this._swapView(userIndexView);
     },
 
     userProfile: function (username) {
@@ -64,7 +64,39 @@
       this._swapView(profileView);
     },
 
-    EditUserProfile: function (username) {
+    userFollowing: function (username) {
+      var users = new Collections.Following({
+        follower: username
+      });
+      users.fetch({
+        reset: true
+      });
+
+      var followingView = new Views.UsersIndex({
+        collection: users,
+        userSession: this.userSession()
+      });
+
+      this._swapView(followingView);
+    },
+
+    userFollowers: function (username) {
+      var users = new Collections.Followers({
+        following: username
+      });
+      users.fetch({
+        reset: true
+      });
+
+      var followersView = new Views.UsersIndex({
+        collection: users,
+        userSession: this.userSession()
+      });
+
+      this._swapView(followersView);
+    },
+
+    editUserProfile: function (username) {
       var user = new Models.User({
         url: '/api/users/:' + username
       });
@@ -76,7 +108,6 @@
       });
       this.needsOwnership(username, editProfileView);
 
-      // this._swapView(editProfileView);
     },
 
     users: function () {

@@ -45,7 +45,7 @@ class Api::UsersController < UsersController
     end
   end
 
-  def followers
+  def following
     user = User.find_by({ username: params[:id] })
     if !!user
       @users = user.following
