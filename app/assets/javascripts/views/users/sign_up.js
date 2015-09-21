@@ -18,9 +18,11 @@ Nstagram.Views.SignUp = Backbone.View.extend({
   signUp: function (e) {
     e.preventDefault();
 
-    var formData = this.$el.serializeJSON();
+    // var formData = this.$el.serializeJSON();
     this.user = new Nstagram.Models.User();
-    this.user.save(formData, {
+    var formData = new FormData(this.el);
+
+    this.user.saveFormData(formData, {
       success: function (newUser) {
         if (newUser.escape('errors').length > 0) {
           return;

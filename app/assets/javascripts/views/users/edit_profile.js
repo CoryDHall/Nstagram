@@ -18,9 +18,9 @@ Nstagram.Views.EditProfile = Backbone.View.extend({
   edit: function (e) {
     e.preventDefault();
 
-    var formData = this.$el.serializeJSON();
+    var formData = new FormData(this.el);
 
-    this.user.save(formData, {
+    this.user.saveFormData(formData, {
       success: function (newUser) {
         if (newUser.escape('errors').length > 0) {
           return;

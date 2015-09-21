@@ -26,8 +26,8 @@
 <input type="url" name="user[website_url]" id="user_website_url"  placeholder="website" value="<%= user.escape("website_url") %>">
 <br>
 
-<label for="user_profile_picture">Profile photo url</label>
-<input type="url" name="user[profile_picture]" id="user_profile_picture"  placeholder="profile photo" >
+<label for="user_profile_picture">Profile photo</label>
+<input type="file" name="user[profile_picture]" id="user_profile_picture"  placeholder="profile photo" >
 <br>
 <% if (user.isNew()) { %>
 <button>Sign Up</button>

@@ -5,22 +5,19 @@ Nstagram.Models.User = Backbone.Model.extend({
     this.url = options.url || Backbone.Model.prototype.url.bind(this);
   },
   follow: function () {
-    
+
     this._follow.save({}, {
       success: function (follow) {
         var attrs = _.clone(follow.attributes);
-        this._follow.clear();
-        this._follow.set(attrs.follow);
-        delete attrs.follow;
         delete attrs.user;
-        this.set(attrs);
+        this.set(this.parse(attrs));
       }.bind(this)
     });
   },
   unfollow: function () {
 
     this._follow.destroy({
-      success: function () {
+      success: function (follow) {
         this.fetch({
           reset: true
         });
