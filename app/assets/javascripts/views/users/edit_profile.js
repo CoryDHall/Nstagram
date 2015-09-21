@@ -1,12 +1,12 @@
-Nstagram.Views.SignUp = Backbone.View.extend({
+Nstagram.Views.EditProfile = Backbone.View.extend({
   tagName: 'form',
   template: JST['users/user_form'],
-  id: 'signup-form',
+  id: 'editprofile-form',
   events: {
-    "submit":"signUp"
+    "submit":"edit"
   },
   initialize: function () {
-    this.user = new Nstagram.Models.User();
+    this.user = this.model;
     this.listenTo(this.user, "sync", this.render)
   },
   render: function () {
@@ -15,17 +15,17 @@ Nstagram.Views.SignUp = Backbone.View.extend({
     }));
     return this;
   },
-  signUp: function (e) {
+  edit: function (e) {
     e.preventDefault();
 
     var formData = this.$el.serializeJSON();
-    this.user = new Nstagram.Models.User();
+
     this.user.save(formData, {
       success: function (newUser) {
         if (newUser.escape('errors').length > 0) {
           return;
         }
-        Backbone.history.navigate('', {
+        Backbone.history.navigate('users/' + newUser.escape("username"), {
           trigger: true
         })
       }

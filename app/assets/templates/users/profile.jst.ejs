@@ -25,5 +25,10 @@
 <p>
   <strong><%= user.escape("website_url") %></strong>
 </p>
+<% if (user.id === userSession.id) { %>
+<p>
+  <a href="#users/<%= user.escape("username") %>/edit">Edit Profile</a>
+</p>
+<% } %>
 <br>
 <a href="#">All Users</a>

@@ -14,7 +14,8 @@
       '': 'root',
       'welcome': 'welcome',
       'users': 'usersIndex',
-      'users/:username': 'userProfile'
+      'users/:username': 'userProfile',
+      'users/:username/edit': 'EditUserProfile'
     },
 
     root: function () {
@@ -32,21 +33,21 @@
     },
 
     welcome: function () {
-      this.needsNoLogin();
 
       var welcomeView = new Views.Welcome();
 
-      this._swapView(welcomeView);
+      this.needsNoLogin(welcomeView);
+      // this._swapView(welcomeView);
     },
 
     usersIndex: function () {
-      this.needsLogin();
 
       var userIndexView = new Views.UsersIndex({
         collection: this.users(),
         userSession: this.userSession()
       });
-      this._swapView(userIndexView);
+      this.needsLogin(userIndexView);
+      // this._swapView(userIndexView);
     },
 
     userProfile: function (username) {
@@ -61,6 +62,21 @@
       });
 
       this._swapView(profileView);
+    },
+
+    EditUserProfile: function (username) {
+      var user = new Models.User({
+        url: '/api/users/:' + username
+      });
+      user.fetch();
+
+      var editProfileView = new Views.EditProfile({
+        model: user,
+        userSession: this.userSession()
+      });
+      this.needsOwnership(username, editProfileView);
+
+      // this._swapView(editProfileView);
     },
 
     users: function () {
@@ -80,24 +96,40 @@
       return this._userSession;
     },
 
-    needsLogin: function () {
+    needsLogin: function (view) {
       this.userSession(function (session) {
         if (session.isNew()) {
           Backbone.history.navigate('', {
             trigger: true
           });
+        } else {
+          this._swapView(view)
         }
-      });
+      }.bind(this));
     },
 
-    needsNoLogin: function () {
+    needsNoLogin: function (view) {
       this.userSession(function (session) {
         if (!session.isNew()) {
           Backbone.history.navigate('', {
             trigger: true
           });
+        } else {
+          this._swapView(view)
         }
-      });
+      }.bind(this));
+    },
+
+    needsOwnership: function (username, view) {
+      this.userSession(function (session) {
+        if (session.user.escape("username") !== username) {
+          Backbone.history.navigate('', {
+            trigger: true
+          });
+        } else {
+          this._swapView(view)
+        }
+      }.bind(this));
     }
   });
 })();

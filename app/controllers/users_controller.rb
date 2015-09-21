@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :follow, :unfollow, :is_following]
+  before_action :set_user, only: [:show, :edit, :destroy, :follow, :unfollow, :is_following]
   before_action :require_log_in!, except: [:new, :show, :create]
   before_action :prohibit_log_in!, only: [:new, :create]
 
@@ -31,6 +31,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    set_user
     require_ownership!(@user)
 
     if @user.update(user_params)

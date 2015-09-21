@@ -12,6 +12,20 @@ class Api::UsersController < UsersController
     render :show
   end
 
+  def update
+    @user = User.find_by({ username: params[:username] })
+    require_ownership!(@user)
+    if @owner_status
+      if @user.update(user_params)
+        render :show
+      else
+        render :show, status: 422
+      end
+    else
+      render :show, status: 550
+    end
+  end
+
   def profile
     @user = User.find_by({ username: params[:username] })
 

@@ -5,11 +5,13 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
   initialize: function (options) {
     this.userSession = options.userSession;
     this.listenTo(this.model, 'sync change', this.render);
+    this.listenTo(this.userSession, 'sync', this.render);
   },
 
   render: function () {
     this.$el.html(this.template({
-      user: this.model
+      user: this.model,
+      userSession: this.userSession
     }));
 
     this.addSubview('nstagram-follow-button', new Nstagram.Views.FollowButton({
