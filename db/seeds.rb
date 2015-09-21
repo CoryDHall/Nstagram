@@ -34,3 +34,24 @@ joins = %w(_ __ ___ - x)
   end
   User.last.follow(User.find_by(username: "kimkardashian"));
 end
+def seed(query)
+  agent = Mechanize.new
+  agent.log = Logger.new "mech.log"
+  agent.user_agent_alias = 'Mac Safari'
+  agent.pluggable_parser.default = Mechanize::FileSaver
+
+  page = agent.get "http://www.google.com/"
+  search_form = page.form_with :name => "f"
+  search_form.field_with(:name => "q").value = query
+
+  search_results = agent.submit search_form
+  search_results = agent.click("Images")
+
+  image_links = search_results.image_urls
+
+  image_links.each do |image_url|
+    p image_url.to_s
+    img = (agent.get image_url.to_s)
+    img.save("seed_data/#{query}/#{img.filename}")
+  end
+end

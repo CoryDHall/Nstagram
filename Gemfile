@@ -45,6 +45,8 @@ group :development, :test do
   gem 'pry-rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'mechanize'
+  gem 'logger'
 end
 
 group :production do

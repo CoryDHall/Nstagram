@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   has_many :feed_photos,
     through: :following,
     source: :photos
-    
+
 
   after_create :ensure_session_token
 
