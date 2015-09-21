@@ -32,6 +32,17 @@ Nstagram.Models.User = Backbone.Model.extend({
       this._follow.set(response.follow);
       delete response.follow;
     }
+    if (response.photos) {
+      this.photos().set(response.photos);
+      delete response.photos;
+    }
+
     return response;
+  },
+  photos: function () {
+    this._photos = this._photos || new Nstagram.Collections.Photos({
+      user: this
+    });
+    return this._photos;
   }
 });

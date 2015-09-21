@@ -18,6 +18,12 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
       model: this.model,
       userSession: this.userSession
     }));
+
+    this.addSubview('nstagram-thumbs-index', new Nstagram.Views.PhotosIndex({
+      collection: this.model.photos(),
+      user: this.model,
+      userSession: this.userSession
+    }));
     return this;
   }
 });

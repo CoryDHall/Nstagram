@@ -13,3 +13,8 @@ json.follow @follow
 json.is_following !!@follow if logged_in? && current_user != @user
 
 json.profile_picture_url asset_path(@user.profile_picture.url(:square))
+
+json.photos (@user.photos) do |photo|
+  json.extract! photo, :id, :created_at
+  json.url asset_path(photo.photo.url(:full))
+end

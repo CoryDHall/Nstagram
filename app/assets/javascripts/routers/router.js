@@ -13,6 +13,7 @@
     routes: {
       '': 'root',
       'welcome': 'welcome',
+      'upload': 'uploadPhoto',
       'users': 'usersIndex',
       'users/:username': 'userProfile',
       'users/:username/edit': 'editUserProfile',
@@ -35,18 +36,25 @@
     },
 
     welcome: function () {
-
       var welcomeView = new Views.Welcome();
 
       this.needsNoLogin(welcomeView);
     },
 
-    usersIndex: function () {
+    uploadPhoto: function () {
+      var photoUploadView = new Views.PhotoNew({
+        userSession: this.userSession()
+      });
 
+      this.needsLogin(photoUploadView);
+    },
+
+    usersIndex: function () {
       var userIndexView = new Views.UsersIndex({
         collection: this.users(),
         userSession: this.userSession()
       });
+
       this.needsLogin(userIndexView);
     },
 

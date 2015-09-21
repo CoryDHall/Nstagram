@@ -4,8 +4,9 @@ Rails.application.routes.draw do
 
   namespace :api, as: '' do
     resource :feed,
+      only: [:index],
       defaults: { format: :json } do
-        
+
       root to: 'users#feed'
     end
 
@@ -13,14 +14,23 @@ Rails.application.routes.draw do
       except: [:destroy, :new, :edit],
       defaults: { format: :json } do
 
-      get '::username', to: 'users#profile', on: :collection
+      collection do
+        get '::username', to: 'users#profile'
+
+        get '::username/photos', to: 'photos#user_index'
+        post '::username/photos', to: 'photos#create'
+        get '::username/photo/:photo_id', to: 'photos#show'
+        delete '::username/photo/:photo_id', to: 'photos#destroy'
+      end
 
       member do
         get 'followers', to: 'users#followers'
+
         get 'following', to: 'users#following'
+
+        get 'follow', to: 'users#is_following'
         post 'follow', to: 'users#follow'
         put 'follow', to: 'users#follow'
-        get 'follow', to: 'users#is_following'
         delete 'follow', to: 'users#unfollow'
       end
     end
