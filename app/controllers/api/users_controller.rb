@@ -68,6 +68,11 @@ class Api::UsersController < UsersController
     end
   end
 
+  def feed
+    @photos = current_user.feed_photos
+    render 'api/photos/index'
+  end
+
 
   def require_log_in!
     @login_status = logged_in?

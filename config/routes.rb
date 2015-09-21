@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   root to: 'static_page#root'
 
   namespace :api, as: '' do
+    resource :feed,
+      defaults: { format: :json } do
+        
+      root to: 'users#feed'
+    end
+
     resources :users,
       except: [:destroy, :new, :edit],
       defaults: { format: :json } do

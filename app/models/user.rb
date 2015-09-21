@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   has_attached_file :profile_picture,
     styles: {
-      square: '200x200#'
+      square: ['200x200#', :jpeg]
     },
     default_url: "missing.png"
 
@@ -33,6 +33,13 @@ class User < ActiveRecord::Base
     class_name: "User",
     join_table: :follows,
     foreign_key: :follower_id
+
+  has_many :photos
+
+  has_many :feed_photos,
+    through: :following,
+    source: :photos
+    
 
   after_create :ensure_session_token
 
