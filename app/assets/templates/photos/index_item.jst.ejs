@@ -1,2 +1,8 @@
-
-<img src="<%= photo.escape("url") %>" alt="'s photo'" />
+<% if (!profile) { %>
+  <a href="#users/<%= photo.user.escape("username") %>">
+    <nstagram-avatar class="clearfix" style="background-image: url(<%= photo.user.escape("profile_picture_url") %>)">
+    </nstagram-avatar>
+    <h4><%= photo.user.escape("username") %></h4>
+  </a>
+<% } %>
+<img src="<%= photo.escape("url") %>" alt="<%= photo.user.escape("username") %>'s photo'" />

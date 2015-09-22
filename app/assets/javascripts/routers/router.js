@@ -15,6 +15,7 @@
       'welcome': 'welcome',
       'upload': 'uploadPhoto',
       'users': 'usersIndex',
+      'feed': 'feed',
       'users/:username': 'userProfile',
       'users/:username/edit': 'editUserProfile',
       'users/:username/following': 'userFollowing',
@@ -49,6 +50,19 @@
       this.needsLogin(photoUploadView);
     },
 
+    feed: function () {
+      var feedView = new Views.PhotosIndex({
+        userSession: this.userSession(),
+        collection: new Collections.Feed()
+      });
+
+      feedView.collection.fetch({
+        reset: true
+      });
+
+      this.needsLogin(feedView);
+    },
+
     usersIndex: function () {
       var userIndexView = new Views.UsersIndex({
         collection: this.users(),
@@ -62,14 +76,17 @@
       var user = new Models.User({
         url: '/api/users/:' + username
       });
-      user.fetch();
+      user.fetch({
+        success: function () {
+          var profileView = new Views.UserProfile({
+            model: user,
+            userSession: this.userSession()
+          });
 
-      var profileView = new Views.UserProfile({
-        model: user,
-        userSession: this.userSession()
+          this._swapView(profileView);
+        }.bind(this)
       });
 
-      this._swapView(profileView);
     },
 
     userFollowing: function (username) {

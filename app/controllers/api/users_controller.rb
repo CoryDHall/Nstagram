@@ -70,6 +70,7 @@ class Api::UsersController < UsersController
 
   def feed
     @photos = current_user.feed_photos
+    @style = params["style"].intern
     render 'api/photos/index'
   end
 

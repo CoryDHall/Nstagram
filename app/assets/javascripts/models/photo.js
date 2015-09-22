@@ -4,6 +4,14 @@ Nstagram.Models.Photo = Backbone.Model.extend({
     return this._urlRoot
   },
   initialize: function (options) {
-    this.user = options.user;
+  },
+  parse: function (resp) {
+    if (resp.user) {
+      this.user = this.user || new Nstagram.Models.User();
+      this.user.set(resp.user);
+      delete resp.user;
+
+    }
+    return resp;
   }
 });

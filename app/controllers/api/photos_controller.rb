@@ -4,6 +4,13 @@ class Api::PhotosController < ApplicationController
   before_action :require_ownership!, only: [:destroy]
 
   def index
+    @style = params["style"].intern || :thumb
+  end
+
+  def user_index
+    @photos = User.find_by({ username: params[:username] }).photos
+    @style = params["style"].intern
+    render :index
   end
 
   def show

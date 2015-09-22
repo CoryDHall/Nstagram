@@ -1,9 +1,10 @@
-Nstagram.Collections.Photos = Backbone.Collection.extend({
+Nstagram.Collections.Feed = Backbone.Collection.extend({
 
   model: Nstagram.Models.Photo,
+
   initialize: function (options) {
-    this.url = "api/users/:" + options["username"] + "/photos";
-    this.style = options.style || 'thumb'
+    this.url = "api/feed";
+    this.style = 'full';
   },
   fetch: function (options) {
     options = options || {};
