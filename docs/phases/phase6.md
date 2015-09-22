@@ -1,4 +1,4 @@
-# Phase 5: Receive Notifications
+# Phase 6: Receive Notifications
 
 ## Rails
 ### Models
