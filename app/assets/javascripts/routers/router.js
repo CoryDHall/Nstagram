@@ -8,6 +8,10 @@
 
     initialize: function (options) {
       this.$rootEl = $(options.rootEl);
+      this.$footEl = $(options.footEl);
+      this.menu = new Views.Menu();
+      this.$footEl.html(this.menu.$el);
+      this.menu.render();
     },
 
     routes: {

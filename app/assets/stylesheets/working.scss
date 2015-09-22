@@ -347,3 +347,53 @@ nstagram-thumbs-index {
     box-sizing: border-box;
   }
 }
+$site-width: 900px;
+$menu-height: 100px;
+$menu-width: $site-width / 3;
+$ng-highlight: hsl(30, 80%, 48%);
+
+nstagram-content {
+  padding-bottom: $menu-height;
+  box-sizing: border-box;
+}
+nstagram-menu {
+  display: block;
+  clear: both;
+  position: absolute;
+  width: 100%;
+  height: $menu-height;
+  bottom: 0;
+  background: #333;
+
+  ul {
+    text-align: center;
+  }
+
+  li:first-child {
+    border-left: 1px solid rgba(0,0,0,0.2);
+  }
+
+  li {
+    border-right: 1px solid rgba(0,0,0,0.2);
+    display: inline-block;
+    color: #fff;
+    box-sizing: border-box;
+    line-height: $menu-height;
+
+    a {
+      display: inline-block;
+      height: $menu-height;
+      padding: 0 100px;
+      min-width: $menu-width
+    }
+
+    a.upload-link {
+      background: $ng-blue;
+    }
+  }
+
+  .selected {
+    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+    box-shadow: 0 10px 0 $ng-highlight inset;
+  }
+}

@@ -5,7 +5,8 @@ window.Nstagram = {
   Routers: {},
   initialize: function() {
     this.router = new Nstagram.Routers.Router({
-      rootEl: "nstagram-content"
+      rootEl: "nstagram-content",
+      footEl: "nstagram-menu"
     });
 
     Backbone.history.start();
