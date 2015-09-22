@@ -127,76 +127,111 @@ users-index {
 }
 
  /*WELCOME*/
+$ng-blue: hsl(206, 85%, 30%);
 
  #welcome {
    height: 100%;
+
+   .welcome {
+     text-align: center;
+     min-height: 200px;
+   }
+
+   header.welcome {
+     background: $ng-blue;
+     background: linear-gradient(45deg, hsla(120, 70%, 30%, 0.5),hsla(0, 70%, 40%, 0.5));
+     color: #fff;
+     height: 53.125%; /*17/16*/
+     position: relative;
+     box-shadow: 0 -20px 100px #000 inset;
+   }
+   header.welcome::before {
+     content: "";
+     background: linear-gradient(225deg, hsla(60, 70%, 50%, 0),hsla(240, 80%, 50%, 0.5));
+    //  box-shadow: 50px 20px 200px hsla(60, 80%, 50%, 0.6) inset;
+     width: 100%;
+     height: 100%;
+     display: block;
+     top: 0;
+     position: absolute;
+   }
+
+   header.welcome vert-box {
+     top: 50%;
+     transform: translateY(-50%);
+     height: 25%;
+   }
+
+   form.hidden-form {
+     display: none;
+   }
+   nav {
+     font-size: 20px;
+     position: absolute;
+     width: 30%;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     margin: 0 auto 5px;
+     display: block;
+     text-align: center;
+     white-space: nowrap;
+   }
+
+   a {
+    //  background: #fff;
+    //  color: hsl(206, 85%, 30%);
+     text-transform: uppercase;
+     padding: 10px 40px 5px;
+     border-radius: 5px;
+     line-height: 30px;
+     font-weight: bold;
+   }
+   a:first-child:not(.hidden-form)::after {
+     content: "";
+     width: 0;
+     display: block;
+     border: 10px solid transparent;
+     border-bottom-color: #fff;
+     margin: 0 auto -5px;
+     position: absolute;
+     bottom: 0;
+     left: 30%;
+   }
+   a:last-child:not(.hidden-form)::after {
+     content: "";
+     width: 0;
+     display: block;
+     border: 10px solid transparent;
+     border-bottom-color: #fff;
+     margin: 0 auto -5px;
+     position: absolute;
+     bottom: 0;
+     right: 30%;
+   }
+
+   form label {
+     display: none;
+   }
+   form * {
+     font-size: 20px;
+     padding: 5px;
+     margin: 5px 0;
+     border-radius: 3px;
+     border-width: 0 0 2px;
+     border-color: #eee;
+     border-style: solid;
+   }
+
+   form :valid {
+     content: "✓";
+     color: hsl(116, 85%, 30%);
+   }
+
+   section.welcome {
+   }
  }
 
- #welcome .welcome {
-   text-align: center;
-   min-height: 200px;
- }
-
- #welcome header.welcome {
-   background: hsl(206, 85%, 30%);
-   color: #fff;
-   height: 53.125%; /*17/16*/
-   position: relative;
- }
-
- #welcome header.welcome vert-box {
-   top: 50%;
-   transform: translateY(-50%);
-   height: 25%;
- }
-
- #welcome form.hidden-form {
-   display: none;
- }
- #welcome nav {
-   font-size: 20px;
-   position: absolute;
-   width: 30%;
-   bottom: 0;
-   left: 0;
-   right: 0;
-   margin: 0 auto 5px;
-   display: block;
-   text-align: center;
-   white-space: nowrap;
- }
- #welcome a.hidden-form {
-   opacity: 0.8;
- }
- #welcome a {
-   background: #fff;
-   color: hsl(206, 85%, 30%);
-   text-transform: uppercase;
-   padding: 10px 40px 5px;
-   border-radius: 5px;
-   line-height: 30px;
- }
- #welcome a.hidden-form:hover {
-   box-shadow: 0 1px 2px #000;
- }
-
- #welcome form label {
-   display: none;
- }
- #welcome form * {
-   font-size: 20px;
-   padding: 5px;
-   margin: 5px 0;
-   border-radius: 3px;
-   border-width: 0 0 2px;
-   border-color: #eee;
-   border-style: solid;
- }
-
- #welcome form :valid {
-   content: "✓";
-   color: hsl(116, 85%, 30%);
- }
 
  /*USERS INDEX*/
 
@@ -256,5 +291,59 @@ users-index {
   }
   li:hover {
     background-color: hsla(206, 15%, 80%, 0.5);
+  }
+}
+
+photos-index {
+  background: hsl(0,0,98%);
+
+  ul {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  li {
+    box-shadow: 0 2px 20px rgba(0,0,0,0.02);
+    margin-bottom: 100px;
+    background: #fff;
+
+    a {
+      @extend .clearfix;
+      display: block;
+      padding: 10px 0;
+    }
+
+    nstagram-avatar {
+      float: left;
+    }
+
+    h4 {
+      font-size: 24px;
+      height: 100px;
+      box-sizing: border-box;
+      padding: 30px 120px;
+      position: relative;
+      display: block;
+      font-weight: bold;
+      color: $ng-blue;
+    }
+
+  }
+}
+nstagram-thumbs-index {
+  background: hsl(0,0,98%);
+
+  ul {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  li {
+    background: #fff;
+    float: left;
+    padding: 2.5px 5px 0;
+    margin: 0;
+    max-width: 300px;
+    box-sizing: border-box;
   }
 }

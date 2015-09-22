@@ -5,7 +5,7 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   initialize: function (options) {
     this.userSession = options.userSession;
     this.profile = options.profile;
-    this.listenTo(this.model, 'sync change', this.render);
+    this.listenTo(this.model, 'sync change set', this.render);
     this.listenTo(this.user, 'sync change', this.render);
   },
 

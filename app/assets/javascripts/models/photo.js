@@ -10,7 +10,6 @@ Nstagram.Models.Photo = Backbone.Model.extend({
       this.user = this.user || new Nstagram.Models.User();
       this.user.set(resp.user);
       delete resp.user;
-
     }
     return resp;
   }
