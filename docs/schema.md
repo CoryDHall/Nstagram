@@ -12,7 +12,7 @@ password_digest | string  | null: false
 full_name | string  | null: false, index
 bio | string  |
 website_url | string  |
-profile_picture | string  |
+profile_picture | file  |
 
 + sessions
 ---
@@ -39,7 +39,7 @@ column      | data type | options
 ------------|-----------|---------------
 id  | integer | null: false, primary key
 user_id | integer | null: false, foreign key, index
-photo_url | string  | null: false
+photo | file  | null: false
 
 + likes
 ---
