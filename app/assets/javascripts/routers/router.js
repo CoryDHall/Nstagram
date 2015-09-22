@@ -25,7 +25,7 @@
     root: function () {
       this.userSession(function (session) {
         if (!session.isNew()) {
-          Backbone.history.navigate('/users', {
+          Backbone.history.navigate('/feed', {
             trigger: true
           });
         } else {
@@ -51,16 +51,24 @@
     },
 
     feed: function () {
-      var feedView = new Views.PhotosIndex({
-        userSession: this.userSession(),
-        collection: new Collections.Feed()
-      });
+      this.userSession(function (session) {
+        if (session.user.get("num_following") === 0) {
+          Backbone.history.navigate('/users', {
+            trigger: true
+          });
+        } else {
+          var feedView = new Views.PhotosIndex({
+            userSession: this.userSession(),
+            collection: new Collections.Feed()
+          });
 
-      feedView.collection.fetch({
-        reset: true
-      });
+          feedView.collection.fetch({
+            reset: true
+          });
 
-      this.needsLogin(feedView);
+          this.needsLogin(feedView);
+        }
+      }.bind(this));
     },
 
     usersIndex: function () {
