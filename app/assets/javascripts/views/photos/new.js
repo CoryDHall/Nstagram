@@ -21,20 +21,21 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
     e.preventDefault();
 
     var formData = new FormData(this.el);
-
-    this.photo = new Nstagram.Models.Photo({
-      user: this.userSession.user
-    });
-    debugger
-    this.photo.saveFormData(formData, {
-      success: function (newPhoto) {
-        if (newPhoto.escape('errors').length > 0) {
-          return;
-        }
-        Backbone.history.navigate('', {
-          trigger: true
-        })
-      }
+    this.userSession.fetch({
+      success: function (session) {
+        this.photo = new Nstagram.Models.Photo();
+        this.photo.parse({user: session.user});
+        this.photo.saveFormData(formData, {
+          success: function (newPhoto) {
+            if (newPhoto.escape('errors').length > 0) {
+              return;
+            }
+            Backbone.history.navigate('', {
+              trigger: true
+            });
+          }
+        });
+      }.bind(this)
     });
   }
 });

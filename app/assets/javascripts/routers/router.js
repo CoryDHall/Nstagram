@@ -67,11 +67,13 @@
     },
 
     uploadPhoto: function () {
-      var photoUploadView = new Views.PhotoNew({
-        userSession: this.userSession()
-      });
-
-      this.needsLogin(photoUploadView);
+      var photoUploadView;
+      this.userSession(function (session) {
+        photoUploadView = new Views.PhotoNew({
+          userSession: this.userSession()
+        });
+        this.needsLogin(photoUploadView);
+      }.bind(this));
     },
 
     feed: function () {
@@ -82,7 +84,7 @@
           });
         } else {
           var feedView = new Views.PhotosIndex({
-            userSession: this.userSession(),
+            userSession: session,
             collection: new Collections.Feed()
           });
 
@@ -127,16 +129,20 @@
       var users = new Collections.Following({
         follower: username
       });
+      var that = this;
       users.fetch({
-        reset: true
-      });
+        reset: true,
+        success: function () {
+          that.userSession(function (session) {
+            var followingView = new Views.UsersIndex({
+              collection: users,
+              userSession: session
+            });
 
-      var followingView = new Views.UsersIndex({
-        collection: users,
-        userSession: this.userSession()
+            that._swapView(followingView);
+          });
+        }
       });
-
-      this._swapView(followingView);
     },
 
     userFollowers: function (username) {

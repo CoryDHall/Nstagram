@@ -348,8 +348,7 @@ $menu-width: $site-width / 3;
 $ng-highlight: hsl(30, 80%, 48%);
 
 nstagram-content {
-  padding-bottom: $menu-height;
-  padding-top: $menu-height;
+  padding-bottom: 2 * $menu-height;
   box-sizing: border-box;
 }
 nstagram-menu {
@@ -417,6 +416,5 @@ nstagram-menu.hide-bar {
   overflow: hidden;
 }
 nstagram-content.hide-bar {
-  padding-top: 0;
   padding-bottom: 0;
 }
