@@ -36,6 +36,7 @@
       'users': 'usersIndex',
       'feed': 'feed',
       'logout': 'logout',
+      'you': 'you',
       'users/:username': 'userProfile',
       'users/:username/edit': 'editUserProfile',
       'users/:username/following': 'userFollowing',
@@ -64,6 +65,12 @@
       var welcomeView = new Views.Welcome();
 
       this.needsNoLogin(welcomeView);
+    },
+
+    you: function () {
+      this.userSession(function (session) {
+        this.userProfile(session.user.get("username"));
+      }.bind(this));
     },
 
     uploadPhoto: function () {
