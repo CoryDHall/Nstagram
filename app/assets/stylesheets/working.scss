@@ -1,6 +1,6 @@
  /*RESET*/
 
-html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4, nstagram-avatar {
+html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4, nstagram-avatar, nstagram-header, nstagram-flash, nstagram-menu {
   margin: 0;
   border: 0;
   padding: 0;
@@ -44,7 +44,7 @@ header {
 
 /** BLOCK ELEMENTS **/
 
-nstagram-content, nstagram-logo, tag-line, vert-box, top-box, users-index, nstagram-avatar, nstagram-follow-button {
+nstagram-content, tag-line, vert-box, users-index, nstagram-avatar, nstagram-follow-button {
   display: block;
 }
 
@@ -65,10 +65,12 @@ vert-box, top-box {
 nstagram-logo.large {
   font-size: 50px;
   line-height: 100px;
+  display: block;
 }
 
 nstagram-logo.medium {
   font-size: 30px;
+  display: inline;
 }
 
 tag-line.large {
@@ -235,14 +237,7 @@ $ng-blue: hsl(206, 85%, 30%);
 
  /*USERS INDEX*/
 
- users-index header.user-index {
-   background: hsl(206, 85%, 30%);
-   color: #fff;
-   text-align: center;
-   padding: 10px 0;
-}
-
-users-index button.logout {
+button.logout {
   position: absolute;
   right: 0;
   top: 0;
@@ -254,7 +249,7 @@ users-index button.logout {
   cursor: pointer;
 }
 
-users-index button.logout:hover {
+button.logout:hover {
   text-shadow: 0 0 4px #fff;
 }
 users-index {
@@ -348,12 +343,13 @@ nstagram-thumbs-index {
   }
 }
 $site-width: 900px;
-$menu-height: 100px;
+$menu-height: 50px;
 $menu-width: $site-width / 3;
 $ng-highlight: hsl(30, 80%, 48%);
 
 nstagram-content {
   padding-bottom: $menu-height;
+  padding-top: $menu-height;
   box-sizing: border-box;
 }
 nstagram-menu {
@@ -396,4 +392,20 @@ nstagram-menu {
     background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4));
     box-shadow: 0 10px 0 $ng-highlight inset;
   }
+}
+nstagram-flash {
+  display: block;
+  height: auto;
+  width: 0;
+}
+nstagram-header {
+  display: block;
+  width: 100%;
+  height: $menu-height;
+  background: $ng-blue;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  box-sizing: border-box;
+  top: 0;
 }

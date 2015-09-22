@@ -8,10 +8,24 @@
 
     initialize: function (options) {
       this.$rootEl = $(options.rootEl);
+
+      this.$headEl = $(options.headEl);
+      this._head = new Views.Header();
+      this.$headEl.html(this._head.$el);
+      this._head.render();
+
+      this.$flashEl = $(options.flashEl);
+
       this.$footEl = $(options.footEl);
-      this.menu = new Views.Menu();
-      this.$footEl.html(this.menu.$el);
-      this.menu.render();
+      this._menu = new Views.Menu();
+      this.$footEl.html(this._menu.$el);
+      this._menu.render();
+    },
+
+    updateTitle: function (pageTitle) {
+      this._currentTitle = pageTitle || "nstagram";
+      $('title').text(this._currentTitle);
+      this._head.changeTitle(this._currentTitle);
     },
 
     routes: {
@@ -20,13 +34,16 @@
       'upload': 'uploadPhoto',
       'users': 'usersIndex',
       'feed': 'feed',
+      'logout': 'logout',
       'users/:username': 'userProfile',
       'users/:username/edit': 'editUserProfile',
       'users/:username/following': 'userFollowing',
-      'users/:username/followers': 'userFollowers'
+      'users/:username/followers': 'userFollowers',
+      '*redirect': 'root',
     },
 
     root: function () {
+      this.updateTitle();
       this.userSession(function (session) {
         if (!session.isNew()) {
           Backbone.history.navigate('/feed', {
@@ -94,6 +111,8 @@
             model: user,
             userSession: this.userSession()
           });
+
+          this.updateTitle(username);
 
           this._swapView(profileView);
         }.bind(this)
@@ -198,6 +217,17 @@
           this._swapView(view)
         }
       }.bind(this));
-    }
+    },
+
+    logout: function () {
+      debugger
+      this.userSession(function (session) {
+        session.destroy()
+        session.clear()
+        Backbone.history.navigate('', {
+          trigger: true
+        })
+      });
+    },
   });
 })();

@@ -7,10 +7,6 @@ Nstagram.Views.UsersIndex = Backbone.CompositeView.extend({
     this.listenTo(this.collection, "reset", this.render);
   },
 
-  events: {
-    'click button.logout': 'logout'
-  },
-
   render: function () {
     var content = this.template({
       users: this.collection
@@ -28,14 +24,5 @@ Nstagram.Views.UsersIndex = Backbone.CompositeView.extend({
     }.bind(this));
 
     return this;
-  },
-
-  logout: function (e) {
-    this.userSession.destroy();
-    this.userSession.clear();
-    Backbone.history.navigate('', {
-      trigger: true
-    });
   }
-
 });
