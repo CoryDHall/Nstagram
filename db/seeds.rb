@@ -14,7 +14,7 @@ User.create({
   full_name: "admin"
 })
 admin = User.find(1)
-Seeder.add_from_tumblr_to admin, "George Stubbs", "Yayoi Kusama"
+UserFactory.add_photos_to admin, "George Stubbs", "Yayoi Kusama"
 Seeder.get_profile_picture_from_tumblr admin, "pastorale"
 
 
@@ -25,11 +25,8 @@ User.create({
   full_name: "Kim Kardashian West"
 })
 kim_k = User.find_by(username: "kimkardashian")
-kim_k.update({
-  profile_picture: kim_k.photos.to_a.sample
-});
 
-Seeder.add_from_tumblr_to kim_k, "North West"
+UserFactory.add_photos_to kim_k, "North West"
 Seeder.get_profile_picture_from_tumblr kim_k, "Kim Kardashian Fat"
 
 
