@@ -26,3 +26,4 @@
 * `_search`
 
 ## Gems/Libraries
+pg_search
