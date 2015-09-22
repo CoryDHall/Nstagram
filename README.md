@@ -78,5 +78,5 @@ I will add routes to retrieve interaction activity (new table rows linking to a 
 [phase-two]: ./docs/phases/phase2.md
 [phase-three]: ./docs/phases/phase3.md
 [phase-four]: ./docs/phases/phase4.md
-[phase-four]: ./docs/phases/phase5.md
+[phase-five]: ./docs/phases/phase5.md
 [phase-six]: ./docs/phases/phase6.md
