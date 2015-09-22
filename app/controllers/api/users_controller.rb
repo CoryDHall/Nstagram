@@ -48,7 +48,7 @@ class Api::UsersController < UsersController
   def following
     user = User.find_by({ username: params[:id] })
     if !!user
-      @users = user.following
+      @users = user.following.order(:username)
       render :index
     else
       render json: {}, status: 422
@@ -69,7 +69,7 @@ class Api::UsersController < UsersController
   end
 
   def feed
-    @photos = current_user.feed_photos
+    @photos = current_user.feed_photos.order(created_at: :desc)
     @style = params["style"].intern
     render 'api/photos/index'
   end

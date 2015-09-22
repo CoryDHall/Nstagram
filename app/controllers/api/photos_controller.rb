@@ -1,6 +1,6 @@
 class Api::PhotosController < ApplicationController
   before_action :set_photo, only: [:show, :destroy]
-  before_action :require_log_in!, except: [:show]
+  before_action :require_log_in!, except: [:user_index, :show]
   before_action :require_ownership!, only: [:destroy]
 
   def index
@@ -8,7 +8,7 @@ class Api::PhotosController < ApplicationController
   end
 
   def user_index
-    @photos = User.find_by({ username: params[:username] }).photos
+    @photos = User.find_by({ username: params[:username] }).photos.order(created_at: :desc)
     @style = params["style"].intern
     render :index
   end
