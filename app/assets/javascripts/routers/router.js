@@ -47,6 +47,7 @@
     root: function () {
       this.updateTitle();
       this.userSession(function (session) {
+      $('.home-link').not('.selected').addClass('selected')
         if (!session.isNew()) {
           this.showBars();
           Backbone.history.navigate('/feed', {
@@ -69,6 +70,7 @@
 
     you: function () {
       this.userSession(function (session) {
+        $('.you-link').not('.selected').addClass('selected')
         this.userProfile(session.user.get("username"));
       }.bind(this));
     },
@@ -79,12 +81,16 @@
         photoUploadView = new Views.PhotoNew({
           userSession: this.userSession()
         });
+        $('.upload-link').not('.selected').addClass('selected')
+
         this.needsLogin(photoUploadView);
       }.bind(this));
     },
 
     feed: function () {
       this.userSession(function (session) {
+        $('.home-link').not('.selected').addClass('selected')
+
         if (session.user.get("num_following") === 0) {
           Backbone.history.navigate('/users', {
             trigger: true
@@ -239,6 +245,7 @@
       this.userSession(function (session) {
         session.destroy()
         session.clear()
+        $('*').removeClass("selected").blur();
         Backbone.history.navigate('', {
           trigger: true
         })
