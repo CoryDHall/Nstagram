@@ -36,6 +36,9 @@ class Seeder
     agent.pluggable_parser.default = Mechanize::FileSaver
 
     page = agent.get "http://www.tumblr.com/"
+  rescue
+    return
+  else
     search_form = page.form_with :id => "search_form"
     search_form.field_with(:name => "q").value = query
 
@@ -45,19 +48,21 @@ class Seeder
     p
     if only_one
       image_url = image_links.sample
+      idx = Dir["seed_data/#{subspace}#{query}/*"].length
+      begin
+        p image_url.to_s.sub(/_500./, "_1280.")
+        if (image_url.to_s[/\Adata:|\/p\?/].nil?)&& image_url.to_s.length < 256
+          p "-----"
+            raise "invalid img" if img.nil?
+            img = (agent.get image_url.to_s.sub(/_500./, "_1280."))
+            img.save!("seed_data/#{subspace}#{query}/#{idx + 1}-#{img.filename}")
+        end
+      rescue
+        image_links.delete image_url
 
-    begin
-      p image_url.to_s.sub(/_500./, "_1280.")
-      if (image_url.to_s[/\Adata:|\/p\?/].nil?)&& image_url.to_s.length < 256
-        p "-----"
-          img = (agent.get image_url.to_s.sub(/_500./, "_1280."))
-          img.save!("seed_data/#{subspace}#{query}/#{img.filename}")
+        image_url = image_links.sample
+        retry unless image_links.empty?
       end
-    rescue
-      image_url = image_links.sample
-      retry
-    end
-      return Dir["seed_data/#{subspace}#{query}/#{img.filename}"]
     else
       image_links.each_with_index do |image_url, idx|
         print "FETCHING:\t\t", image_url.to_s.sub(/_500./, "_1280.")
@@ -65,6 +70,7 @@ class Seeder
           puts "\n-----VALID"
           begin
             img = (agent.get image_url.to_s.sub(/_500./, "_1280."))
+            raise "invalid img" if img.nil?
             print "----SAVING TO:\t\t", "seed_data/#{subspace}#{query}/#{idx}-#{img.filename}"
             img.save!("seed_data/#{subspace}#{query}/#{idx}-#{img.filename}")
           rescue
@@ -73,7 +79,7 @@ class Seeder
         end
       end
     end
-    Dir["seed_data/#{subspace}#{query}/*"]
+    only_one ? Dir["seed_data/#{subspace}#{query}/*"].last : Dir["seed_data/#{subspace}#{query}/*"]
   end
 
   def self.add_from_google_to(user, *query)
@@ -91,16 +97,22 @@ class Seeder
       puts "SCRAPING:\t\t[TUMBLR]:\t\t#{query}"
       accum.concat seed_from_tumblr(query)
     end
+    photo_list = [];
     files.shuffle.each do |file|
       puts "ADDING:\t\t[#{file}]", "TO:\t\t[#{user.username}]"
-      user.photos.create photo: File.open(file)
+      photo_list << {photo: File.open(file)}
     end
+    puts "SAVING"
+    user.photos.create photo_list
+
+    puts "\nSUCCESS: ADDED #{photo_list.count} PHOTOS"
     user
   end
 
   def self.get_profile_picture_from_tumblr(user, query)
     file = seed_from_tumblr query, "profile_picture", true
-    user.update profile_picture: File.open(file[0])
+    file && user.update(profile_picture: File.open(file))
+    user
   end
 
   def self.remove_old_seeds (query, subspace)
