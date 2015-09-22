@@ -15,9 +15,8 @@ User.create({
 })
 admin = User.find(1)
 Seeder.add_from_tumblr_to admin, "George Stubbs", "Yayoi Kusama"
-# (seed("George Stubbs") + seed("Yayoi Kusama")).shuffle.each do |file|
-#   admin.photos.create photo: File.open(file)
-# end
+Seeder.get_profile_picture_from_tumblr admin, "pastorale"
+
 
 User.create({
   username: "kimkardashian",
@@ -30,24 +29,16 @@ kim_k.update({
   profile_picture: kim_k.photos.to_a.sample
 });
 
-# seed("North West").each do |file|
-#   kim_k.photos.create! photo: File.open(file)
-# end
+Seeder.add_from_tumblr_to kim_k, "North West"
+Seeder.get_profile_picture_from_tumblr kim_k, "Kim Kardashian Fat"
 
-Seeder.add_from_tumblr_to kim_k, "North West", "Kim Kardashian Fat"
 
-joins = %w(_ __ ___ - x)
 100.times do
-  name = Faker::Name.name
-  until User.create({
-    username: Faker::Internet.user_name(name, joins),
-    password: "password",
-    email: Faker::Internet.safe_email(name),
-    full_name: name,
-    bio: Faker::Lorem.sentence,
-    website_url: Faker::Internet.url
-  })
-
-  end
-  User.last.follow(kim_k);
+  UserFactory.create_user.follow(kim_k);
 end
+
+UserFactory.add_photos_to UserFactory.create_user("bubbles", "powerpuff girls"), "powerpuff girls"
+
+UserFactory.add_photos_to UserFactory.create_user("jerry gurgich", "jerry gurgich"), "jerry gurgich"
+
+UserFactory.add_photos_to UserFactory.create_user("pikachu", "pikachu"), "pikachu"

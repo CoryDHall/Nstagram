@@ -1,6 +1,9 @@
 class Seeder
-  def self.seed_from_google(query, subspace = "")
+  def self.seed_from_google (query, subspace = "")
     subspace += subspace.length > 0 ? "/" : ""
+
+    remove_old_seeds query, subspace
+
     agent = Mechanize.new
     agent.log = Logger.new "mech.log"
     agent.user_agent_alias = 'Mac Safari'
@@ -14,7 +17,6 @@ class Seeder
     search_results = agent.click("Images")
 
     image_links = search_results.image_urls
-
     image_links.each_with_index do |image_url, idx|
       p image_url.to_s
       img = (agent.get image_url.to_s)
@@ -23,8 +25,11 @@ class Seeder
     Dir["seed_data/#{subspace}#{query}/*"]
   end
 
-  def self.seed_from_tumblr(query, subspace = "")
+  def self.seed_from_tumblr(query, subspace = "", only_one = false)
     subspace += subspace.length > 0 ? "/" : ""
+
+    remove_old_seeds query, subspace
+
     agent = Mechanize.new
     agent.log = Logger.new "mech.log"
     agent.user_agent_alias = 'Mac Safari'
@@ -38,14 +43,33 @@ class Seeder
 
     image_links = search_results.image_urls
     p
-    image_links.each_with_index do |image_url, idx|
+    if only_one
+      image_url = image_links.sample
+
+    begin
       p image_url.to_s.sub(/_500./, "_1280.")
       if (image_url.to_s[/\Adata:|\/p\?/].nil?)&& image_url.to_s.length < 256
         p "-----"
-        begin
           img = (agent.get image_url.to_s.sub(/_500./, "_1280."))
-          img.save!("seed_data/#{subspace}#{query}/#{idx}-#{img.filename}")
-        rescue
+          img.save!("seed_data/#{subspace}#{query}/#{img.filename}")
+      end
+    rescue
+      image_url = image_links.sample
+      retry
+    end
+      return Dir["seed_data/#{subspace}#{query}/#{img.filename}"]
+    else
+      image_links.each_with_index do |image_url, idx|
+        print "FETCHING:\t\t", image_url.to_s.sub(/_500./, "_1280.")
+        if (image_url.to_s[/\Adata:|\/p\?/].nil?)&& image_url.to_s.length < 256
+          puts "\n-----VALID"
+          begin
+            img = (agent.get image_url.to_s.sub(/_500./, "_1280."))
+            print "----SAVING TO:\t\t", "seed_data/#{subspace}#{query}/#{idx}-#{img.filename}"
+            img.save!("seed_data/#{subspace}#{query}/#{idx}-#{img.filename}")
+          rescue
+          end
+          puts "SUCCESS", ""
         end
       end
     end
@@ -64,11 +88,26 @@ class Seeder
 
   def self.add_from_tumblr_to(user, *query)
     files = query.inject([]) do |accum, query|
+      puts "SCRAPING:\t\t[TUMBLR]:\t\t#{query}"
       accum.concat seed_from_tumblr(query)
     end
     files.shuffle.each do |file|
+      puts "ADDING:\t\t[#{file}]", "TO:\t\t[#{user.username}]"
       user.photos.create photo: File.open(file)
     end
     user
+  end
+
+  def self.get_profile_picture_from_tumblr(user, query)
+    file = seed_from_tumblr query, "profile_picture", true
+    user.update profile_picture: File.open(file[0])
+  end
+
+  def self.remove_old_seeds (query, subspace)
+    old_seeds = Dir["seed_data/#{subspace}#{query}/*"]
+    old_seeds.each do |seed|
+      puts "DELETING:\t\t#{seed}"
+      File.delete seed
+    end
   end
 end
