@@ -20,6 +20,7 @@
       this._menu = new Views.Menu();
       this.$footEl.html(this._menu.$el);
       this._menu.render();
+      this._barsHidden = false;
     },
 
     updateTitle: function (pageTitle) {
@@ -46,6 +47,7 @@
       this.updateTitle();
       this.userSession(function (session) {
         if (!session.isNew()) {
+          this.showBars();
           Backbone.history.navigate('/feed', {
             trigger: true
           });
@@ -58,6 +60,7 @@
     },
 
     welcome: function () {
+      this.hideBars();
       var welcomeView = new Views.Welcome();
 
       this.needsNoLogin(welcomeView);
@@ -220,7 +223,6 @@
     },
 
     logout: function () {
-      debugger
       this.userSession(function (session) {
         session.destroy()
         session.clear()
@@ -228,6 +230,24 @@
           trigger: true
         })
       });
+    },
+
+    hideBars: function () {
+      if (!this._barsHidden) {
+        this.$headEl.addClass("hide-bar");
+        this.$rootEl.addClass("hide-bar");
+        this.$footEl.addClass("hide-bar");
+        this._barsHidden = true;
+      }
+    },
+
+    showBars: function () {
+      if (this._barsHidden) {
+        this.$headEl.removeClass("hide-bar");
+        this.$rootEl.removeClass("hide-bar");
+        this.$footEl.removeClass("hide-bar");
+        this._barsHidden = false;
+      }
     },
   });
 })();
