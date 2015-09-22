@@ -30,6 +30,10 @@ gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
 gem 'figaro'
 
+gem 'pry-rails'
+gem 'mechanize'
+gem 'logger'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -42,11 +46,8 @@ group :development, :test do
   gem 'faker'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-  gem 'pry-rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'mechanize'
-  gem 'logger'
 end
 
 group :production do
