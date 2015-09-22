@@ -4,12 +4,12 @@ class Api::PhotosController < ApplicationController
   before_action :require_ownership!, only: [:destroy]
 
   def index
-    @style = params["style"].intern || :thumb
+    @style = !!params["style"] ? params["style"].intern : :thumb
   end
 
   def user_index
     @photos = User.find_by({ username: params[:username] }).photos.order(created_at: :desc)
-    @style = params["style"].intern
+    @style = !!params["style"] ? params["style"].intern : :thumb
     render :index
   end
 
