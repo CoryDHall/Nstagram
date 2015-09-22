@@ -1,7 +1,8 @@
 class Api::UsersController < UsersController
 
   def index
-    @users = @login_status ? User.all : nil
+    @users = @login_status ? User.all
+      .sort { |a, b| b.photos.count <=> a.photos.count } : nil
   end
 
 
