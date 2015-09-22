@@ -36,7 +36,7 @@ I will implement user authentication in Rails. This will establish the framework
 
 [Details][phase-one]
 
-### Phase 2: Uploading and Viewing Photos, User profile pages, Photo feed (~2 days)
+### Phase 2: Uploading and Viewing Photos, User profile pages, Photo feed (~2 days) [Completed]
 I will first integrate **Paperclip** for file upload and viewing. I will then add API routes to serve user and photo data as JSON, then add Backbone models and collections that fetch data from those routes. By the end of this phase, users will be able to upload photos, view photos, view other user's photos, and view their feed of followed users' photos, all inside a single Backbone app.
 
 [Details][phase-two]
