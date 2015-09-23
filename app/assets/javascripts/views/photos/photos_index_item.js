@@ -8,14 +8,47 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
     this.listenTo(this.model, 'sync change set', this.render);
   },
 
+  events: {
+    'dblclick': 'likeToggle',
+  },
+
   render: function () {
-    this.model.user = this.model.user || new Nstagram.Models.User({username: "you", profile_picture_url: ""});
+    var user = this.model.user || new Nstagram.Models.User({
+      username: "you",
+      profile_picture_url: ""
+    });
     var content = this.template({
       photo: this.model,
+      user: user,
       profile: this.profile
     });
     this.$el.html(content);
 
     return this;
+  },
+
+  likeToggle: function (e) {
+    if (this.model.get("is_current_user_liking")) {
+      this.model.unlike({
+        success: function (like, xHr, options) {
+          this.showHeartBreak();
+        }.bind(this)
+      });
+    } else {
+      this.model.like({
+        success: function (like, xHr, options) {
+          this.showHeart();
+        }.bind(this)
+      });
+    }
+  },
+
+  showHeart: function () {
+    console.log("liked!");
+  },
+
+  showHeartBreak: function () {
+    console.log("unliked!");
   }
+
 });

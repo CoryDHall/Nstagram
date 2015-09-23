@@ -1,5 +1,5 @@
 class Api::PhotosController < ApplicationController
-  before_action :set_photo, only: [:show, :destroy]
+  before_action :set_photo, only: [:show, :destroy, :like, :unlike]
   before_action :require_log_in!, except: [:user_index, :show]
   before_action :require_ownership!, only: [:destroy]
 
@@ -22,6 +22,16 @@ class Api::PhotosController < ApplicationController
   end
 
   def destroy
+  end
+
+  def like
+    @like = current_user.like @photo
+    render json: @like, status: 200
+  end
+
+  def unlike
+    @like = current_user.unlike @photo
+    render json: @like, status: 200
   end
 
   def require_log_in!

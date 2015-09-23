@@ -36,7 +36,7 @@
       'users': 'usersIndex',
       'feed': 'feed',
       'logout': 'logout',
-      'you': 'you',
+      'me': 'you',
       'users/:username': 'userProfile',
       'users/:username/edit': 'editUserProfile',
       'users/:username/following': 'userFollowing',

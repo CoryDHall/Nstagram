@@ -42,7 +42,12 @@ class User < ActiveRecord::Base
     through: :following,
     source: :photos
 
-  has_many :likes, dependent: :destroy
+  has_many :likes,
+    dependent: :destroy
+
+  has_many :liked_photos,
+    through: :likes,
+    source: :photo
 
   after_create :ensure_session_token
 
@@ -57,11 +62,15 @@ class User < ActiveRecord::Base
   end
 
   def like (photo)
-    self.likes.create(photo)
+    self.likes.create(photo: photo)
   end
 
   def unlike (photo)
-    self.likes.delete(photo)
+    self.liked_photos.delete(photo)
+  end
+
+  def likes? (photo)
+    self.liked_photos.exists?(id: photo.id)
   end
 
   def following? (user)

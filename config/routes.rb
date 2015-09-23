@@ -19,8 +19,8 @@ Rails.application.routes.draw do
 
         get '::username/photos', to: 'photos#user_index'
         post '::username/photos', to: 'photos#create'
-        get '::username/photo/:photo_id', to: 'photos#show'
-        delete '::username/photo/:photo_id', to: 'photos#destroy'
+        get '::username/photos/:photo_id', to: 'photos#show'
+        delete '::username/photos/:photo_id', to: 'photos#destroy'
       end
 
       member do
@@ -34,6 +34,11 @@ Rails.application.routes.draw do
         delete 'follow', to: 'users#unfollow'
       end
     end
+
+    post 'like/:photo_id', to: 'photos#like'
+    put 'like/:photo_id', to: 'photos#like'
+    delete 'like/:photo_id', to: 'photos#unlike'
+
   end
 
   resources :users, controller: 'users' do

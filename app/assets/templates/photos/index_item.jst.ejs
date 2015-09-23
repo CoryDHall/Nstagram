@@ -1,10 +1,10 @@
 <% if (!profile) { %>
   <p class="post-date"><em><%= photo.escape("posted") %> ago</em></p>
-  <a href="#users/<%= photo.user.escape("username") %>">
+  <a href="#users/<%= user.escape("username") %>">
     <h4>
-    <nstagram-avatar class="clearfix" style="background-image: url(<%= photo.user.escape("profile_picture_url") %>)">
+    <nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture_url") %>)">
     </nstagram-avatar>
-    <%= photo.user.escape("username") %></h4>
+    <%= user.escape("username") %></h4>
   </a>
 <% } %>
-<img src="<%= photo.escape("url") %>" alt="<%= photo.user.escape("username") %> posted this photo <%= photo.escape("posted") %> ago" />
+<img src="<%= photo.escape("url") %>" alt="<%= user.escape("username") %> posted this photo <%= photo.escape("posted") %> ago" />

@@ -34,7 +34,7 @@ Nstagram.Models.User = Backbone.Model.extend({
     }
     if (response.photos) {
       this.photos({
-        username: response["username"]
+        user: this
       }).set(response.photos);
       delete response.photos;
     }
