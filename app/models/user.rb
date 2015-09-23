@@ -22,7 +22,8 @@ class User < ActiveRecord::Base
   has_one :user_session, dependent: :destroy
 
   has_many :follows,
-    foreign_key: :follower_id
+    foreign_key: :follower_id,
+    dependent: :destroy
 
   has_and_belongs_to_many :followers,
     class_name: "User",
@@ -34,12 +35,14 @@ class User < ActiveRecord::Base
     join_table: :follows,
     foreign_key: :follower_id
 
-  has_many :photos
+  has_many :photos,
+    dependent: :destroy
 
   has_many :feed_photos,
     through: :following,
     source: :photos
 
+  has_many :likes, dependent: :destroy
 
   after_create :ensure_session_token
 
@@ -53,6 +56,14 @@ class User < ActiveRecord::Base
     following?(user) && self.following.delete(user)
   end
 
+  def like (photo)
+    self.likes.create (photo)
+  end
+
+  def unlike (photo)
+    self.likes.destroy (photo)
+  end
+
   def following? (user)
     self.following.exists?(id: user.id)
   end
@@ -63,6 +74,10 @@ class User < ActiveRecord::Base
 
   def num_following
     self.following.count
+  end
+
+  def full_feed
+    Photo.where(user: [self] | self.following)
   end
 
   def password=(password)

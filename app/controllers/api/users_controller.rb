@@ -70,7 +70,7 @@ class Api::UsersController < UsersController
   end
 
   def feed
-    @photos = current_user.feed_photos.order(created_at: :desc)
+    @photos = current_user.full_feed.order(created_at: :desc)
     @style = params["style"].intern
     render 'api/photos/index'
   end
