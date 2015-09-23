@@ -57,11 +57,11 @@ class User < ActiveRecord::Base
   end
 
   def like (photo)
-    self.likes.create (photo)
+    self.likes.create(photo)
   end
 
   def unlike (photo)
-    self.likes.destroy (photo)
+    self.likes.delete(photo)
   end
 
   def following? (user)

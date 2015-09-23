@@ -39,7 +39,7 @@ class UserSessionsController < ApplicationController
   def get_current
     @user = current_user
     if !!@user
-      render 'api/users/show'
+      render 'api/users/show_current'
     else
       render json: current_user
     end
