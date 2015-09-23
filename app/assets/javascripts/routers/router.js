@@ -24,7 +24,7 @@
     },
 
     updateTitle: function (pageTitle) {
-      this._currentTitle = pageTitle || "nstagram";
+      this._currentTitle = pageTitle ? pageTitle.toUpperCase() : "nstagram";
       $('title').text(this._currentTitle);
       this._head.changeTitle(this._currentTitle);
     },
@@ -44,10 +44,14 @@
       '*redirect': 'root',
     },
 
+    menuSelect: function (linkClass) {
+      $('.selected').removeClass('selected');
+      $('.' + linkClass).not('.selected').addClass('selected');
+    },
+
     root: function () {
       this.updateTitle();
       this.userSession(function (session) {
-      $('.home-link').not('.selected').addClass('selected')
         if (!session.isNew()) {
           this.showBars();
           Backbone.history.navigate('/feed', {
@@ -70,7 +74,7 @@
 
     you: function () {
       this.userSession(function (session) {
-        $('.you-link').not('.selected').addClass('selected')
+        this.menuSelect("you-link");
         this.userProfile(session.user.get("username"));
       }.bind(this));
     },
@@ -81,7 +85,8 @@
         photoUploadView = new Views.PhotoNew({
           userSession: this.userSession()
         });
-        $('.upload-link').not('.selected').addClass('selected')
+        this.menuSelect("upload-link");
+
 
         this.needsLogin(photoUploadView);
       }.bind(this));
@@ -89,7 +94,8 @@
 
     feed: function () {
       this.userSession(function (session) {
-        $('.home-link').not('.selected').addClass('selected')
+
+        this.menuSelect("home-link");
 
         if (session.user.get("num_following") === 0) {
           Backbone.history.navigate('/users', {
@@ -111,6 +117,8 @@
     },
 
     usersIndex: function () {
+      this.menuSelect("all-users-link");
+
       var userIndexView = new Views.UsersIndex({
         collection: this.users(),
         userSession: this.userSession()

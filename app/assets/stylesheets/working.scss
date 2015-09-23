@@ -39,6 +39,12 @@ header {
 
 }
 
+$num-menu-items: 4;
+$site-width: 1200px;
+$menu-height: 50px;
+$menu-width: $site-width / ($num-menu-items + 1);
+$menu-min-height: 0.5in;
+$ng-highlight: hsl(30, 80%, 48%);
 
 /** CUSTOM-TAGS-FIX **/
 
@@ -63,18 +69,18 @@ vert-box, top-box {
 }
 
 nstagram-logo.large {
-  font-size: 50px;
-  line-height: 100px;
+  font-size: $menu-height;
+  line-height: 2 * $menu-height;
   display: block;
 }
 
 nstagram-logo.medium {
-  font-size: 30px;
+  font-size: $menu-height * 3 / 5;
   display: inline;
 }
 
 tag-line.large {
-  font-size: 40px;
+  font-size: $menu-height * 4 / 5;
 }
 
 .follow-button, .unfollow-button {
@@ -212,28 +218,28 @@ $ng-blue: hsl(206, 85%, 30%);
      right: 30%;
    }
 
-   form label {
-     display: none;
-   }
-   form * {
-     font-size: 20px;
-     padding: 5px;
-     margin: 5px 0;
-     border-radius: 3px;
-     border-width: 0 0 2px;
-     border-color: #eee;
-     border-style: solid;
-   }
-
-   form :valid {
-     content: "✓";
-     color: hsl(116, 85%, 30%);
-   }
 
    section.welcome {
    }
  }
 
+form label {
+ display: none;
+}
+form * {
+ font-size: $menu-height / 7 * 5;
+ padding: 5px;
+ margin: 5px 0;
+ border-radius: 3px;
+ border-width: 0 0 2px;
+ border-color: #eee;
+ border-style: solid;
+}
+
+form :valid {
+ content: "✓";
+ color: hsl(116, 85%, 30%);
+}
 
  /*USERS INDEX*/
 
@@ -255,7 +261,7 @@ button.logout:hover {
 users-index {
   li {
     border-bottom: 1px solid #ddd;
-    height: 100px;
+    height: 2 * $menu-height;
     width: 100%;
     padding: 0 0 0 40px;
     box-sizing: border-box;
@@ -263,7 +269,8 @@ users-index {
     a:link,
     a:visited,
     a:hover,
-    a:focus {
+    a:focus,
+    a:active {
       width: 50%;
       height: 100%;
       padding: 30px;
@@ -275,52 +282,100 @@ users-index {
       font-size: 30px;
       clear: none;
     }
-    nstagram-follow-button {
-      float: right;
-      margin-top: 50px;
-      margin-right: 40px;
-      -webkit-transform: translateY(-50%);
-      transform: translateY(-50%);
-      box-sizing: border-box;
-    }
   }
   li:hover {
     background-color: hsla(206, 15%, 80%, 0.5);
   }
 }
+nstagram-follow-button {
+  float: right;
+  margin-top: $menu-height;
+  margin-right: $menu-height;
+  -webkit-transform: translateY(-50%) scale(1.25);
+  transform: translateY(-50%) scale(1.25);
+  box-sizing: border-box;
+}
+nstagram-profile {
+  @extend .clearfix;
+  width: $site-width;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: block;
 
+  header {
+    @extend .clearfix;
+    display: block;
+
+    a:link,
+    a:visited,
+    a:active {
+      color: #777;
+    }
+    a:hover,
+    a:focus {
+      color: $ng-blue;
+    }
+
+    p {
+      font-weight: lighter;
+      margin: 5px;
+      font-size: $menu-height;
+    }
+    small {
+      font-size: $menu-height / 2;
+      font-weight: normal;
+    }
+    em {
+      text-align: left;
+      color: #777;
+    }
+  }
+
+  nstagram-avatar {
+    float: left;
+  }
+
+}
 photos-index {
   background: hsl(0,0,98%);
 
   ul {
-    max-width: 900px;
+    width: $site-width;
+    max-width: 100%;
     margin: 0 auto;
+    text-align: center;
   }
 
   li {
     box-shadow: 0 2px 20px rgba(0,0,0,0.02);
-    margin-bottom: 100px;
+    margin-bottom: 2 * $menu-height;
     background: #fff;
 
-    a {
+    a:link, a:visited, a:hover, a:active {
       @extend .clearfix;
       display: block;
-      padding: 10px 0;
+      padding: 10px;
+      text-align: left;
     }
 
     nstagram-avatar {
-      float: left;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
     }
 
     h4 {
       font-size: 24px;
-      height: 100px;
-      box-sizing: border-box;
-      padding: 30px 120px;
       position: relative;
-      display: block;
+      display: inline;
       font-weight: bold;
       color: $ng-blue;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
     }
 
   }
@@ -329,7 +384,8 @@ nstagram-thumbs-index {
   background: hsl(0,0,98%);
 
   ul {
-    max-width: 900px;
+    width: $site-width;
+    max-width: 100%;
     margin: 0 auto;
   }
 
@@ -338,30 +394,32 @@ nstagram-thumbs-index {
     float: left;
     padding: 2.5px 5px 0;
     margin: 0;
-    max-width: 300px;
+    width: $site-width / 3;
+    max-width: 33.333%;
     box-sizing: border-box;
   }
 }
-$site-width: 900px;
-$menu-height: 50px;
-$menu-width: $site-width / 3;
-$ng-highlight: hsl(30, 80%, 48%);
 
 nstagram-content {
+  margin-top: $menu-height;
   padding-bottom: 2 * $menu-height;
   box-sizing: border-box;
 }
 nstagram-menu {
   display: block;
   clear: both;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: $menu-height;
-  bottom: 0;
+  min-height: $menu-min-height;
+  bottom: -1px;
   background: #333;
 
   ul {
     text-align: center;
+    width: $site-width;
+    max-width: 100%;
+    margin: 0 auto;
   }
 
   li:first-child {
@@ -374,12 +432,14 @@ nstagram-menu {
     color: #fff;
     box-sizing: border-box;
     line-height: $menu-height;
+    min-height: $menu-min-height;
 
     a {
       display: inline-block;
       height: $menu-height;
+      min-height: $menu-min-height;
       padding: 0 100px;
-      min-width: $menu-width
+      min-width: $menu-width;
     }
 
     a.upload-link {
@@ -401,12 +461,14 @@ nstagram-header {
   display: block;
   width: 100%;
   height: $menu-height;
+  min-height: $menu-min-height;
   background: $ng-blue;
   color: #fff;
   text-align: center;
   padding: 10px 0;
   box-sizing: border-box;
   top: 0;
+  position: fixed;
 }
 
 nstagram-header.hide-bar,
@@ -415,6 +477,15 @@ nstagram-menu.hide-bar {
   padding: 0;
   overflow: hidden;
 }
+
+nstagram-menu.hide-bar {
+  bottom: -($menu-height + 10);
+}
+
+nstagram-header.hide-bar {
+  top: -($menu-height + 10);
+}
 nstagram-content.hide-bar {
+  margin-top: 0;
   padding-bottom: 0;
 }
