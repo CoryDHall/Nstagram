@@ -44,11 +44,19 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   },
 
   showHeart: function () {
-    this.$('nsta-photo').append($('<div>').text("\uD83D\uDC96").addClass("photo-like"));
+    var $overlay = $('<div>').text("\uD83D\uDC96").addClass("photo-like");
+    this.$('nsta-photo').append($overlay);
+    setTimeout(function () {
+      $overlay.remove();
+    }, 500);
   },
 
   showHeartBreak: function () {
-    this.$('nsta-photo').append($('<div>').text("\uD83D\uDC94").addClass("photo-like"));
+    var $overlay = $('<div>').text("\uD83D\uDC94").addClass("photo-like");
+    this.$('nsta-photo').append($overlay);
+    setTimeout(function () {
+      $overlay.remove();
+    }, 500);
   }
 
 });

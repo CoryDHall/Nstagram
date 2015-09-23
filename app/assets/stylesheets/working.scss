@@ -513,7 +513,13 @@ nstagram-content.hide-bar {
 .photo-like {
   position: absolute;
   z-index: 10;
-  bottom: 0;
+  bottom: 50%;
   font-size: 200px;
   width: 100%;
+  transform: translateY(50%);
+}
+nsta-photo {
+  @extend .clearfix;
+  display: block;
+  position: relative;
 }
