@@ -6,5 +6,19 @@
     </nstagram-avatar>
     <%= user.escape("username") %></h4>
   </a>
-<% } %>
+<% } %><nsta-photo>
 <img src="<%= photo.escape("url") %>" alt="<%= user.escape("username") %> posted this photo <%= photo.escape("posted") %> ago" />
+</nsta-photo>
+<p class="likes">
+  <% if (photo.get("likes")) { %>
+    <% if (photo.get("likes").count > 10) { %>
+      <%= photo.get("likes").count %> likes
+    <% } else if (photo.get("likes").count > 0) { %>
+      <% photo.likers.forEach(function(liker, idx) { %>
+        <a href="#users/<%= liker.username %>"><%= liker.username %> </a>
+        <%= idx + 1 === photo.likers.length ? " " : ", " %>
+      <% }) %>
+      liked this
+    <% } %>
+  <% } %>
+</p>

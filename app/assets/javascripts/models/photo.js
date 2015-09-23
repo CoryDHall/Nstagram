@@ -20,9 +20,7 @@ Nstagram.Models.Photo = Backbone.Model.extend({
       delete resp.current_like;
     }
     if (resp.likes) {
-      this.likers = this.likers || new Nstagram.Collections.Users();
-      this.likers.set(resp.likes.users);
-      delete resp.likes.users;
+      this.likers = resp.likes.users || [];
     }
     return resp;
   },

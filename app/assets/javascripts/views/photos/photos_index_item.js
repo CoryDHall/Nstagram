@@ -44,11 +44,11 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   },
 
   showHeart: function () {
-    console.log("liked!");
+    this.$('nsta-photo').append($('<div>').text("\uD83D\uDC96").addClass("photo-like"));
   },
 
   showHeartBreak: function () {
-    console.log("unliked!");
+    this.$('nsta-photo').append($('<div>').text("\uD83D\uDC94").addClass("photo-like"));
   }
 
 });

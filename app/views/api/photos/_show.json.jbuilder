@@ -17,6 +17,7 @@ json.url asset_path(@photo.photo.url(@style || :thumb))
 if logged_in?
   json.is_current_user_liking @liked_photo_ids.include? @photo.id
   json.current_like @likes.find_or_initialize_by photo: @photo
+  json.current_like_username @current_user.username
 end
 
 if @style == :full
