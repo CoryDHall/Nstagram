@@ -24,6 +24,26 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
       }));
     }
 
+    this.closeErrors();
+
     return this;
   },
+
+  closeErrors: function () {
+    TweenMax.staggerFromTo(
+      this.$('li').not('.closing'),
+      1,
+      {
+        css: { className: "+=closing" }
+      },
+      {
+        css: { className: "+=closing-done" },
+        delay: 3,
+      },
+      1,
+      function () {
+        this.$('.closing-done').remove();
+      }.bind(this)
+    );
+  }
 });

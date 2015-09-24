@@ -532,10 +532,15 @@ nstagram-content.hide-bar {
   width: 100%;
   transform: translateY(50%);
 }
+.photo-like.opening {
+  opacity: 0;
+  transform: translateY(100%);
+}
 nsta-photo {
   @extend .clearfix;
   display: block;
   position: relative;
+
 }
 
 nstagram-flash {
@@ -563,6 +568,22 @@ nstagram-flash {
     span {
       transform: scale(0.5);
     }
+  }
+
+  .closing {
+    background: rgba(0, 0, 0, 0.9);
+    border: 0;
+    font-size: 28px;
+    position: relative;
+  }
+
+  .closing-done {
+    background: rgba(0, 0, 0, 0);
+    border: 0;
+    padding: 0;
+    height: 0;
+    top: -100;
+    font-size: 1px;
   }
 
   .error-failure {

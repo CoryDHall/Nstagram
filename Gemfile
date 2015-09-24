@@ -37,6 +37,8 @@ gem 'faker'
 
 gem 'kaminari'
 
+gem 'omniauth-twitter'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

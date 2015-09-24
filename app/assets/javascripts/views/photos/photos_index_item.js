@@ -51,19 +51,21 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   },
 
   showHeart: function () {
-    var $overlay = $('<div>').text("\uD83D\uDC96").addClass("photo-like");
+    var $overlay = $('<div>').text("\uD83D\uDC96").addClass("photo-like opening");
     this.$('nsta-photo').append($overlay);
-    setTimeout(function () {
-      $overlay.remove();
-    }, 500);
+    TweenMax.to($overlay, 1, { css: { className: "-=opening" }, yoyo: true, onReverseComplete: function () {
+        $overlay.remove();
+      }
+    });
   },
 
   showHeartBreak: function () {
-    var $overlay = $('<div>').text("\uD83D\uDC94").addClass("photo-like");
+    var $overlay = $('<div>').text("\uD83D\uDC94").addClass("photo-like opening");
     this.$('nsta-photo').append($overlay);
-    setTimeout(function () {
-      $overlay.remove();
-    }, 500);
+    TweenMax.to($overlay, 1, { css: { className: "-=opening" }, yoyo: true, onReverseComplete: function () {
+        $overlay.remove();
+      }
+    });
   }
 
 });
