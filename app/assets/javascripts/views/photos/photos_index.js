@@ -6,7 +6,7 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
     this.userSession = options.userSession;
     this.listenTo(this.collection, "reset set sync", this.render);
     this.profile = options.profile;
-    this.pageOn = options.pageOn || 1;
+    this.page = options.pageOn || 1;
   },
 
   hearAbout: function (e) {
@@ -16,7 +16,7 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
   render: function () {
     var content = this.template({
       photos: this.collection,
-      pageOn: this.pageOn + 1
+      pageOn: this.page + 1
     });
     this.$el.html(content);
 
