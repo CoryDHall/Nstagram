@@ -1,4 +1,7 @@
 class Api::UsersController < UsersController
+  after_action :send_users_errors, only: [:index, :followers, :following]
+  after_action :send_user_errors, only: [:create, :update, :profile]
+  after_action :send_follow_errors, only: [:profile, :is_following, :follow, :unfollow]
 
   def index
     @users = !@login_status ? nil : User
@@ -67,9 +70,9 @@ class Api::UsersController < UsersController
       render json: nil, status: 422
       return
     end
-    follow = current_user.follows.find_by(user_id: params[:id])
+    @follow = current_user.follows.find_by(user_id: params[:id])
     if !!follow
-      render json: follow
+      render json: @follow
     else
       render json: nil, status: 404
     end
@@ -81,6 +84,21 @@ class Api::UsersController < UsersController
     render 'api/photos/index'
   end
 
+  def send_photos_errors
+    @photos.to_a.each { |photo| pull_errors_from photo }
+  end
+
+  def send_users_errors
+    @users.to_a.each { |user| pull_errors_from user }
+  end
+
+  def send_user_errors
+    pull_errors_from @user
+  end
+
+  def send_follow_errors
+    pull_errors_from @follow
+  end
 
   def require_log_in!
     @login_status = logged_in?

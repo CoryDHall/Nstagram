@@ -2,6 +2,9 @@ class Api::PhotosController < ApplicationController
   before_action :set_photo, only: [:show, :destroy, :like, :unlike]
   before_action :require_log_in!, except: [:user_index, :show]
   before_action :require_ownership!, only: [:destroy]
+  after_action :send_photos_errors, only: [:index, :user_index]
+  after_action :send_photo_errors, only: [:show, :create, :destroy, :like, :unlike]
+  after_action :send_like_errors, only: [:like, :unlike]
 
   def index
     @style = !!params["style"] ? params["style"].intern : :thumb
@@ -19,7 +22,7 @@ class Api::PhotosController < ApplicationController
   end
 
   def create
-    current_user.photos.create(photo_params)
+    @photo = current_user.photos.create(photo_params)
     render json: {}, status: 200
   end
 
@@ -48,6 +51,18 @@ class Api::PhotosController < ApplicationController
 
     def set_photo
       @photo = Photo.find(params[:photo_id])
+    end
+
+    def send_photos_errors
+      @photos.to_a.each { |photo| pull_errors_from photo }
+    end
+
+    def send_photo_errors
+      pull_errors_from @photo
+    end
+
+    def send_like_errors
+      pull_errors_from @like
     end
 
     def photo_params
