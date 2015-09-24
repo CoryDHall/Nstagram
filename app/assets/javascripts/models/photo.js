@@ -22,17 +22,27 @@ Nstagram.Models.Photo = Backbone.Model.extend({
     if (resp.likes) {
       this.likers = resp.likes.users || [];
     }
+    this.likers = this.likers || [];
     return resp;
   },
   like: function (options) {
     this.set("is_current_user_liking", true);
+    this.likers.push({ username: this.escape("current_like_username") });
+    this.attributes["likes"] = this.get("likes") || { count: 0 }
+    this.get("likes").count += 1;
     this._like.save({}, options);
   },
   unlike: function (options) {
     this.set("is_current_user_liking", false);
+    this.likers = _.reject(this.likers, function (liker) {
+      return liker.username == this.escape("current_like_username");
+    }.bind(this));
     options["completed"] = this.fetch.bind(this, {
       reset: true
     });
+    this.attributes["likes"] = this.get("likes") || { count: 0 }
+    this.get("likes").count -= 1;
+    this.get("likes").count === 0 && this.unset("likes");
     this._like.destroy(options);
   }
 });

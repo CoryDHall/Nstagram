@@ -1,8 +1,14 @@
 class Api::UsersController < UsersController
 
   def index
-    @users = @login_status ? User.all.includes(:photos)
-      .sort { |a, b| b.photos.length <=> a.photos.length } : nil
+    @users = !@login_status ? nil : User
+      .joins("LEFT OUTER JOIN photos ON photos.user_id = users.id")
+      .group(:id)
+      .joins("LEFT OUTER JOIN photos AS photos_0 ON photos_0.user_id = users.id")
+      .select("users.* ")
+      .order("COUNT(photos_0.user_id) DESC")
+      .includes(:photos)
+      .page(params["page"] || 1)
   end
 
 
@@ -39,7 +45,7 @@ class Api::UsersController < UsersController
   def followers
     user = User.find_by({ username: params[:id] })
     if !!user
-      @users = user.followers
+      @users = user.followers.order(:username).page(params["page"] || 1)
       render :index
     else
       render json: {}, status: 422
@@ -49,7 +55,7 @@ class Api::UsersController < UsersController
   def following
     user = User.find_by({ username: params[:id] })
     if !!user
-      @users = user.following.order(:username)
+      @users = user.following.order(:username).page(params["page"] || 1)
       render :index
     else
       render json: {}, status: 422
@@ -70,7 +76,7 @@ class Api::UsersController < UsersController
   end
 
   def feed
-    @photos = current_user.full_feed.order(created_at: :desc)
+    @photos = current_user.full_feed.order(created_at: :desc).page(params["page"] || 1)
     @style = params["style"].intern
     render 'api/photos/index'
   end

@@ -19,4 +19,5 @@ class Photo < ActiveRecord::Base
     through: :likes,
     source: :user
 
+  paginates_per 6
 end

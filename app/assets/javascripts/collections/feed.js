@@ -8,9 +8,9 @@ Nstagram.Collections.Feed = Backbone.Collection.extend({
   },
   fetch: function (options) {
     options = options || {};
-    options.data = {
-      style: this.style
-    };
+    options.data = options.data || {};
+    options.data["style"] = this.style;
+
     return Backbone.Collection.prototype.fetch.call(this, options);
   }
 

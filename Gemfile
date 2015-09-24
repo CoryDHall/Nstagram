@@ -35,6 +35,8 @@ gem 'mechanize'
 gem 'logger'
 gem 'faker'
 
+gem 'kaminari'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

@@ -5,11 +5,12 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   initialize: function (options) {
     this.userSession = options.userSession;
     this.profile = options.profile;
-    this.listenTo(this.model, 'sync change set', this.render);
+    this.listenTo(this.model, 'sync change change:is_current_user_liking set', this.render);
+    this.listenTo(this.model._like, 'sync', this.renderLater);
   },
 
   events: {
-    'dblclick': 'likeToggle',
+    'doubletap': 'likeToggle',
   },
 
   render: function () {
@@ -25,6 +26,12 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
     this.$el.html(content);
 
     return this;
+  },
+
+  renderLater: function () {
+    setTimeout(function () {
+      this.model.trigger("sync");
+    }.bind(this), 1000);
   },
 
   likeToggle: function (e) {

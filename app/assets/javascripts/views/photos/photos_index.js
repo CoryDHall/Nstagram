@@ -4,13 +4,19 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
 
   initialize: function (options) {
     this.userSession = options.userSession;
-    this.listenTo(this.collection, "reset set", this.render);
+    this.listenTo(this.collection, "reset set sync", this.render);
     this.profile = options.profile;
+    this.pageOn = options.pageOn || 1;
+  },
+
+  hearAbout: function (e) {
+    this.checkScroll(e, this.getMore.bind(this));
   },
 
   render: function () {
     var content = this.template({
-      photos: this.collection
+      photos: this.collection,
+      pageOn: this.pageOn + 1
     });
     this.$el.html(content);
 
@@ -24,8 +30,26 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
         })
       );
     }.bind(this));
-
     return this;
+  },
+
+
+  getMore: function ($load_el) {
+    if ($load_el.parent().length === 0 || this.collection.any(function (user) {
+      return user.get("is_on_last_page");
+    })) {
+      return;
+    }
+    this.page = parseInt($load_el.remove().attr("data-page"), 10);
+    this.collection.fetch({
+      data: {
+        page: this.page
+      },
+      remove: false
+    });
   }
+
+
+
 
 });

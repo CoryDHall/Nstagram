@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.serializejson
+//= require jquery.mobile-events
 //= require underscore
 //= require backbone
 //= require nstagram

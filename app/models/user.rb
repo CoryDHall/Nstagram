@@ -49,6 +49,8 @@ class User < ActiveRecord::Base
     through: :likes,
     source: :photo
 
+  paginates_per 24
+
   after_create :ensure_session_token
 
   attr_reader :password

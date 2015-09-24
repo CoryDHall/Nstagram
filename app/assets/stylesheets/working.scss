@@ -343,6 +343,11 @@ nstagram-profile {
   }
 
 }
+nstagram-thumbs-index {
+  p.likes {
+    display: none;
+  }
+}
 photos-index {
   background: hsl(0,0,98%);
 
@@ -359,7 +364,7 @@ photos-index {
     background: #fff;
     position: relative;
 
-    a:link, a:visited, a:hover, a:active {
+    > a:link, > a:visited, > a:hover, > a:active {
       @extend .clearfix;
       display: block;
       padding: 10px;
@@ -375,6 +380,15 @@ photos-index {
       box-sizing: border-box;
       line-height: $menu-height * 2;
       color: #aaa;
+    }
+    p.likes {
+      text-align: left;
+      font-size: 24px;
+      color: $ng-blue;
+      a {
+        font-weight: bold;
+
+      }
     }
 
     nstagram-avatar {

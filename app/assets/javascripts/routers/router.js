@@ -21,6 +21,23 @@
       this.$footEl.html(this._menu.$el);
       this._menu.render();
       this._barsHidden = false;
+
+      this._scrolling = false;
+      this.$rootEl.on("scroll", function (e) {
+        if (this._scrolling) {
+          return
+        } else {
+          this._scrolling = true;
+          this.tellCurrentView(e);
+          setTimeout(function () {
+            this._scrolling = false;
+          }.bind(this), 100);
+        }
+      }.bind(this));
+    },
+
+    tellCurrentView: function (e) {
+      this._currentView && this._currentView.hearAbout(e);
     },
 
     updateTitle: function (pageTitle) {
