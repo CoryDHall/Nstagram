@@ -49,14 +49,14 @@ class UsersController < ApplicationController
 
   def follow
     @follow = current_user.follow(@user)
-    @user.errors.add :follow, "#{you} followed #{@user.username} -$S#{current_user.following? @user ? "success" : "failure"}"
+    @user.errors.add :follow, "you followed #{@user.username} -$S#{current_user.following?(@user) ? "success" : "failure"}"
     render :show
   end
 
   def unfollow
     current_user.unfollow(@user)
     @follow = nil
-    @user.errors.add :follow, "#{you} unfollowed #{@user.username} -$S#{current_user.following? @user ? "failure" : "success"}"
+    @user.errors.add :follow, "you unfollowed #{@user.username} -$S#{current_user.following?(@user) ? "failure" : "success"}"
     render :show
   end
 

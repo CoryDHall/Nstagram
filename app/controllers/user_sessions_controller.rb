@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
   before_action :prohibit_log_in!, only: [:new, :create]
-  after_action :send_user_errors, only: [:get_current]
+  after_action :send_user_errors, only: [:get_current, :create_session]
 
   def new
     @user_session = UserSession.new
@@ -29,21 +29,22 @@ class UserSessionsController < ApplicationController
   end
 
   def create_session
-    user = User.find_by_username_password(
+    @user = User.find_by_username_password(
       session_params[:username],
       session_params[:password]
-    );
-    log_in user if !!user
+    ) || User.new(username: session_params[:username]);
+    if @user.persisted?
+      log_in @user
+    else
+      @user.errors.add :login, "Unable to log in -$Sfailure"
+    end
     get_current
   end
 
   def get_current
-    @user = current_user
-    if !!@user
-      render 'api/users/show_current'
-    else
-      render json: current_user
-    end
+    @user ||= current_user
+    @user ||= User.new()
+    render 'api/users/show_current'
   end
 
   def destroy_current

@@ -24,10 +24,10 @@ class ApplicationController < ActionController::Base
     model.errors.keys.each do |attribute|
       composite_message = model.errors.full_messages_for(attribute).join(" | ")
 
-      status_code = composite_message[/-$S(warning|notice|success)/]
-      status_code ||= "warning"
+      status_code = composite_message[/(failure|notice|success)(?<!-\$S)/]
+      status_code ||= "failure"
 
-      composite_message.gsub(/-$S(warning|notice|success)/, "");
+      composite_message.gsub!(/-\$S(failure|notice|success)/, "");
 
       flash["#{model.class.name}:#{attribute}"] = composite_message + "-$STATUS: #{status_code}"
     end

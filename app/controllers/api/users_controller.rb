@@ -1,6 +1,6 @@
 class Api::UsersController < UsersController
   after_action :send_users_errors, only: [:index, :followers, :following]
-  after_action :send_user_errors, only: [:create, :update, :profile]
+  after_action :send_user_errors, only: [:create, :update, :profile, :follow, :unfollow]
   after_action :send_follow_errors, only: [:profile, :is_following, :follow, :unfollow]
 
   def index

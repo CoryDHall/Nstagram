@@ -1,3 +1,4 @@
+
 json.errors @user.errors.full_messages
 json.extract! @user,
   :id,
