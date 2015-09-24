@@ -50,7 +50,7 @@ class UserSessionsController < ApplicationController
   def destroy_current
     log_out
     @user = current_user
-    if logged_in?
+    if !!session[:token]
       @user.errors.add :logout, "Log out unsuccessful! -$Sfailure"
     else
       @user.errors.add :logout, "Log out successful! -$Ssuccess"

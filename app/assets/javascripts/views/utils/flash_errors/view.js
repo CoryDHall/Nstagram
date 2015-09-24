@@ -11,6 +11,7 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
     var content = this.template({
       errors: this.collection
     });
+
     if (this.$('nsta-flash-loaded').length === 0 ) {
       this.$el.html(content);
     } else {
@@ -18,20 +19,27 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
       var $newErrors = $(content).find('li');
       this.$el.append($newErrors.filter(function (idx) {
         var $el = $($newErrors.get(idx));
-        console.log("[data-error='" + $el.attr('data-error') + "'][data-time='" + $el.attr('data-time') + "']");
+
         return !$errors.is("[data-error='" + $el.attr('data-error') + "'][data-time='" + $el.attr('data-time') + "']");
-        return true;
       }));
     }
-
-    this.closeErrors();
+    this.popErrors();
 
     return this;
+  },
+  popErrors: function () {
+    TweenMax.staggerTo(
+      this.$('.opening'),
+      0.5,
+      { css: { className: "-=opening" } },
+      0.4,
+      this.closeErrors.bind(this)
+    );
   },
 
   closeErrors: function () {
     TweenMax.staggerFromTo(
-      this.$('li').not('.closing'),
+      this.$('li').not('.closing, .closing-done'),
       1,
       {
         css: { className: "+=closing" }
@@ -40,7 +48,7 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
         css: { className: "+=closing-done" },
         delay: 3,
       },
-      1,
+      0.9,
       function () {
         this.$('.closing-done').remove();
       }.bind(this)

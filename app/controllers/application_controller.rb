@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
       this_error[:reference] = reference
       this_error[:message], this_error[:status] = message.split("-$STATUS: ")
       this_error[:status], this_error[:time] = this_error[:status].split("-$TIME: ")
-      
+
       _errors << this_error
     end
 
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
 
       composite_message.gsub!(/-\$S(failure|notice|success)/, "");
 
-      flash["#{model.class.name}:#{attribute}"] = composite_message + "-$STATUS: #{status_code}" + "-$TIME: #{Time.now}"
+      flash["#{model.class.name}: #{attribute}"] = composite_message + "-$STATUS: #{status_code}" + "-$TIME: #{Time.now}"
     end
   end
 
