@@ -11,16 +11,7 @@
   });
 
   FlErr.update = function () {
-    var newErrors = new FlErr.Errors();
-    newErrors.fetch({
-      success: function () {
-      var newErrorView = new FlErr.View({
-        collection: newErrors
-      });
-
-      Backbone.Router.prototype._swapView.call(FlErr, newErrorView);
-      }
-    });
+    this.newErrors.fetch();
   };
 
   FlErr.clear = function () {
@@ -29,6 +20,20 @@
 
   FlErr.setEl = function ($el) {
     this.$rootEl = $el;
+    this.newErrors = new FlErr.Errors();
+    this.errorView = new FlErr.View({
+      collection: this.newErrors
+    });
+
+    Backbone.Router.prototype._swapView.call(this, this.errorView)
+  };
+
+  FlErr.listen = function () {
+    $(document).ajaxComplete(function (e, xHr, options) {
+      if (options["url"] !== FlErr.Errors.prototype.url) {
+        FlErr.update();
+      }
+    });
   };
 
 })();

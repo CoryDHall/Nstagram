@@ -78,6 +78,20 @@ class Api::UsersController < UsersController
     end
   end
 
+  def follow
+    @follow = current_user.follow(@user)
+    @user.errors.add :follow, "you followed #{@user.username} -$S#{current_user.following?(@user) ? "success" : "failure"}"
+    render :show
+  end
+
+  def unfollow
+    current_user.unfollow(@user)
+    @follow = nil
+    @user.errors[:follow] = "you unfollowed #{@user.username} -$S#{current_user.following?(@user) ? "failure" : "notice"}"
+    render :show
+  end
+
+
   def feed
     @photos = current_user.full_feed.order(created_at: :desc).page(params["page"] || 1)
     @style = params["style"].intern

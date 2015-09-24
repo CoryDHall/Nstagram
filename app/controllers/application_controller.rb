@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
       this_error = {}
       this_error[:reference] = reference
       this_error[:message], this_error[:status] = message.split("-$STATUS: ")
+      this_error[:status], this_error[:time] = this_error[:status].split("-$TIME: ")
+      
       _errors << this_error
     end
 
@@ -22,14 +24,16 @@ class ApplicationController < ActionController::Base
   def pull_errors_from (model)
     return unless model && !!model.errors
     model.errors.keys.each do |attribute|
-      composite_message = model.errors.full_messages_for(attribute).join(" | ")
+      composite_message = model.errors.full_messages_for(attribute)
+        .map { |message| message.split(" ")[1..-1].join(" ") }
+        .join(" | ")
 
       status_code = composite_message[/(failure|notice|success)(?<!-\$S)/]
       status_code ||= "failure"
 
       composite_message.gsub!(/-\$S(failure|notice|success)/, "");
 
-      flash["#{model.class.name}:#{attribute}"] = composite_message + "-$STATUS: #{status_code}"
+      flash["#{model.class.name}:#{attribute}"] = composite_message + "-$STATUS: #{status_code}" + "-$TIME: #{Time.now}"
     end
   end
 

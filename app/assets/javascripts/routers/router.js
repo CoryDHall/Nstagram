@@ -15,6 +15,8 @@
       this._head.render();
 
       this.$flashEl = $(options.flashEl);
+      Nstagram.FlashErrors.setEl(this.$flashEl);
+      Nstagram.FlashErrors.listen();
 
       this.$footEl = $(options.footEl);
       this._menu = new Views.Menu();

@@ -68,7 +68,9 @@ class User < ActiveRecord::Base
   end
 
   def unlike (photo)
-    self.liked_photos.delete(photo)
+    _like = self.likes.where(photo: photo)
+    self.likes.delete(_like)
+    _like
   end
 
   def likes? (photo)

@@ -4,7 +4,6 @@ class Api::PhotosController < ApplicationController
   before_action :require_ownership!, only: [:destroy]
   after_action :send_photos_errors, only: [:index, :user_index]
   after_action :send_photo_errors, only: [:show, :create, :destroy, :like, :unlike]
-  after_action :send_like_errors, only: [:like, :unlike]
 
   def index
     @style = !!params["style"] ? params["style"].intern : :thumb
@@ -59,10 +58,6 @@ class Api::PhotosController < ApplicationController
 
     def send_photo_errors
       pull_errors_from @photo
-    end
-
-    def send_like_errors
-      pull_errors_from @like
     end
 
     def photo_params

@@ -537,3 +537,41 @@ nsta-photo {
   display: block;
   position: relative;
 }
+
+nstagram-flash {
+  display: block;
+  height: auto;
+  width: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 100;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+
+  li {
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
+    background: rgba(48, 48, 48, 0.9);
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    letter-spacing: 2px;
+    text-transform: lowercase;
+
+    span {
+      transform: scale(0.5);
+    }
+  }
+
+  .error-failure {
+    color: red;
+  }
+  .error-success {
+    color: green;
+  }
+  .error-notice {
+    color: yellow;
+  }
+}

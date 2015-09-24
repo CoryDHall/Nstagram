@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
   before_action :prohibit_log_in!, only: [:new, :create]
-  after_action :send_user_errors, only: [:get_current, :create_session]
+  after_action :send_user_errors, only: [:get_current, :create_session, :destroy_current]
 
   def new
     @user_session = UserSession.new
@@ -49,6 +49,12 @@ class UserSessionsController < ApplicationController
 
   def destroy_current
     log_out
+    @user = current_user
+    if logged_in?
+      @user.errors.add :logout, "Log out unsuccessful! -$Sfailure"
+    else
+      @user.errors.add :logout, "Log out successful! -$Ssuccess"
+    end
     render json: current_user
   end
 
