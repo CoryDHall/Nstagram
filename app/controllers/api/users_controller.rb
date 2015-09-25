@@ -93,8 +93,13 @@ class Api::UsersController < UsersController
 
 
   def feed
-    @photos = current_user.full_feed.order(created_at: :desc).page(params["page"] || 1)
-    @style = params["style"].intern
+    require_log_in!
+    if @login_status
+      @photos = current_user.full_feed.order(created_at: :desc).page(params["page"] || 1)
+      @style = params["style"].intern
+    else
+      @photos = Photo.none
+    end
     render 'api/photos/index'
   end
 
