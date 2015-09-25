@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
     auth = Auth.find_by(uid: auth_hash[:uid])
     if auth.nil?
       auth = Auth.new(uid: auth_hash[:uid], provider: auth_hash[:provider])
-      user = UserFactory.make_from_auth(auth, auth_hash[:info][:name])
+      user = UserFactory.make_from_auth(auth, auth_hash[:info][:name].gsub(/\s/, "_"))
       auth.save
     else
       user = find(auth.user_id)

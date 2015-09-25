@@ -1,5 +1,6 @@
 class Photo < ActiveRecord::Base
   validates :user, :photo, presence: true
+  before_save :ensure_caption
 
   belongs_to :user
 
@@ -19,5 +20,15 @@ class Photo < ActiveRecord::Base
     through: :likes,
     source: :user
 
+  has_one :caption,
+    class_name: "Comment"
+
+  has_many :comments,
+    dependent: :destroy
+
   paginates_per 6
+
+  def ensure_caption
+    self.caption ||= self.build_caption(body: "", user: self.user);
+  end
 end
