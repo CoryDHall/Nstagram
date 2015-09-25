@@ -23,8 +23,8 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
     var formData = new FormData(this.el);
     this.userSession.fetch({
       success: function (session) {
-        this.photo = new Nstagram.Models.Photo();
-        this.photo.parse({user: session.user});
+        this.photo = new Nstagram.Models.Photo({user: session.user});
+        // this.photo.parse();
         this.photo.saveFormData(formData, {
           success: function (newPhoto) {
             if (newPhoto.escape('errors').length > 0) {

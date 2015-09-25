@@ -102,7 +102,7 @@
       var photoUploadView;
       this.userSession(function (session) {
         photoUploadView = new Views.PhotoNew({
-          userSession: this.userSession()
+          userSession: session
         });
         this.menuSelect("upload-link");
 
