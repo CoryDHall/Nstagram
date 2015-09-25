@@ -7,11 +7,11 @@
 <input type="email" name="user[email]" id="user_email"  placeholder="email" value="<%= user.escape("email") %>" required>
 <br>
 <label for="user_password">Password</label>
-<input type="password" name="user[password]" id="user_password"  placeholder="password" required>
+<input type="password" name="user[password]" id="user_password"  placeholder="password" required minlength="8">
 <br>
 
 <label for="user_password_confirmation">Password confirmation</label>
-<input type="password" name="user[password_confirmation]" id="user_password_confirmation"  placeholder="password" required>
+<input type="password" name="user[password_confirmation]" id="user_password_confirmation"  placeholder="confirm password" required minlength="8" >
 <br>
 <% } %>
 <label for="user_full_name">Full name</label>
@@ -31,7 +31,7 @@
 <br>
 <% if (user.isNew()) { %>
 <button>Sign Up</button>
-<em>or</em><a href="/auth/twitter">Log In with Twitter</a>
+<em>or</em><a href="/auth/twitter" class="twitter-button">Log In with Twitter</a>
 <% } else { %>
 <button>Update</button>
 <em>or</em><a href="#me">Cancel</a>

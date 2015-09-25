@@ -20,6 +20,14 @@ ul {
   list-style: none;
 }
 
+input, textarea, keygen, select, button {
+  display: block;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+}
+
 .clearfix:after {
   content: '';
   display: block;
@@ -41,7 +49,7 @@ header {
 
 
 $num-menu-items: 4;
-$site-width: 1200px;
+$site-width: 900px;
 $menu-height: 50px;
 $menu-width: $site-width / ($num-menu-items + 1);
 $menu-min-height: 0.5in;
@@ -228,42 +236,42 @@ $ng-blue: hsl(206, 85%, 30%);
     @include retina {
       font-size: $r-menu-height * 3 / 10;
     }
-  }
 
-  a {
-    //  background: #fff;
-    //  color: hsl(206, 85%, 30%);
-    text-transform: uppercase;
-    border-radius: 5px;
-    line-height: 30px;
-    font-weight: bold;
-    display: block;
-    float: left;
-    width: 50%
-  }
-  a.signup-link {
-  }
-  a:first-child:not(.hidden-form)::after {
-    content: "";
-    width: 0;
-    display: block;
-    border: 10px solid transparent;
-    border-bottom-color: #fff;
-    margin: 0 auto -5px;
-    position: relative;
-    bottom: 0;
-  }
-  a:last-child:not(.hidden-form)::after {
-    content: "";
-    width: 0;
-    display: block;
-    border: 10px solid transparent;
-    border-bottom-color: #fff;
-    margin: 0 auto -5px;
-    position: relative;
-    bottom: 0;
-  }
+    a {
+      //  background: #fff;
+      //  color: hsl(206, 85%, 30%);
+      text-transform: uppercase;
+      border-radius: 5px;
+      line-height: 30px;
+      font-weight: bold;
+      display: block;
+      float: left;
+      width: 50%
+    }
 
+    a.signup-link {
+    }
+    a:first-child:not(.hidden-form)::after {
+      content: "";
+      width: 0;
+      display: block;
+      border: 10px solid transparent;
+      border-bottom-color: #fff;
+      margin: 0 auto -5px;
+      position: relative;
+      bottom: 0;
+    }
+    a:last-child:not(.hidden-form)::after {
+      content: "";
+      width: 0;
+      display: block;
+      border: 10px solid transparent;
+      border-bottom-color: #fff;
+      margin: 0 auto -5px;
+      position: relative;
+      bottom: 0;
+    }
+  }
 
   section.welcome {
   }
@@ -275,16 +283,41 @@ form label {
 form * {
   font-size: $menu-height / 7 * 5;
   padding: 5px;
-  margin: 5px 0;
-  border-radius: 3px;
-  border-width: 0 0 2px;
+  width: 100%;
+  border-radius: 10px;
   border-color: #eee;
   border-style: solid;
+  display: block;
+  float: none;
+  min-height: $menu-height * 2;
+  line-height: $menu-height * 2;
 }
-
-form :valid {
-  content: "✓";
-  color: hsl(116, 85%, 30%);
+form {
+  margin-bottom: $menu-height;
+  a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitter-button:active {
+    font-size: $menu-height / 5 * 4;
+    font-weight: bold;
+    background: hsl(190, 90%, 60%);
+    color: #fff;
+    position: relative;
+    text-transform: uppercase;
+  }
+  button {
+    background: $ng-blue;
+    color: #fff;
+    font-weight: bold;
+    position: relative;
+    text-transform: uppercase;
+  }
+  br {
+    padding: 0;
+    display: none;
+  }
+}
+form :valid:required {
+  background: hsl(116, 70%, 80%);
+  color: #fff;
+  border: 1px solid rgba(0,0,0,0.2);
 }
 
 /*USERS INDEX*/
@@ -315,6 +348,7 @@ users-index {
     width: 100%;
     padding: 0 0 0 40px;
     box-sizing: border-box;
+    white-space: nowrap;
 
     a:link,
     a:visited,
@@ -465,6 +499,9 @@ nstagram-thumbs-index {
     min-height: 100%;
     padding: 0 5px;
     box-sizing: border-box;
+    @include retina {
+      padding: 1px;
+    }
   }
 
   li {
@@ -478,6 +515,9 @@ nstagram-thumbs-index {
     @include slim {
       padding: 0.5px;
     }
+    @include retina {
+      padding: 0.5px;
+    }
   }
 
   img {
@@ -489,8 +529,6 @@ nstagram-content {
   margin-top: $menu-height;
   padding-bottom: 2 * $menu-height;
   box-sizing: border-box;
-  padding-left: 20px;
-  padding-right: 20px;
 
   @include slim {
     padding-left: 5px;
@@ -499,9 +537,13 @@ nstagram-content {
   @include retina {
     margin-top: $r-menu-height;
     padding-bottom: 2 * $r-menu-height;
+      padding-left: 0;
+      padding-right: 0;
 
-    padding-left: 0;
-    padding-right: 0;
+    @include slim {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 }
 nstagram-menu {
