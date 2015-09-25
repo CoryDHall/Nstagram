@@ -32,7 +32,7 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
       style: 'thumb',
       userSession: this.userSession,
       profile: true,
-      pageOn: this.page + 1
+      pageOn: this.page
     })
     this.addSubview('nstagram-thumbs-index', this.thumbIndex);
 

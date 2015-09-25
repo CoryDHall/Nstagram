@@ -62,6 +62,13 @@ $r-menu-min-height: $menu-min-height * 2;
   }
 }
 
+@mixin slim {
+  @media
+  only screen and (max-width: 600px) {
+     @content;
+  }
+}
+
 /** CUSTOM-TAGS-FIX **/
 
 /** BLOCK ELEMENTS **/
@@ -446,7 +453,6 @@ photos-index {
       width: 100%;
       height: auto;
     }
-
   }
 }
 nstagram-thumbs-index {
@@ -455,17 +461,27 @@ nstagram-thumbs-index {
   ul {
     width: $site-width;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 50%;
+    min-height: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
   }
 
   li {
     background: #fff;
     float: left;
-    padding: 2.5px 5px 0;
+    padding: 10px;
     margin: 0;
     width: $site-width / 3;
     max-width: 33.333%;
     box-sizing: border-box;
+    @include slim {
+      padding: 0.5px;
+    }
+  }
+
+  img {
+    display: block;
   }
 }
 
@@ -473,11 +489,19 @@ nstagram-content {
   margin-top: $menu-height;
   padding-bottom: 2 * $menu-height;
   box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 20px;
 
+  @include slim {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
   @include retina {
     margin-top: $r-menu-height;
     padding-bottom: 2 * $r-menu-height;
 
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 nstagram-menu {
@@ -499,6 +523,8 @@ nstagram-menu {
     width: $site-width;
     max-width: 100%;
     margin: 0 auto;
+    white-space: nowrap;
+    position: relative;
   }
 
   li:first-child {
@@ -512,13 +538,15 @@ nstagram-menu {
     box-sizing: border-box;
     line-height: $menu-height;
     min-height: $menu-min-height;
+    width: 100% / $num-menu-items;
 
     a {
-      display: inline-block;
+      display: block;
       height: $menu-height;
       min-height: $menu-min-height;
-      padding: 0 ($menu-height * 2);
-      min-width: $menu-width;
+      padding: 0 10px !important;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     a.upload-link {
@@ -614,7 +642,6 @@ nsta-photo {
   @extend .clearfix;
   display: block;
   position: relative;
-
 }
 
 nstagram-flash {
