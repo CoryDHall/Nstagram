@@ -77,6 +77,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-
+  OmniAuth.config.logger = Logger.new "./log/" + Time.now.to_s.gsub(/\s|:/, "-").underscore + ".oauth.log"
   Paperclip.options[:command_path] = "/usr/bin/"
 end

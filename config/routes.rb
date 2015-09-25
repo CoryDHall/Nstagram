@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       defaults: { format: :json } do
 
       collection do
-        get '::username', to: 'users#profile'
+        get '::username', to: 'users#profile', username: /[\w-]+/
 
         get '::username/photos', to: 'photos#user_index'
         post '::username/photos', to: 'photos#create'
@@ -41,7 +41,10 @@ Rails.application.routes.draw do
     put 'like/:photo_id', to: 'photos#like'
     delete 'like/:photo_id', to: 'photos#unlike'
 
+    get '*redirect', to: '/application#failure'
   end
+
+  get 'auth/twitter/callback', to: 'user_sessions#twitter'
 
   resources :users, controller: 'users' do
     member do
@@ -52,8 +55,11 @@ Rails.application.routes.draw do
 
   resource :user_session,
     only: [:new, :destroy, :create] do
-      get 'current', to: 'user_sessions#get_current'
-      post 'current', to: 'user_sessions#create_session'
-      delete 'current', to: 'user_sessions#destroy_current'
-    end
+
+    get 'current', to: 'user_sessions#get_current'
+    post 'current', to: 'user_sessions#create_session'
+    delete 'current', to: 'user_sessions#destroy_current'
+  end
+
+  get '*redirect', to: redirect('/')
 end

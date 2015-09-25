@@ -160,9 +160,13 @@
           this.updateTitle(username);
 
           this._swapView(profileView);
-        }.bind(this)
+        }.bind(this),
+        failure: function () {
+          Backbone.history.navigate('/users', {
+            trigger: true
+          });
+        }
       });
-
     },
 
     userFollowing: function (username) {
@@ -294,6 +298,15 @@
         this.$rootEl.removeClass("hide-bar");
         this.$footEl.removeClass("hide-bar");
         this._barsHidden = false;
+      }
+    },
+
+    _swapView: function (view) {
+      Backbone.Router.prototype._swapView.call(this, view);
+      if (this._userSession.isNew()) {
+        this.hideBars();
+      } else {
+        this.showBars();
       }
     },
   });

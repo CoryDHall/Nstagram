@@ -2,7 +2,7 @@ class UserFactory
   def self.create_user(name = nil, profile_picture_query = nil)
     profile_picture_query ||= "#{%w(grumpy happy fat funny lol sad hungry).sample} #{%w(cat kitty dog puppy).sample}"
     joins = %w(_ __ ___ - x)
-    
+
     tries = 0;
     begin
       tries += 1
@@ -27,6 +27,21 @@ class UserFactory
     rescue
       retry unless tries > 10
     end
+    user
+  end
+
+  def self.make_from_auth(auth, name)
+    user = auth.build_user
+    user.email = "#{auth.uid}.#{auth.provider}@nst-gr-m.x"
+    user.username = "#{name}_#{SecureRandom::urlsafe_base64(3).squeeze}".downcase
+    user.full_name = name
+    lock_user user
+    user.save
+    user
+  end
+
+  def self.lock_user (user)
+    user.password = SecureRandom::urlsafe_base64(12)
     user
   end
 

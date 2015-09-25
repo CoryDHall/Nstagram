@@ -37,6 +37,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def failure
+    flash[:status] = "Resource not found -$STATUS: failure -$TIME: #{Time.now}"
+    render json: {}, status: 404
+  end
+
   def log_in(user)
     session[:token] = user.user_session.reset_token
     @current_user = user
@@ -59,11 +64,17 @@ class ApplicationController < ActionController::Base
   end
 
   def require_log_in!
-    redirect_to new_user_session_url unless current_user
+    unless current_user
+      flash['log_in restricted'] = "unable to perform this action while currently logged out -$STATUS: failure -$TIME: #{Time.now}"
+      redirect_to new_user_session_url
+    end
   end
 
   def prohibit_log_in!
-    redirect_to root_url if current_user
+    if current_user
+      flash['log_in prohibited'] = "unable to perform this action while currently logged in -$STATUS: failure -$TIME: #{Time.now}"
+      redirect_to root_url
+    end
   end
 
   def owner?(id)

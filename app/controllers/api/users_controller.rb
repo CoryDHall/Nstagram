@@ -23,7 +23,7 @@ class Api::UsersController < UsersController
   end
 
   def update
-    @user = User.find_by({ username: user_params[:username] })
+    @user = current_user
     require_ownership!(@user)
     if @owner_status
       if @user.update(user_params)

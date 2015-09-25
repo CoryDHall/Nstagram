@@ -1,4 +1,4 @@
- /*RESET*/
+/*RESET*/
 
 html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, p, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4, nstagram-avatar, nstagram-header, nstagram-flash, nstagram-menu {
   margin: 0;
@@ -26,7 +26,7 @@ ul {
   clear: both;
 }
 
- /*GLOBAL*/
+/*GLOBAL*/
 
 html, body {
   width: 100%;
@@ -39,12 +39,28 @@ header {
 
 }
 
+
 $num-menu-items: 4;
 $site-width: 1200px;
 $menu-height: 50px;
 $menu-width: $site-width / ($num-menu-items + 1);
 $menu-min-height: 0.5in;
 $ng-highlight: hsl(30, 80%, 48%);
+
+$r-menu-height: $menu-height * 2;
+$r-menu-min-height: $menu-min-height * 2;
+
+@mixin retina {
+  @media
+  only screen and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (orientation: portrait) and (min--moz-device-pixel-ratio: 2),
+  only screen and (orientation: portrait) and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (orientation: portrait) and (min-device-pixel-ratio: 2),
+  only screen and (orientation: portrait) and (min-resolution: 192dpi),
+  only screen and (orientation: portrait) and (min-resolution: 2dppx) {
+    @content;
+  }
+}
 
 /** CUSTOM-TAGS-FIX **/
 
@@ -72,15 +88,27 @@ nstagram-logo.large {
   font-size: $menu-height;
   line-height: 2 * $menu-height;
   display: block;
+
+  @include retina {
+    font-size: $r-menu-height;
+    line-height: 2 * $r-menu-height;
+  }
 }
 
 nstagram-logo.medium {
   font-size: $menu-height * 3 / 5;
   display: inline;
+
+  @include retina {
+    font-size: $r-menu-height / 2;
+  }
 }
 
 tag-line.large {
   font-size: $menu-height * 4 / 5;
+  @include retina {
+    font-size: $r-menu-height;
+  }
 }
 
 .follow-button, .unfollow-button {
@@ -140,125 +168,134 @@ users-index {
   }
 }
 
- /*WELCOME*/
+/*WELCOME*/
 $ng-blue: hsl(206, 85%, 30%);
 
- #welcome {
-   height: 100%;
+#welcome {
+  height: 100%;
 
-   .welcome {
-     text-align: center;
-     min-height: 200px;
-   }
+  .welcome {
+    text-align: center;
+    min-height: 200px;
+  }
 
-   header.welcome {
-     background: $ng-blue;
-     background: linear-gradient(45deg, hsla(120, 70%, 30%, 0.5),hsla(0, 70%, 40%, 0.5));
-     color: #fff;
-     height: 53.125%; /*17/16*/
-     position: relative;
-     box-shadow: 0 -20px 100px #000 inset;
-   }
-   header.welcome::before {
-     content: "";
-     background: linear-gradient(225deg, hsla(60, 70%, 50%, 0),hsla(240, 80%, 50%, 0.5));
+  header.welcome {
+    background: $ng-blue;
+    background: linear-gradient(45deg, hsla(120, 70%, 30%, 0.5),hsla(0, 70%, 40%, 0.5));
+    color: #fff;
+    height: 53.125%; /*17/16*/
+    position: relative;
+    box-shadow: 0 -20px 100px #000 inset;
+  }
+  header.welcome::before {
+    content: "";
+    background: linear-gradient(225deg, hsla(60, 70%, 50%, 0),hsla(240, 80%, 50%, 0.5));
     //  box-shadow: 50px 20px 200px hsla(60, 80%, 50%, 0.6) inset;
-     width: 100%;
-     height: 100%;
-     display: block;
-     top: 0;
-     position: absolute;
-   }
+    width: 100%;
+    height: 100%;
+    display: block;
+    top: 0;
+    position: absolute;
+  }
 
-   header.welcome vert-box {
-     top: 50%;
-     transform: translateY(-50%);
-     height: 25%;
-   }
+  header.welcome vert-box {
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25%;
+  }
 
-   form.hidden-form {
-     display: none;
-   }
-   nav {
-     font-size: 20px;
-     position: absolute;
-     width: 30%;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     margin: 0 auto 5px;
-     display: block;
-     text-align: center;
-     white-space: nowrap;
-   }
+  form.hidden-form {
+    display: none;
+  }
+  nav {
+    font-size: $menu-height * 2 / 5;
+    position: absolute;
+    width: 30%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto 5px;
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    @include retina {
+      font-size: $r-menu-height * 3 / 10;
+    }
+  }
 
-   a {
+  a {
     //  background: #fff;
     //  color: hsl(206, 85%, 30%);
-     text-transform: uppercase;
-     padding: 10px 40px 5px;
-     border-radius: 5px;
-     line-height: 30px;
-     font-weight: bold;
-   }
-   a:first-child:not(.hidden-form)::after {
-     content: "";
-     width: 0;
-     display: block;
-     border: 10px solid transparent;
-     border-bottom-color: #fff;
-     margin: 0 auto -5px;
-     position: absolute;
-     bottom: 0;
-     left: 30%;
-   }
-   a:last-child:not(.hidden-form)::after {
-     content: "";
-     width: 0;
-     display: block;
-     border: 10px solid transparent;
-     border-bottom-color: #fff;
-     margin: 0 auto -5px;
-     position: absolute;
-     bottom: 0;
-     right: 30%;
-   }
+    text-transform: uppercase;
+    border-radius: 5px;
+    line-height: 30px;
+    font-weight: bold;
+    display: block;
+    float: left;
+    width: 50%
+  }
+  a.signup-link {
+  }
+  a:first-child:not(.hidden-form)::after {
+    content: "";
+    width: 0;
+    display: block;
+    border: 10px solid transparent;
+    border-bottom-color: #fff;
+    margin: 0 auto -5px;
+    position: relative;
+    bottom: 0;
+  }
+  a:last-child:not(.hidden-form)::after {
+    content: "";
+    width: 0;
+    display: block;
+    border: 10px solid transparent;
+    border-bottom-color: #fff;
+    margin: 0 auto -5px;
+    position: relative;
+    bottom: 0;
+  }
 
 
-   section.welcome {
-   }
- }
+  section.welcome {
+  }
+}
 
 form label {
- display: none;
+  display: none;
 }
 form * {
- font-size: $menu-height / 7 * 5;
- padding: 5px;
- margin: 5px 0;
- border-radius: 3px;
- border-width: 0 0 2px;
- border-color: #eee;
- border-style: solid;
+  font-size: $menu-height / 7 * 5;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 3px;
+  border-width: 0 0 2px;
+  border-color: #eee;
+  border-style: solid;
 }
 
 form :valid {
- content: "✓";
- color: hsl(116, 85%, 30%);
+  content: "✓";
+  color: hsl(116, 85%, 30%);
 }
 
- /*USERS INDEX*/
+/*USERS INDEX*/
 
 button.logout {
   position: absolute;
   right: 0;
   top: 0;
-  font-size: 10px;
+  font-size: $menu-height / 5;
   background: transparent;
   border: 0;
   color: #fff;
-  padding: 20px;
+  padding: $menu-height * 2 / 5;
   cursor: pointer;
+  @include retina {
+    padding: $r-menu-height * 2 / 5;
+    font-size: $r-menu-height / 5
+  }
 }
 
 button.logout:hover {
@@ -436,6 +473,12 @@ nstagram-content {
   margin-top: $menu-height;
   padding-bottom: 2 * $menu-height;
   box-sizing: border-box;
+
+  @include retina {
+    margin-top: $r-menu-height;
+    padding-bottom: 2 * $r-menu-height;
+
+  }
 }
 nstagram-menu {
   display: block;
@@ -447,6 +490,9 @@ nstagram-menu {
   bottom: -1px;
   background: #333;
   z-index: 100;
+  font-size: $menu-height * 2 / 5;
+  letter-spacing: 1.5px;
+
 
   ul {
     text-align: center;
@@ -471,12 +517,28 @@ nstagram-menu {
       display: inline-block;
       height: $menu-height;
       min-height: $menu-min-height;
-      padding: 0 100px;
+      padding: 0 ($menu-height * 2);
       min-width: $menu-width;
     }
 
     a.upload-link {
       background: $ng-blue;
+    }
+  }
+
+  @include retina {
+    height: $r-menu-height;
+    min-height: $r-menu-min-height;
+    font-size: $r-menu-height * 3 / 10;
+    letter-spacing: 2px;
+
+    li {
+      line-height: $r-menu-height;
+      min-height: $r-menu-min-height;
+      a {
+        height: $r-menu-height;
+        min-height: $r-menu-min-height;
+      }
     }
   }
 
@@ -498,11 +560,17 @@ nstagram-header {
   background: $ng-blue;
   color: #fff;
   text-align: center;
-  padding: 10px 0;
+  padding: ($menu-height / 5) 0;
   box-sizing: border-box;
   top: 0;
   position: fixed;
   z-index: 100;
+
+  @include retina {
+    height: $r-menu-height;
+    min-height: $r-menu-min-height;
+    padding: ($r-menu-height / 5) 0;
+  }
 
 }
 
@@ -515,10 +583,16 @@ nstagram-menu.hide-bar {
 
 nstagram-menu.hide-bar {
   bottom: -($menu-height + 10);
+  @include retina {
+    bottom: -($r-menu-height + 10);
+  }
 }
 
 nstagram-header.hide-bar {
   top: -($menu-height + 10);
+  @include retina {
+    top: -($r-menu-height + 10);
+  }
 }
 nstagram-content.hide-bar {
   margin-top: 0;
@@ -555,7 +629,6 @@ nstagram-flash {
     background: rgba(48, 48, 48, 0.9);
     box-shadow: 0 10px 20px rgba(0,0,0,0.75) inset;
   }
-
   li {
     white-space: nowrap;
     text-align: center;
@@ -576,6 +649,9 @@ nstagram-flash {
     }
   }
 
+  li:first-child {
+    margin-top: $menu-height;
+  }
   .closing {
     background: rgba(0, 0, 0, 0.5);
   }
@@ -585,8 +661,18 @@ nstagram-flash {
     border: 0;
     height: 0;
     padding: 0;
-    top: -100px;
-    font-size: 36px;
+    top: $menu-height * -2;
+    font-size: $menu-height * 18 / 25;
+
+    @include retina {
+      top: $r-menu-height * -2;
+      font-size: $r-menu-height * 18 / 25;
+
+      li:first-child {
+        margin-top: $r-menu-height;
+      }
+
+    }
   }
   .closing-done {
     color: #000;

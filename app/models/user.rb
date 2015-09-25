@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
     with: /(\S+)/
   }, allow_blank: true
 
+  validates :username, format: {
+    with: /[\w_-]+/
+  }
+
   validate :username_is_case_insensitive_unique
 
   has_attached_file :profile_picture,
@@ -48,6 +52,9 @@ class User < ActiveRecord::Base
   has_many :liked_photos,
     through: :likes,
     source: :photo
+
+  has_many :auths,
+    dependent: :destroy
 
   paginates_per 24
 
@@ -114,6 +121,18 @@ class User < ActiveRecord::Base
   def self.find_by_username_password(username, password)
     user = find_by(username: username)
     user && user.is_password?(password) ? user : nil
+  end
+
+  def self.find_or_create_from_auth_hash (auth_hash)
+    auth = Auth.find_by(uid: auth_hash[:uid])
+    if auth.nil?
+      auth = Auth.new(uid: auth_hash[:uid], provider: auth_hash[:provider])
+      user = UserFactory.make_from_auth(auth, auth_hash[:info][:name])
+      auth.save
+    else
+      user = find(auth.user_id)
+    end
+    user
   end
 
   def username_is_case_insensitive_unique

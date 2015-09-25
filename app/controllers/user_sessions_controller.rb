@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
-  before_action :prohibit_log_in!, only: [:new, :create]
-  after_action :send_user_errors, only: [:get_current, :create_session, :destroy_current]
+  before_action :prohibit_log_in!, only: [:new, :create, :twitter]
+  after_action :send_user_errors, only: [:get_current, :create_session, :destroy_current, :twitter]
 
   def new
     @user_session = UserSession.new
@@ -56,6 +56,30 @@ class UserSessionsController < ApplicationController
       @user.errors.add :logout, "Log out successful! -$Ssuccess"
     end
     render json: current_user
+  end
+
+  def twitter
+
+    l = Logger.new "./log/twitter.auth.log"
+    l << "*" * 80
+    l << "*" * 80
+    l << "\n\n"
+    l << auth_hash.inspect.gsub(ENV["twitter_key"], "x"*5).gsub(ENV["twitter_secret"], "x"*5)
+    l << "\n\n"
+    l << "=" * 80
+    l << "=" * 80
+
+    @user = User.find_or_create_from_auth_hash(auth_hash)
+    if @user.persisted?
+      log_in @user
+    else
+      @user.errors['log in/sign up'] = "Unable to authenticate your credentials -$Sfailure"
+    end
+    redirect_to :root
+  end
+
+  def auth_hash
+    request.env['omniauth.auth']
   end
 
   private
