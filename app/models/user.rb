@@ -135,6 +135,15 @@ class User < ActiveRecord::Base
     user
   end
 
+  def self.order_by_num_photos
+    self
+    .joins("LEFT OUTER JOIN photos ON photos.user_id = users.id")
+    .group(:id)
+    .joins("LEFT OUTER JOIN photos AS photos_0 ON photos_0.user_id = users.id")
+    .select("users.* ")
+    .order("COUNT(photos_0.user_id) DESC")
+  end
+
   def username_is_case_insensitive_unique
     if User.all.any? do |user|
       user.username.downcase == self.username.downcase &&

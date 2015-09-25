@@ -5,37 +5,52 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
-
-User.create({
+#
+#
+admin = User.create({
   username: "admin",
   password: "password",
   email: "admin@nstagr.am",
   full_name: "admin"
 })
-admin = User.find(1)
-UserFactory.add_photos_to admin, "George Stubbs", "Yayoi Kusama"
-Seeder.get_profile_picture_from_tumblr admin, "pastorale"
+
+UserFactory.add_photos_to admin, "art history", "architecture"
+UserFactory.get_profile_picture_from_tumblr admin, "caravaggio"
 
 
-User.create({
+kim_k = User.create({
   username: "kimkardashian",
   password: "password",
   email: Faker::Internet.safe_email("kimkardashian"),
   full_name: "Kim Kardashian West"
 })
-kim_k = User.find_by(username: "kimkardashian")
 
 UserFactory.add_photos_to kim_k, "North West"
-Seeder.get_profile_picture_from_tumblr kim_k, "Kim Kardashian Fat"
+UserFactory.get_profile_picture_from_tumblr kim_k, "Kim Kardashian Pregnant"
 
+
+
+UserFactory.create_user_with_photos "arya stark"
+
+UserFactory.create_user_with_photos "jerry gurgich"
+
+UserFactory.create_user_with_photos "pikachu"
+
+nobodies = []
 
 100.times do
-  UserFactory.create_user.follow(kim_k);
+  user = UserFactory.create_user
+  user.follow(kim_k);
+  nobodies << user
 end
 
-UserFactory.add_photos_to UserFactory.create_user("bubbles", "powerpuff girls"), "powerpuff girls"
 
-UserFactory.add_photos_to UserFactory.create_user("jerry gurgich", "jerry gurgich"), "jerry gurgich"
+users = User.order_by_num_photos.to_a
 
-UserFactory.add_photos_to UserFactory.create_user("pikachu", "pikachu"), "pikachu"
+nobodies.each do |nobody|
+  rand(100).times do
+    UserFactory.follow_random nobody, users
+  end
+  UserFactory.lock_user nobody
+  nobody.save
+end
