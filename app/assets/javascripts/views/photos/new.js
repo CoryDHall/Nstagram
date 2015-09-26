@@ -68,6 +68,7 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
       ctx.drawImage(img, oX, oY, dW, dH);
 
       view.$('button').prop("disabled", false);
+      view.resize();
     });
     if (photo) {
       reader.readAsDataURL(photo);

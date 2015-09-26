@@ -321,6 +321,7 @@ form {
     display: none;
   }
   #photo-upload {
+    border: 0;
     border-radius: 0;
     cursor: pointer;
     padding: 0;
@@ -332,7 +333,7 @@ form {
   }
 
   #photo-upload.empty {
-    border: 1px solid $ng-highlight;
+    outline: 1px solid $ng-highlight;
   }
 
 }
