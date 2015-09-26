@@ -42,14 +42,14 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
   },
 
   showPhoto: function (e) {
-    var photo = e.currentTarget.files[0];
+    var photo = this.photo = e.currentTarget.files[0];
     $(e.currentTarget).prop("disabled", true);
     this.$('.empty').removeClass("empty");
     var reader = new FileReader();
     var view = this;
 
     reader.addEventListener('load', function () {
-      var img = new Image();
+      var img = this.img = new Image();
       img.src = reader.result;
       if (img.naturalWidth * img.naturalHeight === 0) {
         reader.readAsDataURL(photo);
@@ -84,8 +84,12 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
 
   submit: function (e) {
     e.preventDefault();
+    this.$('button').removeClass('fresh');
+    this.resize();
 
     var formData = new FormData(this.el);
+    formData.append('photo[photo]', this.photo);
+
     this.userSession.fetch({
       success: function (session) {
         this.photo = new Nstagram.Models.Photo({user: session.user});

@@ -326,7 +326,10 @@ form {
     cursor: pointer;
     padding: 0;
     position: absolute;
-    top: 0;
+    top: $menu-height;
+    @include retina {
+      top: $r-menu-height;
+    }
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
@@ -337,28 +340,38 @@ form {
   }
 
 }
-:hover #photo-upload.empty {
+#photo-upload.empty:hover {
   box-shadow: 0 0 5px red inset, 0 10px 10px #000 inset;
 }
 #photo-form {
   background: #222;
   position: absolute;
-  top: 0;
-  bottom: -5px;
+  top: -$menu-height;
+  @include retina {
+    top: -$r-menu-height;
+  }
+  bottom: 0;
   width: 100%;
 
   button {
-    bottom: $menu-height;
+    bottom: 0;
+    padding-bottom: $menu-height + 2;
     position: absolute;
     box-sizing: border-box;
+    @include retina {
+      padding-bottom: $r-menu-height + 2;
+    }
   }
 
-  button:disabled {
+  button.fresh:disabled {
     height: 5px;
     min-height: 5px;
-    line-height: 0;
-    padding: 0;
+    border-radius: 0;
+    padding: 0 0 $menu-height + 2;
     background: $ng-highlight;
+    @include retina {
+      padding-bottom: $r-menu-height + 2;
+    }
   }
 
   button:enabled {
@@ -658,7 +671,7 @@ nstagram-menu {
   }
 
   .upload-link.selected {
-    // box-shadow: none;
+    box-shadow: none;
     // color: rgba(255,255,255,0);
   }
 }
