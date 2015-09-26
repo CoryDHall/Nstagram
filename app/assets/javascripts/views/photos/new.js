@@ -4,17 +4,81 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
   id: 'photo-form',
 
   events: {
-    "submit":"submit"
+    "click #photo-upload": "pickPhoto",
+    "change #photo-input": "showPhoto",
+    "submit": "submit",
+    "resize window": "resize"
   },
 
   initialize: function (options) {
     this.userSession = options.userSession;
+    $(window).resize(this.resize.bind(this));
+  },
+
+  resize: function (e) {
+    var $canvas = this.$('canvas');
+    var availableHeight = this.$el.parent().height() - this.$('button').height();
+    var availableWidth = this.$el.parent().width();
+    if (availableWidth > availableHeight) {
+      var newDim = Math.max(availableHeight, 100);
+      $canvas.width(newDim);
+      $canvas.height(newDim);
+    } else {
+      $canvas.width(availableWidth);
+      $canvas.height(availableWidth);
+    }
   },
 
   render: function () {
     this.$el.html(this.template());
-
+    Nstagram.FlashErrors.newErrors.add({
+      reference: "Upload",
+      status: "notice",
+      time: "now",
+      message: "a photo by clicking anywhere"
+    })
+    this.resize();
     return this;
+  },
+
+  showPhoto: function (e) {
+    var photo = e.currentTarget.files[0];
+    $(e.currentTarget).prop("disabled", true);
+    this.$('.empty').removeClass("empty");
+    var reader = new FileReader();
+    var view = this;
+
+    reader.addEventListener('load', function () {
+      var img = new Image();
+      img.src = reader.result;
+      if (img.naturalWidth * img.naturalHeight === 0) {
+        reader.readAsDataURL(photo);
+        return;
+      }
+
+      var canvas = view.$('#photo-upload')[0];
+
+      var ctx = canvas.getContext("2d");
+      var aRatio = (img.naturalWidth / img.naturalHeight);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      var dW = aRatio > 1 ? canvas.width : canvas.width * aRatio;
+      var dH = aRatio > 1 ? canvas.height / aRatio : canvas.height;
+      var oX = (canvas.width - dW) / 2;
+      var oY = (canvas.height - dH) / 2;
+      ctx.drawImage(img, oX, oY, dW, dH);
+
+      view.$('button').prop("disabled", false);
+    });
+    if (photo) {
+      reader.readAsDataURL(photo);
+    }
+  },
+
+  pickPhoto: function (e) {
+    if (!$(e.target).is($('#photo-input'))) {
+      e.preventDefault();
+    }
+    this.$("#photo-input").click();
   },
 
   submit: function (e) {

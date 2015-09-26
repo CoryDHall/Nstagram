@@ -159,6 +159,7 @@ nstagram-avatar {
     position: absolute;
     left: 50%;
     top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
     transform: translateY(-50%) translateX(-50%);
   }
 }
@@ -215,6 +216,7 @@ $ng-blue: hsl(206, 85%, 30%);
 
   header.welcome vert-box {
     top: 50%;
+    -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     height: 25%;
   }
@@ -283,6 +285,7 @@ form label {
 form * {
   font-size: $menu-height / 7 * 5;
   padding: 5px;
+  outline: 0;
   width: 100%;
   border-radius: 10px;
   border-color: #eee;
@@ -291,6 +294,7 @@ form * {
   float: none;
   min-height: $menu-height * 2;
   line-height: $menu-height * 2;
+  box-sizing: border-box;
 }
 form {
   margin-bottom: $menu-height;
@@ -313,11 +317,57 @@ form {
     padding: 0;
     display: none;
   }
+  #photo-input {
+    display: none;
+  }
+  #photo-upload {
+    border-radius: 0;
+    cursor: pointer;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+
+  #photo-upload.empty {
+    border: 1px solid $ng-highlight;
+  }
+
+}
+:hover #photo-upload.empty {
+  box-shadow: 0 0 5px red inset, 0 10px 10px #000 inset;
+}
+#photo-form {
+  background: #222;
+  position: absolute;
+  top: 0;
+  bottom: -5px;
+  width: 100%;
+
+  button {
+    bottom: $menu-height;
+    position: absolute;
+    box-sizing: border-box;
+  }
+
+  button:disabled {
+    height: 5px;
+    min-height: 5px;
+    line-height: 0;
+    padding: 0;
+    background: $ng-highlight;
+  }
+
+  button:enabled {
+    background: green;
+  }
 }
 form :valid:required {
-  background: hsl(116, 70%, 80%);
-  color: #fff;
-  border: 1px solid rgba(0,0,0,0.2);
+  background: #fff;
+  color: #000;
+  outline: 4px solid hsl(116, 90%, 50%);
 }
 
 /*USERS INDEX*/
@@ -530,20 +580,9 @@ nstagram-content {
   padding-bottom: 2 * $menu-height;
   box-sizing: border-box;
 
-  @include slim {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
   @include retina {
     margin-top: $r-menu-height;
     padding-bottom: 2 * $r-menu-height;
-      padding-left: 0;
-      padding-right: 0;
-
-    @include slim {
-      padding-left: 0;
-      padding-right: 0;
-    }
   }
 }
 nstagram-menu {
@@ -616,6 +655,11 @@ nstagram-menu {
     background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4));
     box-shadow: 0 10px 0 $ng-highlight inset;
   }
+
+  .upload-link.selected {
+    // box-shadow: none;
+    // color: rgba(255,255,255,0);
+  }
 }
 nstagram-flash {
   display: block;
@@ -674,10 +718,12 @@ nstagram-content.hide-bar {
   bottom: 50%;
   font-size: 200px;
   width: 100%;
+  -webkit-transform: translateY(50%);
   transform: translateY(50%);
 }
 .photo-like.opening {
   opacity: 0;
+  -webkit-transform: translateY(100%);
   transform: translateY(100%);
 }
 nsta-photo {
@@ -714,6 +760,7 @@ nstagram-flash {
     position: relative;
 
     span {
+      -webkit-transform: scale(0.5);
       transform: scale(0.5);
     }
   }

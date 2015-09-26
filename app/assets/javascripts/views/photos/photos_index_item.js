@@ -10,7 +10,7 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   },
 
   events: {
-    'doubletap': 'likeToggle',
+    'doubletap': 'like',
   },
 
   render: function () {
@@ -35,12 +35,26 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   },
 
   likeToggle: function (e) {
+    e.preventDefault();
     if (this.model.get("is_current_user_liking")) {
       this.model.unlike({
         success: function (like, xHr, options) {
           this.showHeartBreak();
         }.bind(this)
       });
+    } else {
+      this.model.like({
+        success: function (like, xHr, options) {
+          this.showHeart();
+        }.bind(this)
+      });
+    }
+  },
+
+  like: function (e) {
+    e.preventDefault();
+    if (this.model.get("is_current_user_liking")) {
+
     } else {
       this.model.like({
         success: function (like, xHr, options) {

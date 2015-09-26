@@ -105,7 +105,7 @@
           userSession: session
         });
         this.menuSelect("upload-link");
-
+        this.updateTitle("Upload");
 
         this.needsLogin(photoUploadView);
       }.bind(this));
@@ -137,6 +137,7 @@
 
     usersIndex: function () {
       this.menuSelect("all-users-link");
+      this.updateTitle("Users");
 
       var userIndexView = new Views.UsersIndex({
         collection: this.users(),
