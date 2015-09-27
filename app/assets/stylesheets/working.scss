@@ -53,7 +53,24 @@ $site-width: 1200px;
 $menu-height: 50px;
 $menu-width: $site-width / ($num-menu-items + 1);
 $menu-min-height: 0.5in;
+
+$ng-blue: hsl(206, 85%, 30%);
 $ng-highlight: hsl(30, 80%, 48%);
+$ng-follow: hsl(110, 60%, 41%);
+$ng-create-action: hsl(146, 85%, 30%);
+
+$ng-white: hsl(60, 10%, 99%);
+$ng-slight: hsl(300, 10%, 88%);
+$ng-light: hsl(150, 10%, 70%);
+$ng-middle: hsl(180, 10%, 50%);
+$ng-dark: rgb(51, 51, 51);
+$ng-darker: hsl(30, 10%, 12%);
+
+$ng-flash-red: hsl(356, 60%, 40%);
+$ng-flash-yellow: hsl(56, 60%, 40%);
+$ng-flash-green: hsl(146, 60%, 40%);
+$ng-flash-blue: hsl(206, 60%, 40%);
+
 
 $r-menu-height: $menu-height * 2;
 $r-menu-min-height: $menu-min-height * 2;
@@ -130,15 +147,15 @@ tag-line.large {
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 1px;
-  border: 1px solid hsl(116, 85%, 30%);
-  color: hsl(116, 85%, 30%);
+  border: 1px solid $ng-follow;
+  color: $ng-follow;
   border-radius: 3px;
   padding: 5px 20px;
   text-transform: uppercase;
 }
 .follow-button {
-  background: hsl(116, 85%, 30%);
-  color: #fff;
+  background: $ng-follow;
+  color: $ng-white;
 }
 button.is-following-false {
   display: none;
@@ -150,7 +167,7 @@ nstagram-avatar {
   overflow: hidden;
   text-align: center;
   border-radius: 100%;
-  background-color: #eee;
+  background-color: $ng-slight;
   background-size: cover;
   background-position: center;
 
@@ -185,7 +202,6 @@ users-index {
 }
 
 /*WELCOME*/
-$ng-blue: hsl(206, 85%, 30%);
 
 #welcome {
   height: 100%;
@@ -198,10 +214,11 @@ $ng-blue: hsl(206, 85%, 30%);
   header.welcome {
     background: $ng-blue linear-gradient($ng-blue, transparentize($ng-blue, 0.5), rgba(0,0,0,0.8));
 
-    color: #fff;
+    color: $ng-white;
     height: 53.125%; /*17/16*/
     position: relative;
-    text-shadow: 0 1px 0 transparentize(#333, 0.25);
+    text-shadow: 0 1px 0 transparentize($ng-dark
+, 0.25);
   }
   header.welcome::before {
     background: linear-gradient(transparent, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
@@ -257,7 +274,7 @@ $ng-blue: hsl(206, 85%, 30%);
       width: 0;
       display: block;
       border: 10px solid transparent;
-      border-bottom-color: #fff;
+      border-bottom-color: $ng-white;
       margin: 0 auto -5px;
       position: relative;
       bottom: 0;
@@ -270,7 +287,7 @@ $ng-blue: hsl(206, 85%, 30%);
       width: 0;
       display: block;
       border: 10px solid transparent;
-      border-bottom-color: #fff;
+      border-bottom-color: $ng-white;
       margin: 0 auto -5px;
       position: relative;
       bottom: 0;
@@ -280,8 +297,9 @@ $ng-blue: hsl(206, 85%, 30%);
     }
   }
   :disabled {
-    background: #777;
-    text-shadow: 0 1px 0 transparentize(#333, 0.2);
+    background: $ng-middle;
+    text-shadow: 0 1px 0 transparentize($ng-dark
+, 0.2);
   }
 
   section.welcome {
@@ -297,7 +315,7 @@ form *, %form {
   outline: 0;
   width: 100%;
   border-radius: 10px;
-  border-color: #eee;
+  border-color: $ng-slight;
   border-style: solid;
   display: block;
   float: none;
@@ -310,7 +328,7 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
   font-size: $menu-height / 5 * 4;
   font-weight: bold;
   background: hsl(190, 90%, 60%);
-  color: #fff;
+  color: $ng-white;
   position: relative;
   text-transform: uppercase;
 }
@@ -318,7 +336,7 @@ form {
   margin-bottom: $menu-height;
   button {
     background: $ng-blue;
-    color: #fff;
+    color: $ng-white;
     font-weight: bold;
     position: relative;
     text-transform: uppercase;
@@ -346,15 +364,15 @@ form {
   }
 
   #photo-upload.empty {
-    outline: 1px solid $ng-highlight;
+    outline: 1px solid $ng-darker;
   }
 
 }
 #photo-upload.empty:hover {
-  box-shadow: 0 0 5px red inset, 0 10px 10px #000 inset;
+  box-shadow: 0 0 5px $ng-dark inset, 0 10px 10px $ng-darker inset;
 }
 #photo-form {
-  background: #222;
+  background: $ng-darker;
   position: absolute;
   top: -$menu-height;
   @include retina {
@@ -386,7 +404,7 @@ form {
 
   .form-caption {
     margin-top: 10px;
-    color: #fff;
+    color: $ng-white;
   }
 
   .form-caption:disabled {
@@ -397,14 +415,14 @@ form {
   }
 
   button:enabled {
-    background: green;
+    background: $ng-create-action;
     cursor: pointer;
   }
 }
 form :valid:required {
-  background: #fff;
+  background: $ng-white;
   color: #000;
-  outline: 4px solid hsl(116, 90%, 50%);
+  outline: 4px solid $ng-flash-blue;
 }
 
 /*USERS INDEX*/
@@ -416,7 +434,7 @@ button.logout {
   font-size: $menu-height / 5;
   background: transparent;
   border: 0;
-  color: #fff;
+  color: $ng-white;
   padding: $menu-height * 2 / 5;
   cursor: pointer;
   @include retina {
@@ -426,11 +444,11 @@ button.logout {
 }
 
 button.logout:hover {
-  text-shadow: 0 0 4px #fff;
+  text-shadow: 0 0 4px $ng-white;
 }
 users-index {
   li {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $ng-light;
     height: 2 * $menu-height;
     width: 100%;
     padding: 0 0 0 40px;
@@ -481,7 +499,7 @@ nstagram-profile {
     a:link,
     a:visited,
     a:active {
-      color: #777;
+      color: $ng-middle;
     }
     a:hover,
     a:focus {
@@ -499,7 +517,7 @@ nstagram-profile {
     }
     em {
       text-align: left;
-      color: #777;
+      color: $ng-middle;
     }
   }
 
@@ -514,7 +532,7 @@ nstagram-thumbs-index {
   }
 }
 photos-index {
-  background: hsl(0,0,98%);
+  background: $ng-white;
 
   ul {
     width: $site-width;
@@ -526,7 +544,7 @@ photos-index {
   li {
     box-shadow: 0 2px 20px rgba(0,0,0,0.02);
     margin-bottom: 2 * $menu-height;
-    background: #fff;
+    background: $ng-white;
     position: relative;
 
     > a:link, > a:visited, > a:hover, > a:active {
@@ -544,7 +562,7 @@ photos-index {
       width: 100%;
       box-sizing: border-box;
       line-height: $menu-height * 2;
-      color: #aaa;
+      color: $ng-middle;
     }
     p.likes, p.caption {
       text-align: left;
@@ -591,7 +609,7 @@ nstagram-thumbs-index {
   }
 
   li {
-    background: #fff;
+    background: $ng-white;
     float: left;
     padding: 10px;
     margin: 0;
@@ -629,7 +647,7 @@ nstagram-menu {
   height: $menu-height;
   min-height: $menu-min-height;
   bottom: -1px;
-  background: #333;
+  background: $ng-dark;
   z-index: 100;
   font-size: $menu-height * 2 / 5;
   letter-spacing: 1.5px;
@@ -651,7 +669,7 @@ nstagram-menu {
   li {
     border-right: 1px solid rgba(0,0,0,0.2);
     display: inline-block;
-    color: #fff;
+    color: $ng-white;
     box-sizing: border-box;
     line-height: $menu-height;
     min-height: $menu-min-height;
@@ -707,7 +725,7 @@ nstagram-header {
   height: $menu-height;
   min-height: $menu-min-height;
   background: $ng-blue;
-  color: #fff;
+  color: $ng-white;
   text-align: center;
   padding: ($menu-height / 5) 0;
   box-sizing: border-box;
@@ -784,7 +802,7 @@ nstagram-flash {
     text-align: center;
     width: 100%;
     background: rgba(48, 48, 48, 0.9);
-    color: #fff;
+    color: $ng-white;
     padding: 20px;
     box-sizing: border-box;
     font-size: 24px;
@@ -808,7 +826,7 @@ nstagram-flash {
   }
 
   .closing-done, .opening {
-    background: rgba(0, 0, 0, 1);
+    background: $ng-darker;
     border: 0;
     height: 0;
     padding: 0;
@@ -826,19 +844,19 @@ nstagram-flash {
     }
   }
   .closing-done {
-    color: #000;
+    color: $ng-darker;
   }
   .opening {
 
   }
 
   .error-failure {
-    color: red;
+    color: $ng-flash-red;
   }
   .error-success {
-    color: green;
+    color: $ng-flash-green;
   }
   .error-notice {
-    color: yellow;
+    color: $ng-flash-yellow;
   }
 }
