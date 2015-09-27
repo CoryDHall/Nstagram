@@ -30,9 +30,8 @@
 <input type="file" name="user[profile_picture]" id="user_profile_picture"  placeholder="profile photo" >
 <br>
 <% if (user.isNew()) { %>
-<button>Sign Up</button>
-<em>or</em><a href="/auth/twitter" class="twitter-button">Log In with Twitter</a>
+<button value="Sign Up" data-disable-with="Building Your Account…">Sign Up</button>
 <% } else { %>
-<button>Update</button>
+<button value="Sign Up" data-disable-with="Building Your Account…">Update</button>
 <em>or</em><a href="#me">Cancel</a>
 <% } %>

@@ -2,14 +2,14 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
   id: 'welcome',
   template: JST['welcome'],
   events: {
-    'click a': 'toggleSignUpLogIn'
+    'click nav > a': 'toggleSignUpLogIn'
   },
   render: function () {
     var content = this.template();
 
     this.$el.html(content);
-    this.addSubview('section.welcome', new Nstagram.Views.LogIn());
-    this.addSubview('section.welcome', new Nstagram.Views.SignUp());
+    this.addSubview('section.welcome', new Nstagram.Views.LogIn(), true);
+    this.addSubview('section.welcome', new Nstagram.Views.SignUp(), true);
     this.$('#login-form, .login-link')
       .addClass('hidden-form');
 
@@ -32,18 +32,8 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
       }
     };
     this.welcome.update();
-    // var newColor = "hsla(" + (Math.round((Math.random() * 2) - 1) + this.welcome.deg) + ", 90%, 45%, 0.9)";
-    // this.welcome.color = newColor;
-    // debugger
-    // TweenMax.set(this.welcome, 1, {
-    //     colorProps: { color: newColor },
-    //     onUpdate: function () {
-    //       console.log(this.welcome.color);
-    //       this.welcome.update();
-    //     }.bind(this)
-    //   }
-    // );
   },
+
   toggleSignUpLogIn: function (e) {
     e.preventDefault();
 

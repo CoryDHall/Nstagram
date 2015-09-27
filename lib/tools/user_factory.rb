@@ -51,7 +51,7 @@ class UserFactory
     def self.make_from_auth(auth, name)
       user = auth.build_user
       user.email = "#{auth.uid}.#{auth.provider}@nst-gr-m.x"
-      user.username = "#{name}_#{SecureRandom::urlsafe_base64(3).squeeze}".downcase
+      user.username = "#{name.gsub(/\W/,"_")}_#{SecureRandom::urlsafe_base64(3).squeeze}".downcase
       user.full_name = name
       lock_user user
       user.save

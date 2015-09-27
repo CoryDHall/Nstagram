@@ -273,6 +273,10 @@ $ng-blue: hsl(206, 85%, 30%);
       bottom: 0;
     }
   }
+  :disabled {
+    background: #777;
+    text-shadow: 0 1px 0 transparentize(#333, 0.2);
+  }
 
   section.welcome {
   }
@@ -281,7 +285,7 @@ $ng-blue: hsl(206, 85%, 30%);
 form label {
   display: none;
 }
-form * {
+form *, %form {
   font-size: $menu-height / 7 * 5;
   padding: 5px;
   outline: 0;
@@ -295,16 +299,17 @@ form * {
   line-height: $menu-height * 2;
   box-sizing: border-box;
 }
+a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitter-button:active {
+  @extend %form;
+  font-size: $menu-height / 5 * 4;
+  font-weight: bold;
+  background: hsl(190, 90%, 60%);
+  color: #fff;
+  position: relative;
+  text-transform: uppercase;
+}
 form {
   margin-bottom: $menu-height;
-  a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitter-button:active {
-    font-size: $menu-height / 5 * 4;
-    font-weight: bold;
-    background: hsl(190, 90%, 60%);
-    color: #fff;
-    position: relative;
-    text-transform: uppercase;
-  }
   button {
     background: $ng-blue;
     color: #fff;

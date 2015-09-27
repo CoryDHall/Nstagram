@@ -22,3 +22,6 @@ git_rsa*
 # Ignore Seed Data Builders
 seed_data/
 mech.log
+
+# Ignore tempfiles
+*.*\~
