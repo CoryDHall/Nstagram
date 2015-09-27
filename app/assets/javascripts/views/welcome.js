@@ -13,7 +13,36 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
     this.$('#login-form, .login-link')
       .addClass('hidden-form');
 
+    TweenPlugin.activate("colorProps");
+    setInterval(this.shiftBGColor.bind(this), 100 / 12);
     return this;
+  },
+  shiftBGColor: function () {
+    this.welcome = this.welcome || {
+      head: this.$('header.welcome'),
+      deg: 0,
+      update: function () {
+        this.deg = Math.round(((Math.random() * 3) - 1) / 1) + this.deg % 360;
+
+        this.head[0].style.backgroundImage = "radial-gradient(circle at 0% 100%, " + this.getColor(0) + " 0%, transparent 90%), radial-gradient(circle at 100% 20%, " + this.getColor(90) + " 0%, transparent 60%), radial-gradient(circle at 90% 90%, " + this.getColor(240) + " 0%, transparent 80%)";
+      },
+      getColor: function (rotation) {
+        rotation = rotation || 0;
+        return "hsla(" + ((this.deg + rotation) % 360) + ", 90%, 45%, 0.9)";
+      }
+    };
+    this.welcome.update();
+    // var newColor = "hsla(" + (Math.round((Math.random() * 2) - 1) + this.welcome.deg) + ", 90%, 45%, 0.9)";
+    // this.welcome.color = newColor;
+    // debugger
+    // TweenMax.set(this.welcome, 1, {
+    //     colorProps: { color: newColor },
+    //     onUpdate: function () {
+    //       console.log(this.welcome.color);
+    //       this.welcome.update();
+    //     }.bind(this)
+    //   }
+    // );
   },
   toggleSignUpLogIn: function (e) {
     e.preventDefault();
