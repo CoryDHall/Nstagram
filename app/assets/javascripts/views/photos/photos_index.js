@@ -4,7 +4,8 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
 
   initialize: function (options) {
     this.userSession = options.userSession;
-    this.listenTo(this.collection, "reset set sync", this.render);
+    this.listenTo(this.collection, "add", this.addMore);
+    this.listenTo(this.collection, "reset", this.render);
     this.profile = options.profile;
     this.page = options.pageOn || 1;
   },
@@ -16,7 +17,6 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
   render: function () {
     var content = this.template({
       photos: this.collection,
-      pageOn: this.page + 1
     });
     this.$el.html(content);
 
@@ -30,7 +30,22 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
         })
       );
     }.bind(this));
+    this.loadMoreView = new Nstagram.Views.LoadMore({
+      pageOn: this.page + 1
+    });
+    this.addSubview('div', this.loadMoreView);
     return this;
+  },
+
+  addMore: function (photo) {
+    this.addSubview(
+      'ul',
+      new Nstagram.Views.PhotosIndexItem({
+        model: photo,
+        userSession: this.userSession,
+        profile: this.profile
+      })
+    );
   },
 
 
@@ -40,12 +55,18 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
     })) {
       return;
     }
-    this.page = parseInt($load_el.remove().attr("data-page"), 10);
+    this.page++;
     this.collection.fetch({
       data: {
         page: this.page
       },
-      remove: false
+      remove: false,
+      success: function () {
+        this.loadMoreView.initialize({
+          pageOn: this.page + 1
+        });
+        this.loadMoreView.render();
+      }.bind(this)
     });
   }
 

@@ -41,7 +41,7 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
       .removeClass('hidden-form')
       .not(e.currentTarget)
       .addClass('hidden-form');
-      
+
     switch ($(e.currentTarget).attr('class')) {
       case 'signup-link':
         this.$('#signup-form.hidden-form')

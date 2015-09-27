@@ -6,7 +6,7 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
     this.userSession = options.userSession;
     this.listenTo(this.model, 'sync change', this.render);
     this.listenTo(this.userSession, 'sync', this.render);
-    this.listenTo(this.model.photos(), 'sync', this.render);
+    // this.listenTo(this.model.photos(), 'sync', this.render);
     this.page = 1;
   },
 
@@ -41,18 +41,8 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
   },
 
   getMore: function ($load_el) {
-    if ($load_el.parent().length === 0 || this.model.photos().any(function (photo) {
-      return photo.get("is_on_last_page");
-    })) {
-      return;
-    }
-    this.page = parseInt($load_el.remove().attr("data-page"), 10);
     this.model.photos().initialize({ username: this.model.get("username") })
-    this.model.photos().fetch({
-      data: {
-        page: this.page
-      },
-      remove: false
-    });
+    this.thumbIndex.getMore($load_el);
+
   }
 });
