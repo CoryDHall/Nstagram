@@ -31,4 +31,5 @@ if @style == :full
       end
     end
   end
+  json.caption @photo.caption.body
 end

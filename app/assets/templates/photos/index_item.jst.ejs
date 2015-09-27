@@ -23,3 +23,9 @@
     <% } %>
   <% } %>
 </p>
+<% if (photo.escape("caption") !== "") { %>
+  <p class="caption">
+    <a href="#users/<%= user.escape("username") %>" class="comment-author"><%= user.escape("username") %></a>
+    <%= photo.escape("caption") %>
+  </p>
+<% } %>

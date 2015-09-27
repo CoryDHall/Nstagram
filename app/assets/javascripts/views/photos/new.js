@@ -17,7 +17,7 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
 
   resize: function (e) {
     var $canvas = this.$('canvas');
-    var availableHeight = this.$el.parent().height() - this.$('button').height();
+    var availableHeight = this.$el.parent().height() - this.$('button').height() - this.$('.form-caption').height();
     var availableWidth = this.$el.parent().width();
     if (availableWidth > availableHeight) {
       var newDim = Math.max(availableHeight, 100);
@@ -55,6 +55,7 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
         reader.readAsDataURL(photo);
         return;
       }
+      this.$('.form-caption').prop("disabled", false).focus();
 
       var canvas = view.$('#photo-upload')[0];
 
@@ -69,7 +70,7 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
 
       view.$('button').prop("disabled", false);
       view.resize();
-    });
+    }.bind(this));
     if (photo) {
       reader.readAsDataURL(photo);
     }

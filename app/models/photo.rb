@@ -1,6 +1,7 @@
 class Photo < ActiveRecord::Base
   validates :user, :photo, presence: true
   before_save :ensure_caption
+  after_save :commit_caption
 
   belongs_to :user
 
@@ -30,5 +31,9 @@ class Photo < ActiveRecord::Base
 
   def ensure_caption
     self.caption ||= self.build_caption(body: "", user: self.user);
+  end
+
+  def commit_caption
+    self.caption.save;
   end
 end
