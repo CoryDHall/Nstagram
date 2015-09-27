@@ -236,11 +236,11 @@ $ng-blue: hsl(206, 85%, 30%);
     white-space: nowrap;
     @include retina {
       font-size: $r-menu-height * 3 / 10;
+      width: 80%;
+      margin: 0 auto $r-menu-height / 10;
     }
 
     a {
-      //  background: #fff;
-      //  color: hsl(206, 85%, 30%);
       text-transform: uppercase;
       border-radius: 5px;
       line-height: 30px;
@@ -261,6 +261,9 @@ $ng-blue: hsl(206, 85%, 30%);
       margin: 0 auto -5px;
       position: relative;
       bottom: 0;
+      @include retina {
+        margin-bottom: -$r-menu-height / 10;
+      }
     }
     a:last-child:not(.hidden-form)::after {
       content: "";
@@ -271,6 +274,9 @@ $ng-blue: hsl(206, 85%, 30%);
       margin: 0 auto -5px;
       position: relative;
       bottom: 0;
+      @include retina {
+        margin-bottom: -$r-menu-height / 10;
+      }
     }
   }
   :disabled {
@@ -676,7 +682,6 @@ nstagram-menu {
 
   .upload-link.selected {
     box-shadow: none;
-    // color: rgba(255,255,255,0);
   }
 }
 nstagram-flash {
