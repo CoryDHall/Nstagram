@@ -24,4 +24,4 @@ seed_data/
 mech.log
 
 # Ignore tempfiles
-*.*\~
+*\~

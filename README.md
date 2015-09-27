@@ -13,7 +13,7 @@ nstagram is a clone of Instagram built on Rails and Backbone. Users can:
 - [x] Upload photos
 - [x] View photos
 - [x] Like photos
-- [ ] Leave comments on photos
+- [x] Leave comments on photos
 - [x] Follow other users
 - [x] View a feed of followed user's photos
 - [ ] Use user handles and hashtags in photo descriptions and comments as links
