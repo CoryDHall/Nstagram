@@ -275,8 +275,9 @@
 
     logout: function () {
       this.userSession(function (session) {
-        session.destroy()
-        session.clear()
+        session.destroy();
+        session.clear();
+        session.user.clear();
         $('*').removeClass("selected").blur();
         Backbone.history.navigate('', {
           trigger: true
@@ -303,12 +304,14 @@
     },
 
     _swapView: function (view) {
-      Backbone.Router.prototype._swapView.call(this, view);
-      if (this._userSession.isNew()) {
-        this.hideBars();
-      } else {
-        this.showBars();
-      }
+      this.userSession(function (session) {
+        if (session.user.isNew()) {
+          this.hideBars();
+        } else {
+          this.showBars();
+        }
+        Backbone.Router.prototype._swapView.call(this, view);
+      }.bind(this))
     },
   });
 })();

@@ -49,13 +49,13 @@ class UserSessionsController < ApplicationController
 
   def destroy_current
     log_out
-    @user = current_user
+    @user = User.new
     if !!session[:token]
       @user.errors.add :logout, "Log out unsuccessful! -$Sfailure"
     else
       @user.errors.add :logout, "Log out successful! -$Ssuccess"
     end
-    render json: current_user
+    render 'api/users/show_current'
   end
 
   def twitter
