@@ -540,7 +540,7 @@ nstagram-profile {
   }
 }
 nstagram-thumbs-index {
-  p.likes, p.caption {
+  p.likes, p.caption, ul.photo-actions, nsta-photo-post-head {
     display: none;
   }
 }
@@ -552,63 +552,69 @@ photos-index {
     max-width: 100%;
     margin: 0 auto;
     text-align: center;
-  }
 
-  li {
-    box-shadow: 0 2px $space-4 rgba(0,0,0,0.02);
-    margin-bottom: 2 * $menu-height;
-    background: $ng-white;
-    position: relative;
+    > li {
+      box-shadow: 0 $space-2 $space-2 transparentize($ng-dark, 0.95);
+      margin-bottom: 2 * $menu-height;
+      background: $ng-white;
+      position: relative;
 
-    > a:link, > a:visited, > a:hover, > a:active {
-      display: block;
-      padding: $space-2;
-      text-align: left;
-    }
+      nsta-photo-post-head {
+        > a:link, > a:visited, > a:hover, > a:active {
+          display: block;
+          padding: $space-2;
+          text-align: left;
+        }
+      }
 
-    p.post-date {
-      text-align: right;
-      padding: $space-2 $space-6;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      box-sizing: border-box;
-      line-height: $menu-height * 2;
-      color: $ng-middle;
-      font-size: $font-s-0;
-    }
-    p.likes, p.caption {
-      text-align: left;
-      font-size: $font-s-base;
-      a {
+      p.post-date {
+        text-align: right;
+        padding: $space-2 $space-6;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        box-sizing: border-box;
+        line-height: $menu-height * 2;
+        color: $ng-middle;
+        font-size: $font-s-0;
+      }
+      p.likes, p.caption {
+        text-align: left;
+        font-size: $font-s-base;
+        a {
+          font-weight: bold;
+          color: $ng-blue;
+        }
+      }
+
+      nstagram-avatar {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: $space-2;
+      }
+
+      h4 {
+        font-size: $font-s-base;
+        position: relative;
+        display: inline;
         font-weight: bold;
         color: $ng-blue;
       }
+
+      img {
+        width: 100%;
+        height: auto;
+      }
     }
 
-    nstagram-avatar {
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: $space-2;
-    }
-
-    h4 {
-      font-size: $font-s-base;
-      position: relative;
-      display: inline;
-      font-weight: bold;
-      color: $ng-blue;
-    }
-
-    img {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  .photo-actions {
-    li {
-      float: left;
+    .photo-actions {
+      li {
+        float: left;
+        padding: $space-base $space-2;
+        border: 1px solid $ng-middle;
+        border-radius: $space-base;
+        margin-right: $space-4;
+      }
     }
   }
 }
@@ -624,7 +630,7 @@ nstagram-thumbs-index {
     box-sizing: border-box;
   }
 
-  li {
+  ul.photos li {
     background: $ng-white;
     float: left;
     padding: $space-0 ($space-0 / 4) 0;
@@ -633,6 +639,7 @@ nstagram-thumbs-index {
     position: relative;
     max-width: 33.333%;
     box-sizing: border-box;
+    box-shadow: none;
   }
 
   li:nth-child(3n) {

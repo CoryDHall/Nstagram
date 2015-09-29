@@ -1,4 +1,6 @@
-<% if (!profile) { %>
+<% if (true) { %>
+  <nsta-photo-post-head>
+
   <p class="post-date"><em><%= photo.escape("posted") %> ago</em></p>
   <a href="#users/<%= user.escape("username") %>" class="photo-head clearfix">
     <h4>
@@ -6,6 +8,7 @@
     </nstagram-avatar>
     <%= user.escape("username") %></h4>
   </a>
+  </nsta-photo-post-head>
 <% } %><nsta-photo class="clearfix">
 <img src="<%= photo.escape("url") %>" alt="<%= user.escape("username") %> posted this photo <%= photo.escape("posted") %> ago" />
 </nsta-photo>

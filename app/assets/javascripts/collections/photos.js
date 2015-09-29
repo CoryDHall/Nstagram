@@ -9,7 +9,25 @@ Nstagram.Collections.Photos = Backbone.Collection.extend({
     options = options || {};
     options.data = options.data || {};
     options.data["style"] = this.style;
+    options.beforeSend = function (xhr, settings) {
+      settings.xhr = function () {
+        var xhr = $.ajaxSettings.xhr();
 
+        xhr.upload.addEventListener("progress", function (e) {
+        }, false);
+
+        xhr.upload.onload = function () {
+        };
+
+        xhr.addEventListener("progress", function (e) {
+        }, false);
+
+        xhr.onload = function () {
+        };
+
+        return xhr;
+      };
+    };
     return Backbone.Collection.prototype.fetch.call(this, options);
   }
 

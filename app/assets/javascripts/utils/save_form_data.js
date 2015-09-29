@@ -15,6 +15,23 @@ Backbone.Model.prototype.saveFormData = function (formData, options) {
     },
     error: function (resp) {
       options.error && options.error(model, resp, options);
+    },
+    xhr: function () {
+      var xhr = $.ajaxSettings.xhr();
+
+      xhr.upload.addEventListener("progress", function (e) {
+      }, false);
+
+      xhr.upload.onload = function () {
+      };
+
+      xhr.addEventListener("progress", function (e) {
+      }, false);
+
+      xhr.onload = function () {
+      };
+
+      return xhr;
     }
   });
 };

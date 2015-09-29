@@ -17,9 +17,11 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
 
   delete: function (e) {
     e.preventDefault();
-    this.model.destroy({
-      success: this.remove.bind(this)
-    });    
+    if (confirm("Are you sure?")) {
+      this.model.destroy({
+        success: this.remove.bind(this)
+      });
+    }
   },
 
   render: function () {
@@ -49,7 +51,6 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
     if (this.model.get("is_current_user_liking")) {
       this.model.unlike({
         success: function (like, xHr, options) {
-          console.log($(e.currentTarget));
           $(e.currentTarget).text("like");
           this.showHeartBreak();
         }.bind(this)
