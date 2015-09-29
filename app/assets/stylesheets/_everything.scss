@@ -547,7 +547,7 @@ nstagram-thumbs-index {
 photos-index {
   background: $ng-white;
 
-  ul {
+  ul.photos {
     width: $site-width;
     max-width: 100%;
     margin: 0 auto;
@@ -603,6 +603,12 @@ photos-index {
     img {
       width: 100%;
       height: auto;
+    }
+  }
+
+  .photo-actions {
+    li {
+      float: left;
     }
   }
 }

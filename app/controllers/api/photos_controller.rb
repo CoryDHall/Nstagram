@@ -29,6 +29,15 @@ class Api::PhotosController < ApplicationController
   end
 
   def destroy
+    if @owner_status
+      @photo.likes.destroy
+      @photo.comments.destroy
+      @photo.caption.destroy
+      @photo.destroy
+      render json: {}, status: 200
+    else
+      render json: {}, status: 400
+    end
   end
 
   def like
@@ -45,7 +54,8 @@ class Api::PhotosController < ApplicationController
     @login_status = logged_in?
   end
 
-  def require_ownership!(user)
+  def require_ownership!()
+    user = User.find_by(username: params[:username])
     @owner_status = owner?(user.id)
   end
 

@@ -9,6 +9,14 @@
 <% } %><nsta-photo class="clearfix">
 <img src="<%= photo.escape("url") %>" alt="<%= user.escape("username") %> posted this photo <%= photo.escape("posted") %> ago" />
 </nsta-photo>
+<ul class="photo-actions clearfix">
+  <li><button class="like-button">
+    <%= photo.get("is_current_user_liking") === true ? "unlike" : "like" %>
+  </button></li>
+  <% if (user.id === session.id) { %>
+  <li><button class="delete-button" value="Delete" data-disable-with="Deleting…">Delete</button></li>
+  <% } %>
+</ul>
 <p class="likes">
   <% if (photo.get("likes")) { %>
     <% if (photo.get("likes").count > 10) { %>

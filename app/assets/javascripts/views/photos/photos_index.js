@@ -23,7 +23,7 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
 
     this.collection.each(function (photo) {
       this.addSubview(
-        'ul',
+        'ul.photos',
         new Nstagram.Views.PhotosIndexItem({
           model: photo,
           userSession: this.userSession,
@@ -40,7 +40,7 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
 
   addMore: function (photo) {
     this.addSubview(
-      'ul',
+      'ul.photos',
       new Nstagram.Views.PhotosIndexItem({
         model: photo,
         userSession: this.userSession,
