@@ -7,11 +7,7 @@ Nstagram.Collections.Feed = Backbone.Collection.extend({
     this.style = 'full';
   },
   fetch: function (options) {
-    options = options || {};
-    options.data = options.data || {};
-    options.data["style"] = this.style;
-
-    return Backbone.Collection.prototype.fetch.call(this, options);
+    return Nstagram.Collections.Photos.prototype.fetch.call(this, options);
   }
 
 });

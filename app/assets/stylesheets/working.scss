@@ -1,58 +1,30 @@
-/*RESET*/
-
-html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, p, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4, nstagram-avatar, nstagram-header, nstagram-flash, nstagram-menu {
-  margin: 0;
-  border: 0;
-  padding: 0;
-
-  background: transparent;
-
-  font-family: sans-serif;
-  font-size: inherit;
-  font-weight: inherit;
-  color: inherit;
-  text-decoration: inherit;
-  text-align: inherit;
-  white-space: inherit;
-}
-
-ul {
-  list-style: none;
-}
-
-input, textarea, keygen, select, button {
-  display: block;
-  font-family: inherit;
-  font-size: inherit;
-  color: inherit;
-  background: transparent;
-}
-
-.clearfix:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-/*GLOBAL*/
-
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-header {
-  display: block;
-
-}
-
+$site-width: 600px;
+$menu-height-px: $site-width / 20px;
+$menu-height: $menu-height-px * 1px;
+$avatar-size: $site-width / 6;
+$space-base: $site-width / 150;
+$space-0: $space-base * 2;
 
 $num-menu-items: 4;
-$site-width: 1200px;
-$menu-height: 50px;
 $menu-width: $site-width / ($num-menu-items + 1);
-$menu-min-height: 0.5in;
+$menu-min-height: $menu-height-px / 120 * 1in;
+
+$space-null: 1px;
+$space-2: $space-base * 2;
+$space-3: $space-base * 3;
+$space-4: $space-base * 4;
+$space-6: $space-base * 6;
+$space-8: $space-base * 8;
+$space-16: $space-base * 16;
+$space-20: $space-base * 20;
+
+$font-s-base: $space-base * 4.8;
+$font-s-0: $font-s-base / 1.5;
+$font-s-2: $font-s-base * 1.25;
+$font-s-3: $font-s-base * 2;
+$font-s-4: $font-s-base * 2.8;
+$font-s-menu: $menu-height * 0.4;
+$font-s-menu-big: $font-s-menu * 1.25;
 
 $ng-blue: hsl(206, 85%, 30%);
 $ng-highlight: hsl(30, 80%, 48%);
@@ -62,7 +34,7 @@ $ng-create-action: hsl(146, 85%, 30%);
 $ng-white: hsl(60, 10%, 99%);
 $ng-slight: hsl(300, 10%, 88%);
 $ng-light: hsl(150, 10%, 70%);
-$ng-middle: hsl(180, 10%, 50%);
+$ng-middle: hsl(180, 5%, 50%);
 $ng-dark: rgb(51, 51, 51);
 $ng-darker: hsl(30, 10%, 12%);
 
@@ -72,791 +44,114 @@ $ng-flash-green: hsl(146, 60%, 40%);
 $ng-flash-blue: hsl(206, 60%, 40%);
 
 
-$r-menu-height: $menu-height * 2;
-$r-menu-min-height: $menu-min-height * 2;
+@import "everything";
 
-@mixin retina {
-  @media
-  only screen and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (orientation: portrait) and (min--moz-device-pixel-ratio: 2),
-  only screen and (orientation: portrait) and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (orientation: portrait) and (min-device-pixel-ratio: 2),
-  only screen and (orientation: portrait) and (min-resolution: 192dpi),
-  only screen and (orientation: portrait) and (min-resolution: 2dppx) {
-    @content;
-  }
+
+@media
+only screen and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2),
+only screen and (orientation: portrait) and (min--moz-device-pixel-ratio: 2),
+only screen and (orientation: portrait) and (-o-min-device-pixel-ratio: 2/1),
+only screen and (orientation: portrait) and (min-device-pixel-ratio: 2),
+only screen and (orientation: portrait) and (min-resolution: 192dpi),
+only screen and (orientation: portrait) and (min-resolution: 2dppx) {
+  $site-width: 1200px;
+  $menu-height-px: $site-width / 20px;
+  $menu-height: $menu-height-px * 1px;
+  $space-base: $site-width / 150;
+  $avatar-size: $site-width / 6;
+  $space-0: $space-base / 4;
+
+  $num-menu-items: 4;
+  $menu-width: $site-width / ($num-menu-items + 1);
+  $menu-min-height: $menu-height-px / 120 * 1in;
+
+  $space-null: 1px;
+  $space-2: $space-base * 2;
+  $space-3: $space-base * 3;
+  $space-4: $space-base * 4;
+  $space-6: $space-base * 6;
+  $space-8: $space-base * 8;
+  $space-16: $space-base * 16;
+  $space-20: $space-base * 20;
+
+  $font-s-base: $space-base * 4.8;
+  $font-s-0: $font-s-base / 1.5;
+  $font-s-2: $font-s-base * 1.25;
+  $font-s-3: $font-s-base * 2;
+  $font-s-4: $font-s-base * 2.8;
+  $font-s-menu: $menu-height * 0.4;
+  $font-s-menu-big: $font-s-menu * 1.25;
+
+  $ng-blue: hsl(206, 85%, 30%);
+  $ng-highlight: hsl(30, 80%, 48%);
+  $ng-follow: hsl(110, 60%, 41%);
+  $ng-create-action: hsl(146, 85%, 30%);
+
+  $ng-white: hsl(60, 10%, 99%);
+  $ng-slight: hsl(300, 10%, 88%);
+  $ng-light: hsl(150, 10%, 70%);
+  $ng-middle: hsl(180, 5%, 50%);
+  $ng-dark: rgb(51, 51, 51);
+  $ng-darker: hsl(30, 10%, 12%);
+
+  $ng-flash-red: hsl(356, 60%, 40%);
+  $ng-flash-yellow: hsl(56, 60%, 40%);
+  $ng-flash-green: hsl(146, 60%, 40%);
+  $ng-flash-blue: hsl(206, 60%, 40%);
+  @import "everything";
 }
 
-@mixin slim {
-  @media
-  only screen and (max-width: 600px) {
-     @content;
-  }
-}
 
-/** CUSTOM-TAGS-FIX **/
-
-/** BLOCK ELEMENTS **/
-
-nstagram-content, tag-line, vert-box, users-index, nstagram-avatar, nstagram-follow-button {
-  display: block;
-}
-
-nstagram-content {
-  position: relative;
-  height: 100%;
-  overflow-y: scroll;
-}
-
-vert-box, top-box {
-  position: relative;
-}
-
-.large, .medium {
-  font-weight: bold;
-}
-
-nstagram-logo.large {
-  font-size: $menu-height;
-  line-height: 2 * $menu-height;
-  display: block;
-
-  @include retina {
-    font-size: $r-menu-height;
-    line-height: 2 * $r-menu-height;
-  }
-}
-
-nstagram-logo.medium {
-  font-size: $menu-height * 3 / 5;
-  display: inline;
-
-  @include retina {
-    font-size: $r-menu-height / 2;
-  }
-}
-
-tag-line.large {
-  font-size: $menu-height * 4 / 5;
-  @include retina {
-    font-size: $r-menu-height;
-  }
-}
-
-.follow-button, .unfollow-button {
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  border: 1px solid $ng-follow;
-  color: $ng-follow;
-  border-radius: 3px;
-  padding: 5px 20px;
-  text-transform: uppercase;
-}
-.follow-button {
-  background: $ng-follow;
-  color: $ng-white;
-}
-button.is-following-false {
-  display: none;
-}
-nstagram-avatar {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  text-align: center;
-  border-radius: 100%;
-  background-color: $ng-slight;
-  background-size: cover;
-  background-position: center;
-
-  sub {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translateY(-50%) translateX(-50%);
-    transform: translateY(-50%) translateX(-50%);
-  }
-}
-.profile-picture {
-  position: relative;
-  max-width: 100%;
-  max-height: 100%;
-}
-photos-index {
-  nstagram-avatar {
-    width: $menu-height * 2;
-    height: $menu-height * 2;
-  }
-}
-
-users-index {
-  nstagram-avatar {
-    width: $menu-height * 1.2;
-    height: $menu-height * 1.2;
-    float:left;
-    margin: 0 10px 0 -40px;
-  }
-}
-
-/*WELCOME*/
-
-#welcome {
-  height: 100%;
-
-  .welcome {
-    text-align: center;
-    min-height: 200px;
-  }
-
-  header.welcome {
-    background: $ng-blue linear-gradient($ng-blue, transparentize($ng-blue, 0.5), rgba(0,0,0,0.8));
-
-    color: $ng-white;
-    height: 53.125%; /*17/16*/
-    position: relative;
-    text-shadow: 0 1px 0 transparentize($ng-dark
-, 0.25);
-  }
-  header.welcome::before {
-    background: linear-gradient(transparent, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
-    content: "";
-    width: 100%;
-    height: 100%;
-    display: block;
-    top: 0;
-    position: absolute;
-  }
-
-  header.welcome vert-box {
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    height: 25%;
-  }
-
-  form.hidden-form {
-    display: none;
-  }
-  nav {
-    font-size: $menu-height * 2 / 5;
-    position: absolute;
-    width: 30%;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto 5px;
-    display: block;
-    text-align: center;
-    white-space: nowrap;
-    @include retina {
-      font-size: $r-menu-height * 3 / 10;
-      width: 80%;
-      margin: 0 auto $r-menu-height / 10;
-    }
-
-    a {
-      text-transform: uppercase;
-      border-radius: 5px;
-      line-height: 30px;
-      font-weight: bold;
-      display: block;
-      float: left;
-      width: 50%
-    }
-
-    a.signup-link {
-    }
-    a:first-child:not(.hidden-form)::after {
-      content: "";
-      width: 0;
-      display: block;
-      border: 10px solid transparent;
-      border-bottom-color: $ng-white;
-      margin: 0 auto -5px;
-      position: relative;
-      bottom: 0;
-      @include retina {
-        margin-bottom: -$r-menu-height / 10;
-      }
-    }
-    a:last-child:not(.hidden-form)::after {
-      content: "";
-      width: 0;
-      display: block;
-      border: 10px solid transparent;
-      border-bottom-color: $ng-white;
-      margin: 0 auto -5px;
-      position: relative;
-      bottom: 0;
-      @include retina {
-        margin-bottom: -$r-menu-height / 10;
-      }
-    }
-  }
-  :disabled {
-    background: $ng-middle;
-    text-shadow: 0 1px 0 transparentize($ng-dark
-, 0.2);
-  }
-
-  section.welcome {
-  }
-}
-
-form label {
-  display: none;
-}
-form *, %form {
-  font-size: $menu-height / 7 * 5;
-  padding: 5px;
-  outline: 0;
-  width: 100%;
-  border-radius: 10px;
-  border-color: $ng-slight;
-  border-style: solid;
-  display: block;
-  float: none;
-  min-height: $menu-height * 2;
-  line-height: $menu-height * 2;
-  box-sizing: border-box;
-}
-a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitter-button:active {
-  @extend %form;
-  font-size: $menu-height / 5 * 4;
-  font-weight: bold;
-  background: hsl(190, 90%, 60%);
-  color: $ng-white;
-  position: relative;
-  text-transform: uppercase;
-}
-form {
-  margin-bottom: $menu-height;
-  button {
-    background: $ng-blue;
-    color: $ng-white;
-    font-weight: bold;
-    position: relative;
-    text-transform: uppercase;
-  }
-  br {
-    padding: 0;
-    display: none;
-  }
-  #photo-input {
-    display: none;
-  }
-  #photo-upload {
-    border: 0;
-    border-radius: 0;
-    cursor: pointer;
-    padding: 0;
-    position: relative;
-    top: $menu-height;
-    @include retina {
-      top: $r-menu-height;
-    }
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-  }
-
-  #photo-upload.empty {
-    outline: 1px solid $ng-darker;
-  }
-
-}
-#photo-upload.empty:hover {
-  box-shadow: 0 0 5px $ng-dark inset, 0 10px 10px $ng-darker inset;
-}
-#photo-form {
-  background: $ng-darker;
-  position: absolute;
-  top: -$menu-height;
-  @include retina {
-    top: -$r-menu-height;
-  }
-  bottom: 0;
-  width: 100%;
-
-  button {
-    bottom: 0;
-    padding-bottom: $menu-height + 2;
-    position: absolute;
-    box-sizing: border-box;
-    @include retina {
-      padding-bottom: $r-menu-height + 2;
-    }
-  }
-
-  button.fresh:disabled {
-    height: 5px;
-    min-height: 5px;
-    border-radius: 0;
-    padding: 0 0 $menu-height + 2;
-    background: $ng-highlight;
-    @include retina {
-      padding-bottom: $r-menu-height + 2;
-    }
-  }
-
-  .form-caption {
-    margin-top: 10px;
-    color: $ng-white;
-  }
-
-  .form-caption:disabled {
-    height: 0;
-    box-sizing: border-box;
-    padding: 0;
-    min-height: 0;
-  }
-
-  button:enabled {
-    background: $ng-create-action;
-    cursor: pointer;
-  }
-}
-form :valid:required {
-  background: $ng-white;
-  color: #000;
-  outline: 4px solid $ng-flash-blue;
-}
-
-/*USERS INDEX*/
-
-button.logout {
-  position: absolute;
-  right: 0;
-  top: 0;
-  font-size: $menu-height / 5;
-  background: transparent;
-  border: 0;
-  color: $ng-white;
-  padding: $menu-height * 2 / 5;
-  cursor: pointer;
-  @include retina {
-    padding: $r-menu-height * 2 / 5;
-    font-size: $r-menu-height / 5
-  }
-}
-
-button.logout:hover {
-  text-shadow: 0 0 4px $ng-white;
-}
-users-index {
-  li {
-    border-bottom: 1px solid $ng-light;
-    height: 2 * $menu-height;
-    width: 100%;
-    padding: 0 0 0 40px;
-    box-sizing: border-box;
-    white-space: nowrap;
-
-    a:link,
-    a:visited,
-    a:hover,
-    a:focus,
-    a:active {
-      width: 50%;
-      height: 100%;
-      padding: 30px;
-      display: block;
-      float: left;
-      box-sizing: border-box;
-    }
-    h4 {
-      font-size: 30px;
-      clear: none;
-    }
-  }
-  li:hover {
-    background-color: hsla(206, 15%, 80%, 0.5);
-  }
-}
-nstagram-follow-button {
-  float: right;
-  margin-top: $menu-height;
-  margin-right: $menu-height;
-  -webkit-transform: translateY(-50%) scale(1.25);
-  transform: translateY(-50%) scale(1.25);
-  box-sizing: border-box;
-}
-nstagram-profile {
-  @extend .clearfix;
-  width: $site-width;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  display: block;
-
-  header {
-    @extend .clearfix;
-    display: block;
-
-    a:link,
-    a:visited,
-    a:active {
-      color: $ng-middle;
-    }
-    a:hover,
-    a:focus {
-      color: $ng-blue;
-    }
-
-    p {
-      font-weight: lighter;
-      margin: 5px;
-      font-size: $menu-height;
-    }
-    small {
-      font-size: $menu-height / 2;
-      font-weight: normal;
-    }
-    em {
-      text-align: left;
-      color: $ng-middle;
-    }
-  }
-
-  nstagram-avatar {
-    float: left;
-  }
-
-}
-nstagram-thumbs-index {
-  p.likes, p.caption {
-    display: none;
-  }
-}
-photos-index {
-  background: $ng-white;
-
-  ul {
-    width: $site-width;
-    max-width: 100%;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  li {
-    box-shadow: 0 2px 20px rgba(0,0,0,0.02);
-    margin-bottom: 2 * $menu-height;
-    background: $ng-white;
-    position: relative;
-
-    > a:link, > a:visited, > a:hover, > a:active {
-      @extend .clearfix;
-      display: block;
-      padding: 10px;
-      text-align: left;
-    }
-
-    p.post-date {
-      text-align: right;
-      padding: 10px 30px;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      box-sizing: border-box;
-      line-height: $menu-height * 2;
-      color: $ng-middle;
-    }
-    p.likes, p.caption {
-      text-align: left;
-      font-size: 24px;
-      a {
-        font-weight: bold;
-        color: $ng-blue;
-      }
-    }
-
-    nstagram-avatar {
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 10px;
-    }
-
-    h4 {
-      font-size: 24px;
-      position: relative;
-      display: inline;
-      font-weight: bold;
-      color: $ng-blue;
-    }
-
-    img {
-      width: 100%;
-      height: auto;
-    }
-  }
-}
-nstagram-thumbs-index {
-  background: hsl(0,0,98%);
-
-  ul {
-    width: $site-width;
-    max-width: 100%;
-    margin: 0 auto 50%;
-    min-height: 100%;
-    padding: 0 5px;
-    box-sizing: border-box;
-    @include retina {
-      padding: 1px;
-    }
-  }
-
-  li {
-    background: $ng-white;
-    float: left;
-    padding: 10px;
-    margin: 0;
-    width: $site-width / 3;
-    max-width: 33.333%;
-    box-sizing: border-box;
-    @include slim {
-      padding: 0.5px;
-    }
-    @include retina {
-      padding: 0.5px;
-    }
-  }
-
-  img {
-    display: block;
-  }
-}
-
-nstagram-content {
-  margin-top: $menu-height;
-  padding-bottom: 2 * $menu-height;
-  box-sizing: border-box;
-
-  @include retina {
-    margin-top: $r-menu-height;
-    padding-bottom: 2 * $r-menu-height;
-  }
-}
-nstagram-menu {
-  display: block;
-  clear: both;
-  position: fixed;
-  width: 100%;
-  height: $menu-height;
-  min-height: $menu-min-height;
-  bottom: -1px;
-  background: $ng-dark;
-  z-index: 100;
-  font-size: $menu-height * 2 / 5;
-  letter-spacing: 1.5px;
-
-
-  ul {
-    text-align: center;
-    width: $site-width;
-    max-width: 100%;
-    margin: 0 auto;
-    white-space: nowrap;
-    position: relative;
-  }
-
-  li:first-child {
-    border-left: 1px solid rgba(0,0,0,0.2);
-  }
-
-  li {
-    border-right: 1px solid rgba(0,0,0,0.2);
-    display: inline-block;
-    color: $ng-white;
-    box-sizing: border-box;
-    line-height: $menu-height;
-    min-height: $menu-min-height;
-    width: 100% / $num-menu-items;
-
-    a {
-      display: block;
-      height: $menu-height;
-      min-height: $menu-min-height;
-      padding: 0 10px !important;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    a.upload-link {
-      background: $ng-blue;
-    }
-  }
-
-  @include retina {
-    height: $r-menu-height;
-    min-height: $r-menu-min-height;
-    font-size: $r-menu-height * 3 / 10;
-    letter-spacing: 2px;
-
-    li {
-      line-height: $r-menu-height;
-      min-height: $r-menu-min-height;
-      a {
-        height: $r-menu-height;
-        min-height: $r-menu-min-height;
-      }
-    }
-  }
-
-  .selected {
-    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4));
-    box-shadow: 0 10px 0 $ng-highlight inset;
-  }
-
-  .upload-link.selected {
-    box-shadow: none;
-  }
-}
-nstagram-flash {
-  display: block;
-  height: auto;
-  width: 0;
-}
-nstagram-header {
-  display: block;
-  width: 100%;
-  height: $menu-height;
-  min-height: $menu-min-height;
-  background: $ng-blue;
-  color: $ng-white;
-  text-align: center;
-  padding: ($menu-height / 5) 0;
-  box-sizing: border-box;
-  top: 0;
-  position: fixed;
-  z-index: 100;
-
-  @include retina {
-    height: $r-menu-height;
-    min-height: $r-menu-min-height;
-    padding: ($r-menu-height / 5) 0;
-  }
-
-}
-
-nstagram-header.hide-bar,
-nstagram-menu.hide-bar {
-  height: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-nstagram-menu.hide-bar {
-  bottom: -($menu-height + 10);
-  @include retina {
-    bottom: -($r-menu-height + 10);
-  }
-}
-
-nstagram-header.hide-bar {
-  top: -($menu-height + 10);
-  @include retina {
-    top: -($r-menu-height + 10);
-  }
-}
-nstagram-content.hide-bar {
-  margin-top: 0;
-  padding-bottom: 0;
-}
-.photo-like {
-  position: absolute;
-  z-index: 10;
-  bottom: 50%;
-  font-size: 200px;
-  width: 100%;
-  -webkit-transform: translateY(50%);
-  transform: translateY(50%);
-}
-.photo-like.opening {
-  opacity: 0;
-  -webkit-transform: translateY(100%);
-  transform: translateY(100%);
-}
-nsta-photo {
-  @extend .clearfix;
-  display: block;
-  position: relative;
-}
-
-nstagram-flash {
-  display: block;
-  height: auto;
-  width: 100%;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 100;
-
-  ul  {
-    background: rgba(48, 48, 48, 0.9);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.75) inset;
-  }
-  li {
-    white-space: nowrap;
-    text-align: center;
-    width: 100%;
-    background: rgba(48, 48, 48, 0.9);
-    color: $ng-white;
-    padding: 20px;
-    box-sizing: border-box;
-    font-size: 24px;
-    border-bottom: 1px solid rgba(0,0,0,0.5);
-    letter-spacing: 2px;
-    text-transform: lowercase;
-    overflow: hidden;
-    position: relative;
-
-    span {
-      -webkit-transform: scale(0.5);
-      transform: scale(0.5);
-    }
-  }
-
-  li:first-child {
-    margin-top: $menu-height;
-  }
-  .closing {
-    background: rgba(0, 0, 0, 0.5);
-  }
-
-  .closing-done, .opening {
-    background: $ng-darker;
-    border: 0;
-    height: 0;
-    padding: 0;
-    top: $menu-height * -2;
-    font-size: $menu-height * 18 / 25;
-
-    @include retina {
-      top: $r-menu-height * -2;
-      font-size: $r-menu-height * 18 / 25;
-
-      li:first-child {
-        margin-top: $r-menu-height;
-      }
-
-    }
-  }
-  .closing-done {
-    color: $ng-darker;
-  }
-  .opening {
-
-  }
-
-  .error-failure {
-    color: $ng-flash-red;
-  }
-  .error-success {
-    color: $ng-flash-green;
-  }
-  .error-notice {
-    color: $ng-flash-yellow;
-  }
+@media
+only screen and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2),
+only screen and (orientation: landscape) and (min--moz-device-pixel-ratio: 2),
+only screen and (orientation: landscape) and (-o-min-device-pixel-ratio: 2/1),
+only screen and (orientation: landscape) and (min-device-pixel-ratio: 2),
+only screen and (orientation: landscape) and (min-resolution: 192dpi),
+only screen and (orientation: landscape) and (min-resolution: 2dppx) {
+  $site-width: 500px;
+  $menu-height-px: $site-width / 20px;
+  $menu-height: $menu-height-px * 1px;
+  $space-base: $site-width / 150;
+  $avatar-size: $site-width / 6;
+  $space-0: $space-base;
+
+  $num-menu-items: 4;
+  $menu-width: $site-width / ($num-menu-items + 1);
+  $menu-min-height: $menu-height-px / 120 * 1in;
+
+  $space-null: 1px;
+  $space-2: $space-base * 2;
+  $space-3: $space-base * 3;
+  $space-4: $space-base * 4;
+  $space-6: $space-base * 6;
+  $space-8: $space-base * 8;
+  $space-16: $space-base * 16;
+  $space-20: $space-base * 20;
+
+  $font-s-base: $space-base * 4.8;
+  $font-s-0: $font-s-base / 1.5;
+  $font-s-2: $font-s-base * 1.25;
+  $font-s-3: $font-s-base * 2;
+  $font-s-4: $font-s-base * 2.8;
+  $font-s-menu: $menu-height * 0.4;
+  $font-s-menu-big: $font-s-menu * 1.25;
+
+  $ng-blue: hsl(206, 85%, 30%);
+  $ng-highlight: hsl(30, 80%, 48%);
+  $ng-follow: hsl(110, 60%, 41%);
+  $ng-create-action: hsl(146, 85%, 30%);
+
+  $ng-white: hsl(60, 10%, 99%);
+  $ng-slight: hsl(300, 10%, 88%);
+  $ng-light: hsl(150, 10%, 70%);
+  $ng-middle: hsl(180, 5%, 50%);
+  $ng-dark: rgb(51, 51, 51);
+  $ng-darker: hsl(30, 10%, 12%);
+
+  $ng-flash-red: hsl(356, 60%, 40%);
+  $ng-flash-yellow: hsl(56, 60%, 40%);
+  $ng-flash-green: hsl(146, 60%, 40%);
+  $ng-flash-blue: hsl(206, 60%, 40%);
+  @import "everything";
 }

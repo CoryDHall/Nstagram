@@ -5,7 +5,12 @@ Backbone.View.prototype.checkScroll = function (e, callback) {
       cH = ctx.clientHeight,
       sT = ctx.scrollTop,
       $load_el = this.$('load-more');
-  if (callback && ((sT + cH) / sH) > (2 / 3)) {
+  this.status = this.status || { running: false };
+  if (callback && ((sT + cH) / sH) > (2 / 3) && !this.status.running) {
+    this.status.running = true;
+    setTimeout(function () {
+      this.status.running = false;
+    }.bind(this), 600);
     return callback($load_el);
   }
 };

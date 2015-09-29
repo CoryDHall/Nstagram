@@ -6,6 +6,7 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
     this.userSession = options.userSession;
     this.listenTo(this.collection, "add", this.addMore);
     this.listenTo(this.collection, "reset", this.render);
+    this.style = options.style;
     this.profile = options.profile;
     this.page = options.pageOn || 1;
   },
@@ -33,7 +34,7 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
     this.loadMoreView = new Nstagram.Views.LoadMore({
       pageOn: this.page + 1
     });
-    this.addSubview('div', this.loadMoreView);
+    this.addSubview('div.load-more', this.loadMoreView);
     return this;
   },
 
@@ -58,7 +59,8 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
     this.page++;
     this.collection.fetch({
       data: {
-        page: this.page
+        page: this.page,
+        style: this.style
       },
       remove: false,
       success: function () {

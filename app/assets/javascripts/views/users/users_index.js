@@ -33,7 +33,7 @@ Nstagram.Views.UsersIndex = Backbone.CompositeView.extend({
     this.loadMoreView = new Nstagram.Views.LoadMore({
       pageOn: this.page + 1
     });
-    this.addSubview('div', this.loadMoreView);
+    this.addSubview('div.load-more', this.loadMoreView);
 
     return this;
   },

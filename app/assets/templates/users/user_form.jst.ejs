@@ -30,8 +30,8 @@
 <input type="file" name="user[profile_picture]" id="user_profile_picture"  placeholder="profile photo" >
 <br>
 <% if (user.isNew()) { %>
-<button value="Sign Up" data-disable-with="Building Your Account…">Sign Up</button>
+<button value="Sign Up" data-disable-with="Saving…">Sign Up</button>
 <% } else { %>
-<button value="Sign Up" data-disable-with="Building Your Account…">Update</button>
+<button value="Update" data-disable-with="Updating…">Update</button>
 <em>or</em><a href="#me">Cancel</a>
 <% } %>

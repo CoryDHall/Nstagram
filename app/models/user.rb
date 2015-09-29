@@ -96,6 +96,10 @@ class User < ActiveRecord::Base
     self.following.count
   end
 
+  def num_posts
+    self.photos.count
+  end
+
   def full_feed
     Photo.where(user: [self] | self.following)
   end

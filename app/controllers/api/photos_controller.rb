@@ -10,10 +10,11 @@ class Api::PhotosController < ApplicationController
   end
 
   def user_index
+    @style = !!params["style"] ? params["style"].intern : :thumb
     @photos = User.find_by({ username: params[:username] })
       .photos.order(created_at: :desc)
       .page(params["page"] || 1)
-    @style = !!params["style"] ? params["style"].intern : :thumb
+      .per(@style == :thumb ? 12 : 6);
     render :index
   end
 

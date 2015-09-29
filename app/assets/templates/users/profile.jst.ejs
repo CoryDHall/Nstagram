@@ -1,33 +1,46 @@
-<header>
-<nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture_url") %>)">
-</nstagram-avatar>
-<p>
-  <a href="#users/<%= user.escape("username") %>/followers">
-    <strong><%= user.escape("num_followers") %></strong> Followers
-  </a>
-</p>
-<p>
-  <a href="#users/<%= user.escape("username") %>/following">
-    Following <strong><%= user.escape("num_following") %></strong>
-  </a>
-</p>
-<nstagram-follow-button>
-</nstagram-follow-button>
-<p>
+<header class="profile-header clearfix">
+  <div class="profile-header-top clearfix">
+
+  <nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture_url") %>)">
+  </nstagram-avatar>
+  <ul>
+    <div class="clearfix">
+    <li><a href="#users/<%= user.escape("username") %>/photos">
+        <strong><%= user.escape("num_posts") %></strong> posts
+      </a></li><li>
+      <a href="#users/<%= user.escape("username") %>/followers">
+        <strong><%= user.escape("num_followers") %></strong> followers
+      </a>
+    </li><li>
+      <a href="#users/<%= user.escape("username") %>/following">
+        <strong><%= user.escape("num_following") %></strong> following
+      </a>
+    </li>
+  </div>
+    <% if (user.id === userSession.id) { %>
+    <p>
+      <a href="#users/<%= user.escape("username") %>/edit" class="edit-profile-link">Edit Your Profile</a>
+    </p>
+    <% } else { %>
+    <nstagram-follow-button>
+    </nstagram-follow-button>
+  <% } %>
+  </ul>
+  </div>
+<p class="full-name">
   <%= user.escape("full_name") %>
 </p>
-<p>
-  <em><%= user.escape("bio") %></em>
+<p class="bio">
+  <%= user.escape("bio") %>
 </p>
-<p>
-  <small><%= user.escape("website_url") %></small>
+<p class="website">
+  <a href="<%= user.escape("website_url") %>" target="_blank"><%= user.escape("website_url") %></a>
 </p>
-<% if (user.id === userSession.id) { %>
-<p>
-  <a href="#users/<%= user.escape("username") %>/edit"><strong>Edit Your Profile</strong></a>
-</p>
-<% } %>
 </header>
 <br>
-
+<ul class="profile-nav clearfix">
+  <li class="selected"><a href="#" class="thumbnail-link">[][][]</a></li>
+  <li><a href="#" class="full-size-link">[---]</a></li>
+</ul>
 <nstagram-thumbs-index></nstagram-thumbs-index>
+<nstagram-full-size-index></nstagram-full-size-index>
