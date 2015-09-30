@@ -1,8 +1,8 @@
 # nstagram
 
-[Heroku link][heroku]
+[Link][live-link]
 
-[heroku]: http://nstagram.herokuapp.com/
+[live-link]: http://nsta.corydantehall.com
 
 ## Minimum Viable Product
 nstagram is a clone of Instagram built on Rails and Backbone. Users can:
