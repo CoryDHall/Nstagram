@@ -4,4 +4,8 @@ class Comment < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :photo
+
+  has_one :super_user,
+    through: :photo,
+    source: :user
 end

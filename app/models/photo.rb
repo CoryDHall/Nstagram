@@ -27,6 +27,15 @@ class Photo < ActiveRecord::Base
   has_many :comments,
     dependent: :destroy
 
+  def last_two_comments
+    comments
+      .includes(:user, :super_user)
+      .order("comments.created_at DESC")
+      .where.not(id: caption.id)
+      .first(3)
+      .reverse
+  end
+
   paginates_per 6
 
   def ensure_caption

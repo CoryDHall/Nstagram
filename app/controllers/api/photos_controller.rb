@@ -1,5 +1,5 @@
 class Api::PhotosController < ApplicationController
-  before_action :set_photo, only: [:show, :destroy, :like, :unlike]
+  before_action :set_photo, only: [:show, :destroy, :like, :unlike, :comments, :new_comment, :delete_comment]
   before_action :require_log_in!, except: [:user_index, :show]
   before_action :require_ownership!, only: [:destroy]
   after_action :send_photos_errors, only: [:index, :user_index]
@@ -59,6 +59,34 @@ class Api::PhotosController < ApplicationController
     @owner_status = owner?(user.id)
   end
 
+  def comments
+    @comments = @photo.comments
+    render :comments
+  end
+
+  def new_comment
+    comment = @photo.comments.new(user: current_user, body: comment_params[:body])
+    if comment.save
+      status = 200
+    else
+      status = 402
+    end
+    render json: comment, status: status
+  end
+
+  def delete_comment
+    comment = Comment.find(params[:comment_id])
+    valid = comment &&
+      (comment.user == current_user || comment.super_user == current_user)
+    if valid
+      @photo.comments.delete(comment)
+      status = 200
+    else
+      status = 402
+    end
+    render json: {}, status: status
+  end
+
   private
 
     def set_photo
@@ -75,5 +103,9 @@ class Api::PhotosController < ApplicationController
 
     def photo_params
       params.require(:photo).permit(:photo, :caption)
+    end
+
+    def comment_params
+      params.require(:comment).permit(:body)
     end
 end

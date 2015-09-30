@@ -41,6 +41,11 @@ Rails.application.routes.draw do
     put 'like/:photo_id', to: 'photos#like'
     delete 'like/:photo_id', to: 'photos#unlike'
 
+    get 'comments/:photo_id', to: 'photos#comments'
+    post 'comments/:photo_id', to: 'photos#new_comment'
+    put 'comments/:photo_id/:comment_id', to: 'photos#new_comment'
+    delete 'comments/:photo_id/:comment_id', to: 'photos#delete_comment'
+
     get '*redirect', to: '/application#failure'
   end
 

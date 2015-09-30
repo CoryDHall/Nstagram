@@ -22,6 +22,11 @@ Nstagram.Models.Photo = Backbone.Model.extend({
     if (resp.likes) {
       this.likers = resp.likes.users || [];
     }
+    if (resp.comments) {
+      this.comments();
+      this.comments().set(resp.comments);
+      delete resp.comments;
+    }
     this.likers = this.likers || [];
     return resp;
   },
@@ -48,5 +53,19 @@ Nstagram.Models.Photo = Backbone.Model.extend({
       this.get("likes").count === 0 && this.unset("likes");
       this._like.destroy(options);
     }
+  },
+  comments: function (options) {
+    this._comments = this._comments || new Nstagram.Collections.Comments({
+      photo_id: this.id
+    });
+    return this._comments;
+  },
+  newComment: function (options) {
+    var comment = new Nstagram.Models.Comment({
+      photo_id: this.id
+    });
+    comment.set(options);
+    this.comments().add(comment);
+    return comment;
   }
 });

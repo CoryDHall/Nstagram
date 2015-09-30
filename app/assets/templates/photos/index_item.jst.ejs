@@ -40,3 +40,20 @@
     <%= photo.escape("caption") %>
   </p>
 <% } %>
+
+<% photo.comments().each(function(comment, idx) { %>
+  <p class="comment">
+    <% if (photo.comments().length > 2 && idx === 0) { %>
+      ...
+    <% } else { %>
+      <a href="#users/<%= comment.escape("user") %>" class="comment-author"><%= comment.escape("user") %></a>
+      <%= comment.escape("body") %>
+    <% } %>
+  </p>
+<% }) %>
+<p class="comment">
+  <form class="new-comment-form">
+    <input type="text" name="comment[body]" value="" placeholder="Post a new comment" class="comment-input">
+    <button class="new-comment-button" disabled value="Post Comment" data-disable-with="Saving…">Post Comment</button>
+  </form>
+</p>

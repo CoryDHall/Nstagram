@@ -230,7 +230,7 @@ photos-index {
 }
 
 form *, a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitter-button:active {
-  font-size: $font-s-4;
+  font-size: $font-s-menu;
   padding: $space-base;
   outline: 0;
   width: 100%;
@@ -239,8 +239,8 @@ form *, a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover,
   border-style: solid;
   display: block;
   float: none;
-  min-height: $menu-height * 2;
-  line-height: $menu-height * 2;
+  min-height: $menu-height;
+  line-height: $menu-height;
   box-sizing: border-box;
 }
 
@@ -268,7 +268,7 @@ form {
   :valid:required {
     background: $ng-white;
     color: #000;
-    outline: $space-2 solid $ng-flash-blue;
+    outline: $space-null solid $ng-flash-blue;
   }
 
   #photo-input {
@@ -343,6 +343,14 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
   button:enabled {
     background: $ng-create-action;
     cursor: pointer;
+  }
+}
+
+.new-comment-form {
+  text-align: left;
+
+  button.new-comment-button {
+    display: none;
   }
 }
 
@@ -540,7 +548,7 @@ nstagram-profile {
   }
 }
 nstagram-thumbs-index {
-  p.likes, p.caption, ul.photo-actions, nsta-photo-post-head {
+  p.likes, p.caption, p.comment, ul.photo-actions, nsta-photo-post-head, form {
     display: none;
   }
 }
@@ -578,7 +586,7 @@ photos-index {
         color: $ng-middle;
         font-size: $font-s-0;
       }
-      p.likes, p.caption {
+      p.likes, p.caption, p.comment {
         text-align: left;
         font-size: $font-s-base;
         a {

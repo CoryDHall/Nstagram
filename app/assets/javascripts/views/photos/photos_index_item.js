@@ -7,12 +7,32 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
     this.profile = options.profile;
     this.listenTo(this.model, 'sync change change:is_current_user_liking set', this.render);
     this.listenTo(this.model._like, 'sync', this.renderLater);
+    this.listenTo(this.model.comments(), 'add remove fetch', this.render);
   },
 
   events: {
     'doubletap': 'like',
     'click .like-button': 'likeToggle',
-    'click .delete-button': 'delete'
+    'click .delete-button': 'delete',
+    'input .comment-input': 'startingInput',
+    'submit': 'saveComment'
+  },
+
+  startingInput: function (e) {
+    this.$('.new-comment-button').prop("disabled", false);
+  },
+
+  saveComment: function (e) {
+    e.preventDefault();
+    var comment = this.model.newComment($(e.target).serializeJSON());
+    comment.save({
+      user: this.userSession.user.get("username")
+    }, {
+      success: this.render.bind(this),
+      error: function () {
+        comment.collection.remove(comment);
+      }
+    });
   },
 
   delete: function (e) {
