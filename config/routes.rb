@@ -16,7 +16,9 @@ Rails.application.routes.draw do
       except: [:destroy, :new, :edit],
       defaults: { format: :json } do
 
+
       collection do
+        post 'guest/new', to: 'guest_users#create'
         get '::username', to: 'users#profile', username: /[\w-]+/
 
         get '::username/photos', to: 'photos#user_index'

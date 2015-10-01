@@ -56,6 +56,8 @@ class User < ActiveRecord::Base
   has_many :auths,
     dependent: :destroy
 
+  has_many :guest_user_data
+
   paginates_per 24
 
   after_create :ensure_session_token

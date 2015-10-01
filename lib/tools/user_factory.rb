@@ -41,7 +41,7 @@ class UserFactory
     end
 
     def self.get_profile_picture_from_tumblr(user, profile_picture_query = nil)
-      profile_picture_query ||= "#{%w(grumpy happy fat funny lol sad hungry).sample} #{%w(cat kitty dog puppy).sample}"
+      profile_picture_query ||= "#{%w(grumpy happy funny lol hungry).sample} #{%w(cat kitty dog puppy).sample}"
       try_only_n_times 10 do
         Seeder.get_profile_picture_from_tumblr user, profile_picture_query
       end

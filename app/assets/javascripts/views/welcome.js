@@ -2,7 +2,8 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
   id: 'welcome',
   template: JST['welcome'],
   events: {
-    'click nav > a': 'toggleSignUpLogIn'
+    'click nav > a': 'toggleSignUpLogIn',
+    'submit .guest-form': 'guestLogin'
   },
   render: function () {
     var content = this.template();
@@ -58,5 +59,11 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
           .addClass('hidden-form');
         break;
     }
-  }
+  },
+
+  guestLogin: function (e) {
+    e.preventDefault();
+    var guest = new Nstagram.Models.Guest();
+    guest.save();
+  },
 });
