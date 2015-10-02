@@ -290,9 +290,6 @@ form {
   #photo-upload.empty {
     outline: $space-null solid $ng-darker;
   }
-
-
-
 }
 
 a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitter-button:active {
@@ -498,7 +495,7 @@ nstagram-profile {
           color: $ng-follow;
           background: transparent;
         }
-        div, .follow-button {
+        div, .follow-button, .unfollow-button {
           width: 100%;
         }
       }

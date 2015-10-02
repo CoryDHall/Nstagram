@@ -35,9 +35,12 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
       reference: "Upload",
       status: "notice",
       time: "now",
-      message: "a photo by clicking anywhere"
+      message: "a photo by clicking in the black square"
     })
     this.resize();
+    var ctx = this.$('canvas')[0].getContext("2d");
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     return this;
   },
 

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :api, as: '' do
     get 'errors', to: '/application#errors'
 
+
     resource :feed,
       only: [:index],
       defaults: { format: :json } do
