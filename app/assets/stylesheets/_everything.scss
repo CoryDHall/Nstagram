@@ -59,6 +59,7 @@ nstagram-content {
   position: relative;
   height: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 vert-box, top-box {
@@ -138,6 +139,9 @@ photos-index {
 }
 
 
+body > div {
+  display: none;
+}
 /*WELCOME*/
 
 #welcome {
@@ -146,6 +150,11 @@ photos-index {
   .welcome {
     text-align: center;
     min-height: $avatar-size;
+  }
+
+  section.welcome {
+    width: 100%;
+    border-top: $space-0 solid $ng-white;
   }
 
   header.welcome {
@@ -181,6 +190,7 @@ photos-index {
     font-size: $font-s-menu;
     position: absolute;
     width: $site-width;
+    max-width: 100%;
     bottom: 0;
     left: 0;
     right: 0;
@@ -205,21 +215,27 @@ photos-index {
       content: "";
       width: 0;
       display: block;
-      border: $space-2 solid transparent;
+      border: $space-3 solid transparent;
       border-bottom-color: $ng-white;
       margin: 0 auto -$space-base;
-      position: relative;
+      position: absolute;
+      left: 25%;
       bottom: 0;
+      -webkit-transform: translate(-50%, 25%);
+      transform: translate(-50%, 25%);
     }
     a:last-child:not(.hidden-form)::after {
       content: "";
       width: 0;
       display: block;
-      border: $space-2 solid transparent;
+      border: $space-3 solid transparent;
       border-bottom-color: $ng-white;
       margin: 0 auto -$space-base;
-      position: relative;
+      position: absolute;
+      right: 25%;
       bottom: 0;
+      -webkit-transform: translate(50%, 25%);
+      transform: translate(50%, 25%);
     }
   }
   :disabled {
@@ -234,7 +250,7 @@ form *, a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover,
   padding: $space-base;
   outline: 0;
   width: 100%;
-  border-radius: $space-2;
+  // border-radius: $space-2;
   border-color: $ng-slight;
   border-style: solid;
   display: block;
@@ -245,7 +261,7 @@ form *, a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover,
 }
 
 form {
-  margin-bottom: $menu-height;
+  margin-bottom: $space-base;
 
   label {
     display: none;
@@ -293,7 +309,7 @@ form {
 }
 
 a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitter-button:active {
-  font-size: $menu-height / 5 * 4;
+  // font-size: $menu-height / 5 * 4;
   font-weight: bold;
   background: hsl(190, 90%, 60%);
   color: $ng-white;
@@ -307,6 +323,7 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
   background: $ng-darker;
   position: absolute;
   top: -$menu-height;
+  margin-bottom: $menu-height;
   bottom: 0;
   width: 100%;
 
@@ -326,7 +343,7 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
   }
 
   .form-caption {
-    margin-top: $space-2;
+    margin-top: $space-6;
     color: $ng-white;
   }
 
@@ -395,9 +412,10 @@ users-index {
       }
     }
     h4 {
-      font-size: $font-s-2;
-      line-height: $font-s-2;
-      padding: (($menu-height * 2) - $font-s-2) / 2;
+      font-size: $font-s-base;
+      line-height: $font-s-base;
+      padding: (($menu-height * 2) - $font-s-base) / 2;
+      padding-left: $space-2;
       display: inline-block;
       position: absolute;
     }
@@ -409,8 +427,8 @@ users-index {
     position: absolute;
     right: 0;
     top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%) translateX(-$space-base);
+    transform: translateY(-50%) translateX(-$space-base);
   }
 }
 nstagram-profile {
@@ -520,8 +538,8 @@ nstagram-profile {
   border-color: $ng-middle;
   border-style: solid;
   border-width: 1px;
-  font-size: $font-s-3;
-  line-height: $font-s-3;
+  font-size: $font-s-2;
+  line-height: $font-s-2;
 
   li {
     float: left;
@@ -788,6 +806,7 @@ nstagram-flash {
   box-sizing: border-box;
   position: relative;
   z-index: 100;
+  white-space: normal;
 
   ul  {
     position: absolute;
@@ -796,7 +815,6 @@ nstagram-flash {
     box-shadow: 0 $space-2 $space-4 rgba(0,0,0,0.75) inset;
   }
   li {
-    white-space: nowrap;
     text-align: center;
     width: 100%;
     background: rgba(48, 48, 48, 0.9);
