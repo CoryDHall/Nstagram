@@ -1,4 +1,12 @@
 class Photo < ActiveRecord::Base
+  include PgSearch
+  pg_search_scope :_has_hashtags, lambda { |query| {
+    associated_against: {
+      comments: :body
+    },
+    query: "#" + query
+    }
+  }
   validates :user, :photo, presence: true
   before_save :ensure_caption
   after_save :commit_caption
@@ -34,6 +42,16 @@ class Photo < ActiveRecord::Base
       .where.not(id: caption.id)
       .first(3)
       .reverse
+  end
+
+  def hashtags
+    self.comments.map(&:hashtags).flatten.compact
+  end
+
+  def self.has_hashtag(tag)
+    _has_hashtags(tag).page(1).select do |photo|
+      photo.hashtags.flatten.include? ("##{tag}")
+    end
   end
 
   paginates_per 6

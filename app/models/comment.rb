@@ -8,4 +8,8 @@ class Comment < ActiveRecord::Base
   has_one :super_user,
     through: :photo,
     source: :user
+
+  def hashtags
+    self.body.scan(/#\w+/)
+  end
 end

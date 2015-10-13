@@ -49,6 +49,13 @@ Rails.application.routes.draw do
     put 'comments/:photo_id/:comment_id', to: 'photos#new_comment'
     delete 'comments/:photo_id/:comment_id', to: 'photos#delete_comment'
 
+    resource :search,
+      only: [:index],
+      defaults: { format: :json } do
+        get ':query', to: 'application#search'
+      end
+
+
     get '*redirect', to: '/application#failure'
   end
 
