@@ -39,6 +39,8 @@ gem 'kaminari'
 
 gem 'omniauth-twitter'
 
+gem 'pg_search'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
