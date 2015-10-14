@@ -13,20 +13,28 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
   initialize: function (options) {
     this.userSession = options.userSession;
     $(window).resize(this.resize.bind(this));
+    this.aRatio = 1;
   },
 
   resize: function (e) {
     var $canvas = this.$('canvas');
     var availableHeight = this.$el.parent().height() - this.$('button').height() - this.$('.form-caption').height();
     var availableWidth = this.$el.parent().width();
-    if (availableWidth > availableHeight) {
-      var newDim = Math.max(availableHeight, 100);
-      $canvas.width(newDim);
-      $canvas.height(newDim);
-    } else {
+    var avRatio = availableWidth / availableHeight;
+    if (availableWidth / this.aRatio <= availableHeight) {
       $canvas.width(availableWidth);
-      $canvas.height(availableWidth);
+      $canvas.height(availableWidth / this.aRatio);
+    } else {
+      $canvas.width(availableHeight * this.aRatio);
+      $canvas.height(availableHeight);
     }
+    // if (availableWidth >= availableHeight) {
+    //   $canvas.width(newDim);
+    //   $canvas.height(newDim);
+    // } else {
+    //   $canvas.width(availableWidth);
+    //   $canvas.height(availableWidth);
+    // }
   },
 
   render: function () {
@@ -45,7 +53,7 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
   },
 
   showPhoto: function (e) {
-    var photo = this.photo = e.currentTarget.files[0];
+    var photo = this.photoFile = e.currentTarget.files[0];
     $(e.currentTarget).prop("disabled", true);
     this.$('.empty').removeClass("empty");
     var reader = new FileReader();
@@ -61,15 +69,23 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
       this.$('.form-caption').prop("disabled", false).focus();
 
       var canvas = view.$('#photo-upload')[0];
-
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
       var ctx = canvas.getContext("2d");
-      var aRatio = (img.naturalWidth / img.naturalHeight);
+      var aRatio = this.aRatio = (img.naturalWidth / img.naturalHeight);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      var dW = aRatio > 1 ? canvas.width : canvas.width * aRatio;
-      var dH = aRatio > 1 ? canvas.height / aRatio : canvas.height;
-      var oX = (canvas.width - dW) / 2;
-      var oY = (canvas.height - dH) / 2;
-      ctx.drawImage(img, oX, oY, dW, dH);
+      var $canvas = this.$('canvas');
+
+      ctx.drawImage(img, 0, 0);
+
+      var photoUri = canvas.toDataURL("image/jpeg", 1.0);
+      var bytes = atob(photoUri.split(',')[1]);
+      var arr = new Uint8Array(bytes.length);
+      for (var i = 0; i < bytes.length; i++) {
+        arr[i] = bytes.charCodeAt(i);
+      }
+
+      this.photoFile = new Blob([arr], { type: "image/jpeg" });
 
       view.$('button').prop("disabled", false);
       view.resize();
@@ -92,7 +108,7 @@ Nstagram.Views.PhotoNew = Backbone.View.extend({
     this.resize();
 
     var formData = new FormData(this.el);
-    formData.append('photo[photo]', this.photo);
+    formData.append('photo[photo]', this.photoFile, "photo" + Math.random() + ".jpeg");
 
     this.userSession.fetch({
       success: function (session) {

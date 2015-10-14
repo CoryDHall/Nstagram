@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require jquery.serializejson
 //= require jquery.mobile-events
+//= require jquery.ui.widget
+//= require z.jquery.fileupload
 //= require underscore
 //= require backbone
 //= require tweenmax

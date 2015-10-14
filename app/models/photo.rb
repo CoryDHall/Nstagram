@@ -14,6 +14,7 @@ class Photo < ActiveRecord::Base
   belongs_to :user
 
   has_attached_file :photo,
+  preserve_files: "true",
     styles: {
       thumb: ['300x300#', :jpg],
       full: '1200'

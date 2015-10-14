@@ -9,7 +9,7 @@ Nstagram.Models.Photo = Backbone.Model.extend({
   parse: function (resp) {
     if (resp.user) {
       this.user = this.user || new Nstagram.Models.User();
-      this.user.set(resp.user);
+      this.user.set(resp.user.attributes || resp.user);
       delete resp.user;
     }
     if (resp.current_like) {

@@ -20,6 +20,8 @@ Backbone.Model	app/assets/javascripts/utils/save_form_data.js	/^Backbone.Model.p
 Backbone.Model.saveFormData	app/assets/javascripts/utils/save_form_data.js	/^Backbone.Model.prototype.saveFormData = function (formData, options) {$/;"	m
 Backbone.Router	app/assets/javascripts/utils/swap_view.js	/^Backbone.Router.prototype._swapView = function (newView) {$/;"	c
 Backbone.Router._swapView	app/assets/javascripts/utils/swap_view.js	/^Backbone.Router.prototype._swapView = function (newView) {$/;"	m
+Api	app/controllers/api/application_controller.rb	/^class Api::ApplicationController < ApplicationController$/;"	c
+search	app/controllers/api/application_controller.rb	/^  def search$/;"	f	class:Api
 Api	app/controllers/api/guest_users_controller.rb	/^class Api::GuestUsersController < Api::UsersController$/;"	c
 create	app/controllers/api/guest_users_controller.rb	/^  def create$/;"	f	class:Api
 Api	app/controllers/api/photos_controller.rb	/^class Api::PhotosController < ApplicationController$/;"	c
@@ -95,6 +97,7 @@ follow	app/controllers/users_controller.rb	/^  def follow$/;"	f	class:UsersContr
 unfollow	app/controllers/users_controller.rb	/^  def unfollow$/;"	f	class:UsersController
 set_user	app/controllers/users_controller.rb	/^    def set_user$/;"	f	class:UsersController
 user_params	app/controllers/users_controller.rb	/^    def user_params$/;"	f	class:UsersController
+Api	app/helpers/api/application_helper.rb	/^module Api::ApplicationHelper$/;"	m
 Api	app/helpers/api/guest_user_helper.rb	/^module Api::GuestUserHelper$/;"	m
 Api	app/helpers/api/photo_helper.rb	/^module Api::PhotoHelper$/;"	m
 Api	app/helpers/api/users_helper.rb	/^module Api::UsersHelper$/;"	m
@@ -104,6 +107,7 @@ UserSessionsHelper	app/helpers/user_sessions_helper.rb	/^module UserSessionsHelp
 UsersHelper	app/helpers/users_helper.rb	/^module UsersHelper$/;"	m
 Auth	app/models/auth.rb	/^class Auth < ActiveRecord::Base$/;"	c
 Comment	app/models/comment.rb	/^class Comment < ActiveRecord::Base$/;"	c
+hashtags	app/models/comment.rb	/^  def hashtags$/;"	f	class:Comment
 Follow	app/models/follow.rb	/^class Follow < ActiveRecord::Base$/;"	c
 follower=	app/models/follow.rb	/^  def follower=(follower)$/;"	f	class:Follow
 user=	app/models/follow.rb	/^  def user=(user)$/;"	f	class:Follow
@@ -112,6 +116,8 @@ GuestUserDatum	app/models/guest_user_datum.rb	/^class GuestUserDatum < ActiveRec
 Like	app/models/like.rb	/^class Like < ActiveRecord::Base$/;"	c
 Photo	app/models/photo.rb	/^class Photo < ActiveRecord::Base$/;"	c
 last_two_comments	app/models/photo.rb	/^  def last_two_comments$/;"	f	class:Photo
+hashtags	app/models/photo.rb	/^  def hashtags$/;"	f	class:Photo
+has_hashtag	app/models/photo.rb	/^  def self.has_hashtag(tag)$/;"	F	class:Photo
 ensure_caption	app/models/photo.rb	/^  def ensure_caption$/;"	f	class:Photo
 commit_caption	app/models/photo.rb	/^  def commit_caption$/;"	f	class:Photo
 User	app/models/user.rb	/^class User < ActiveRecord::Base$/;"	c
@@ -183,6 +189,11 @@ AddUserNameIndexToAuths	db/migrate/20150927050305_add_user_name_index_to_auths.r
 change	db/migrate/20150927050305_add_user_name_index_to_auths.rb	/^  def change$/;"	f	class:AddUserNameIndexToAuths
 CreateGuestUserData	db/migrate/20151001213014_create_guest_user_data.rb	/^class CreateGuestUserData < ActiveRecord::Migration$/;"	c
 change	db/migrate/20151001213014_create_guest_user_data.rb	/^  def change$/;"	f	class:CreateGuestUserData
+CreatePgSearchDocuments	db/migrate/20151013031936_create_pg_search_documents.rb	/^class CreatePgSearchDocuments < ActiveRecord::Migration$/;"	c
+up	db/migrate/20151013031936_create_pg_search_documents.rb	/^  def self.up$/;"	F	class:CreatePgSearchDocuments
+down	db/migrate/20151013031936_create_pg_search_documents.rb	/^  def self.down$/;"	F
+AddSearchExtensions	db/migrate/20151013034710_add_search_extensions.rb	/^class AddSearchExtensions < ActiveRecord::Migration$/;"	c
+change	db/migrate/20151013034710_add_search_extensions.rb	/^  def change$/;"	f	class:AddSearchExtensions
 Seeder	lib/tools/seeder.rb	/^class Seeder$/;"	c
 seed_from_google	lib/tools/seeder.rb	/^  def self.seed_from_google (query, subspace = "")$/;"	F	class:Seeder
 seed_from_tumblr	lib/tools/seeder.rb	/^  def self.seed_from_tumblr(query, subspace = "", only_one = false)$/;"	F	class:Seeder
@@ -202,6 +213,7 @@ give_photos_time	lib/tools/user_factory.rb	/^    def self.give_photos_time (user
 add_photos_to	lib/tools/user_factory.rb	/^    def self.add_photos_to (user, *query)$/;"	F	class:UserFactory
 follow_random	lib/tools/user_factory.rb	/^    def self.follow_random (user, users = nil)$/;"	F	class:UserFactory
 try_only_n_times	lib/tools/user_factory.rb	/^    def self.try_only_n_times (n, &prc)$/;"	F	class:UserFactory
+Api	test/controllers/api/application_controller_test.rb	/^class Api::ApplicationControllerTest < ActionController::TestCase$/;"	c
 Api	test/controllers/api/guest_user_controller_test.rb	/^class Api::GuestUserControllerTest < ActionController::TestCase$/;"	c
 Api	test/controllers/api/photo_controller_test.rb	/^class Api::PhotoControllerTest < ActionController::TestCase$/;"	c
 Api	test/controllers/api/user_controller_test.rb	/^class Api::UserControllerTest < ActionController::TestCase$/;"	c
@@ -423,6 +435,15 @@ $.event.special.throttledresize.teardown	vendor/assets/javascripts/jquery.mobile
 triggerCustomEvent	vendor/assets/javascripts/jquery.mobile-events.js	/^    function triggerCustomEvent(obj, eventType, event, touchData) {$/;"	f
 $.fn.serializeJSON	vendor/assets/javascripts/jquery.serializejson.js	/^  "use strict";$/;"	f
 optWithDefault	vendor/assets/javascripts/jquery.serializejson.js	/^      }$/;"	f
+$.expr.toLowerCase	vendor/assets/javascripts/jquery.ui.widget.js	/^	}$/;"	f
+constructor	vendor/assets/javascripts/jquery.ui.widget.js	/^	} );$/;"	c
+$.widget	vendor/assets/javascripts/jquery.ui.widget.js	/^} )( $.cleanData );$/;"	f
+$.widget.extend	vendor/assets/javascripts/jquery.ui.widget.js	/^};$/;"	f
+$.fn	vendor/assets/javascripts/jquery.ui.widget.js	/^	var fullName = object.prototype.widgetFullName || name;$/;"	f
+$.widget.bridge	vendor/assets/javascripts/jquery.ui.widget.js	/^};$/;"	f
+$.Widget	vendor/assets/javascripts/jquery.ui.widget.js	/^};$/;"	f
+$.Widget	vendor/assets/javascripts/jquery.ui.widget.js	/^$.Widget._childConstructors = [];$/;"	c
+processClassString	vendor/assets/javascripts/jquery.ui.widget.js	/^		function processClassString( classes, checkOption ) {$/;"	f
 p._onInitAllProps	vendor/assets/javascripts/tweenmax.js	/^			p = RoundPropsPlugin.prototype;$/;"	f
 p._add	vendor/assets/javascripts/tweenmax.js	/^		};$/;"	c
 _namespace	vendor/assets/javascripts/tweenmax.js	/^		var _namespace = function(ns) {$/;"	f
@@ -479,3 +500,4 @@ p._roundProps	vendor/assets/javascripts/tweenmax.js	/^		};$/;"	f
 TweenLite._onPluginEvent	vendor/assets/javascripts/tweenmax.js	/^		};$/;"	f
 TweenPlugin.activate	vendor/assets/javascripts/tweenmax.js	/^		};$/;"	f
 _gsDefine.plugin	vendor/assets/javascripts/tweenmax.js	/^		};$/;"	f
+getDragHandler	vendor/assets/javascripts/z.jquery.fileupload.js	/^    function getDragHandler(type) {$/;"	f
