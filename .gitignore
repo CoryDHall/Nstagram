@@ -27,5 +27,6 @@ mech.log
 *\~
 
 # Ignore local files
-tags
+/tags
 my_alias
+

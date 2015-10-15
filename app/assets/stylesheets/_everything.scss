@@ -358,6 +358,90 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     background: $ng-create-action;
     cursor: pointer;
   }
+
+  .filter-select {
+    position: absolute;
+    bottom: $menu-height * 2;
+    min-width: 10%;
+    max-width: 50%;
+    border: 1px solid rgba(255,255,255,0.7);
+    right: $menu-height;
+    background: $ng-darker;
+    font-weight: bold;
+    color: $ng-white;
+    box-shadow: 0 $space-0 $space-4 $ng-darker;
+    padding: $space-0 0 0;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    text-transform: uppercase;
+
+    h6 {
+      margin: $space-null 0 $space-2;
+      border: 0;
+      padding: $space-base $space-3;
+      font-size: $font-s-base;
+      cursor: all-scroll;
+    }
+    h6::after {
+      content: " x";
+      font-size: 200%;
+    }
+
+    li.filter-item {
+      padding: 0;
+      cursor: pointer;
+      font-size: $font-s-menu;
+
+      a, a:link, a:hover, a:visited, a:active {
+        border: 0;
+        outline: 0;
+        padding: $space-base $space-3;
+      }
+
+      a:hover {
+        background: $ng-highlight;
+      }
+
+    }
+    .filter-item.selected {
+      a {
+        background: $ng-blue;
+      }
+    }
+  }
+
+  .filter-select.empty {
+    opacity: 0;
+    height: 0;
+  }
+
+  .filter-select.closed {
+    right: 0;
+    bottom: $menu-height * 1.5;
+    max-width: 10%;
+    h6 {
+      cursor: pointer;
+    }
+    h6::before {
+      content: "+ ";
+      font-size: 200%;
+    }
+    h6::after {
+      content: "";
+      font-size: 0;
+    }
+    .filter-item.selected a {
+      font-size: 0;
+      padding: $space-null;
+    }
+    li.filter-item:not(.selected) {
+      visibility: collapse;
+      height: 0;
+      min-height: 0;
+    }
+  }
 }
 
 .new-comment-form {
