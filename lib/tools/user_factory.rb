@@ -5,7 +5,7 @@ class UserFactory
     user = nil
     try_only_n_times 10 do
       name ||= Faker::Name.name
-      user = User.create(
+      user ||= User.create(
         username: Faker::Internet.user_name(name, joins),
         password: "password",
         email: Faker::Internet.safe_email(name),
@@ -20,9 +20,9 @@ class UserFactory
     def self.create_user_with_photos(name_and_query)
       user = nil
       try_only_n_times 5 do
-        user = create_user name_and_query
+        user ||= create_user name_and_query
         get_profile_picture_from_tumblr user, name_and_query
-        add_photos_to user
+        add_photos_to user, name_and_query
         user.save!
       end
 
@@ -32,8 +32,10 @@ class UserFactory
     def self.create_a_full_user(name_and_query, users_to_follow = nil, lock = false)
       user = nil
       try_only_n_times 5 do
-        user = create_user_with_photos name_and_query
-        follow_random user, users_to_follow
+        user ||= create_user_with_photos name_and_query
+        rand(User.count).times do
+          follow_random user, users_to_follow
+        end
         lock_user user if lock
         user.save!
       end
