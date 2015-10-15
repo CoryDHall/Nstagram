@@ -5,12 +5,12 @@ class UserFactory
     user = nil
     try_only_n_times 10 do
       name ||= Faker::Name.name
-      user ||= User.create(
+      user ||= User.create!(
         username: Faker::Internet.user_name(name, joins),
         password: "password",
         email: Faker::Internet.safe_email(name),
         full_name: name,
-        bio: Faker::Lorem.sentence,
+        bio: Faker::Name.title,
         website_url: Faker::Internet.url
         )
       end
@@ -31,10 +31,16 @@ class UserFactory
 
     def self.create_a_full_user(name_and_query, users_to_follow = nil, lock = false)
       user = nil
+      users_to_follow ||= User.order_by_num_photos.to_a
       try_only_n_times 5 do
         user ||= create_user_with_photos name_and_query
         rand(User.count).times do
           follow_random user, users_to_follow
+        end
+        photos = Photo.order_by_popularity.to_a
+        rand(Photo.count).times do
+          like_random user, photos
+          comment_random user, photos
         end
         lock_user user if lock
         user.save!
@@ -84,8 +90,33 @@ class UserFactory
       users ||= User.order_by_num_photos.to_a
 
       try_only_n_times 10 do
-        index = Math.sqrt(rand(users.count) + 1).floor
+        index = Math.sqrt(rand(users.count)).floor
         user.follow users[index]
+      end
+
+      user
+    end
+
+    def self.like_random (user, photos = nil)
+      photos ||= Photo.order_by_popularity.to_a
+
+      try_only_n_times 5 do
+        index = Math.sqrt(rand(photos.count)).floor
+        user.like photos[index]
+      end
+
+      user
+    end
+
+    def self.comment_random (user, photos = nil)
+      photos ||= Photo.order_by_popularity.to_a
+      body = ["@#{user.following.select(:username).sample.username}",
+        "##{Faker::Commerce.product_name.gsub(/\W/, "")}"] +
+        Faker::Hacker.say_something_smart.scan(/[\w\s^']+/)
+
+      try_only_n_times 2 do
+        index = Math.sqrt(rand(photos.count)).floor
+        photos[index].comments.create(user: user, body: body.shuffle.join(" "))
       end
 
       user

@@ -55,6 +55,16 @@ class Photo < ActiveRecord::Base
     end
   end
 
+  def self.order_by_popularity
+    self
+      .joins("LEFT OUTER JOIN comments ON comments.photo_id = photos.id")
+      .group(:id)
+      .joins("LEFT OUTER JOIN likes ON likes.photo_id = photos.id")
+      .group(:id)
+      .select("photos.*")
+      .order("COUNT(photos.id) DESC")
+  end
+
   paginates_per 6
 
   def ensure_caption
