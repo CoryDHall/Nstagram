@@ -11,6 +11,8 @@ window.Nstagram = {
       flashEl: "nstagram-flash"
     });
 
+    this.timeline = new TimelineMax();
+
     Backbone.history.start();
   }
 };

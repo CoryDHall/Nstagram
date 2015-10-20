@@ -19,6 +19,7 @@
 //= require underscore
 //= require backbone
 //= require tweenmax
+//= require timelinemax
 //= require nstagram
 //= require_tree ./utils
 //= require_tree ../templates

@@ -37,26 +37,23 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
 
   toggleSignUpLogIn: function (e) {
     e.preventDefault();
-
     this.$('a')
       .removeClass('hidden-form')
       .not(e.currentTarget)
       .addClass('hidden-form');
 
+    var tl = Nstagram.timeline;
+
     switch ($(e.currentTarget).attr('class')) {
       case 'signup-link':
-        this.$('#signup-form.hidden-form')
-          .removeClass('hidden-form');
-        this.$('#login-form')
-          .not('.hidden-form')
-          .addClass('hidden-form');
+        tl
+          .to(this.$('#signup-form.hidden-form'), 0.25, { className: "-=hidden-form" })
+          .to(this.$('#login-form').not('.hidden-form'), 0.5, { className: "+=hidden-form" }, '-=0.4');
         break;
       case 'login-link':
-        this.$('#login-form.hidden-form')
-          .removeClass('hidden-form');
-        this.$('#signup-form')
-          .not('.hidden-form')
-          .addClass('hidden-form');
+        tl
+          .to(this.$('#login-form.hidden-form'), 0.25, { className: "-=hidden-form" })
+          .to(this.$('#signup-form').not('.hidden-form'), 0.5, { className: "+=hidden-form" }, '-=0.2');
         break;
     }
   },
