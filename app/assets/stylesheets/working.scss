@@ -54,10 +54,10 @@ only screen and (orientation: portrait) and (-o-min-device-pixel-ratio: 2/1),
 only screen and (orientation: portrait) and (min-device-pixel-ratio: 2),
 only screen and (orientation: portrait) and (min-resolution: 192dpi),
 only screen and (orientation: portrait) and (min-resolution: 2dppx) {
-  $site-width: 1200px;
-  $menu-height-px: $site-width / 40px;
+  $site-width: 900px;
+  $menu-height-px: $site-width / 30px;
   $menu-height: $menu-height-px * 1px;
-  $space-base: $site-width / 300;
+  $space-base: $site-width / 225;
   $avatar-size: $site-width / 12;
   $space-0: $space-base / 4;
 
@@ -112,7 +112,7 @@ only screen and (orientation: landscape) and (min-resolution: 2dppx) {
   $site-width: 500px;
   $menu-height-px: $site-width / 20px;
   $menu-height: $menu-height-px * 1px;
-  $space-base: $site-width / 150;
+  $space-base: $site-width / 135;
   $avatar-size: $site-width / 6;
   $space-0: $space-base;
 

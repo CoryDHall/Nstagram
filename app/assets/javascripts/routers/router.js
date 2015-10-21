@@ -328,6 +328,7 @@
           this.showBars();
         }
         Backbone.Router.prototype._swapView.call(this, view);
+        this.$rootEl.trigger("scroll");
       }.bind(this))
     },
   });

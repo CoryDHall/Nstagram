@@ -47,10 +47,17 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
     );
   },
 
+  resetLoadMore: function (page) {
+    this.page = page || this.page;
+    this.loadMoreView = new Nstagram.Views.LoadMore({
+      pageOn: this.page + 1
+    });
+    this.loadMoreView.render();
+  },
 
   getMore: function ($load_el) {
-    if ($load_el.parent().length === 0 || this.collection.any(function (user) {
-      return user.get("is_on_last_page");
+    if ($load_el.parent().length === 0 || this.collection.any(function (photo) {
+      return photo.get("is_on_last_page");
     })) {
       return;
     }
@@ -62,10 +69,7 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
       },
       remove: false,
       success: function () {
-        this.loadMoreView.initialize({
-          pageOn: this.page + 1
-        });
-        this.loadMoreView.render();
+        this.resetLoadMore();
       }.bind(this)
     });
   }

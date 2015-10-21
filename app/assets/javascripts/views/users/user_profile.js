@@ -64,13 +64,13 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
     .to(this.$('nstagram-full-size-index'), 0.5, { className: "+=hidden" }, "+=0.25")
     .set(this.$('nstagram-thumbs-index'), { className: "-=hiding"});
     this._index = swapIndex;
-
+    this.page = 1;
     this._index.collection.initialize({
       username: this.model.get("username"),
       style: 'thumb'
     });
     this._index.collection.fetch({ reset: true });
-
+    this._index.resetLoadMore(this.page);
     this.$(".profile-nav li").toggleClass("selected");
   },
 
@@ -90,6 +90,7 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
       .set(this.$('nstagram-full-size-index'), { className: "-=hiding" });
     this.$(".profile-nav li").toggleClass("selected");
     if (swapIndex) {
+      this.page = 1;
     } else {
       this._index = new Nstagram.Views.PhotosIndex({
         collection: this.model.photos(),
@@ -105,6 +106,7 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
         username: this.model.get("username"),
         style: 'full'
       });
+      this._index.resetLoadMore(this.page);
       this._index.collection.fetch({ reset: true });
   },
 

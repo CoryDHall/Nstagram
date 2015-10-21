@@ -818,7 +818,18 @@ nstagram-thumbs-index {
     left: -$space-0 / 2;
   }
 
+  a.photo-link {
+  }
+
+  img:hover {
+    -webkit-filter: grayscale(80%) brightness(95%);
+    filter: grayscale(80%) brightness(95%);
+    opacity: 0.8;
+  }
+
   img {
+    -webkit-filter: grayscale(0%) brightness(100%);
+    filter: grayscale(0%) brightness(100%);
     display: block;
   }
 }
