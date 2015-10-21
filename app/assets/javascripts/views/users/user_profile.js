@@ -42,6 +42,10 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
     });
     this.addSubview('nstagram-thumbs-index', this._index);
 
+    var tl = Nstagram.timeline;
+    tl
+    .set(this.$('nstagram-full-size-index'), { className: "+=hiding" })
+    .set(this.$('nstagram-full-size-index'), { className: "+=hidden" });
 
     return this;
   },
@@ -52,12 +56,14 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
     if ($(e.currentTarget).parent().hasClass("selected")) {
       return;
     }
-    var swapIndex = this._otherIndex;
+    var swapIndex = this._otherIndex, tl = Nstagram.timeline;
     this._otherIndex = this._index;
-    this.$('nstagram-full-size-index').hide();
-
+    tl
+    .set(this.$('nstagram-full-size-index'), { className: "+=hiding" })
+    .set(this.$('nstagram-thumbs-index'), { className: "-=hidden" })
+    .to(this.$('nstagram-full-size-index'), 0.5, { className: "+=hidden" }, "+=0.25")
+    .set(this.$('nstagram-thumbs-index'), { className: "-=hiding"});
     this._index = swapIndex;
-    this.$('nstagram-thumbs-index').show();
 
     this._index.collection.initialize({
       username: this.model.get("username"),
@@ -75,12 +81,15 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
       return;
     }
 
-    var swapIndex = this._otherIndex;
+    var swapIndex = this._otherIndex, tl = Nstagram.timeline;
     this._otherIndex = this._index;
-    this.$('nstagram-thumbs-index').hide();
-      this.$(".profile-nav li").toggleClass("selected");
+    tl
+      .set(this.$('nstagram-thumbs-index'), { className: "+=hiding" })
+      .set(this.$('nstagram-full-size-index'), { className: "-=hidden" })
+      .to(this.$('nstagram-thumbs-index'), 0.5, { className: "+=hidden" }, "+=0.25")
+      .set(this.$('nstagram-full-size-index'), { className: "-=hiding" });
+    this.$(".profile-nav li").toggleClass("selected");
     if (swapIndex) {
-      this.$('nstagram-full-size-index').show();
     } else {
       this._index = new Nstagram.Views.PhotosIndex({
         collection: this.model.photos(),

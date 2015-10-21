@@ -625,11 +625,17 @@ nstagram-profile {
   font-size: $font-s-2;
   line-height: $font-s-2;
 
+  * {
+    -webkit-transition: box-shadow 0.5s, color 0s;
+    transition: box-shadow 0.5s, color 0s;
+  }
+
   li {
     float: left;
     width: 50%;
     text-transform: uppercase;
     color: $ng-middle;
+    box-shadow: 0 0 0 $ng-middle inset;
   }
 
   a {
@@ -639,11 +645,17 @@ nstagram-profile {
   }
 
 
-
   .selected {
     font-weight: bold;
-    background: $ng-middle;
     color: $ng-white;
+  }
+
+  li.selected:first-child {
+    box-shadow: -($site-width / 2) 0 0 $ng-middle inset;
+  }
+
+  li.selected:last-child {
+    box-shadow: ($site-width / 2) 0 0 $ng-middle inset;
   }
 }
 nstagram-thumbs-index {
@@ -762,10 +774,51 @@ nstagram-thumbs-index {
   }
 }
 
+nstagram-thumbs-index *, nstagram-full-size-index * {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+nstagram-thumbs-index * {
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+}
+
+nstagram-full-size-index * {
+  -webkit-transform-origin: top right;
+  transform-origin: top right;
+}
+
+nstagram-thumbs-index.hidden, nstagram-full-size-index.hidden {
+  display: none;
+}
+
+nstagram-thumbs-index.hiding * {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+nstagram-full-size-index.hiding * {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
+
+nsta-photo-post-head {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  display: block;
+  z-index: 15;
+  background: rgba(255, 255, 255, 0.9);
+}
+
 nstagram-content {
   padding-bottom: 2 * $menu-height;
   box-sizing: border-box;
 
+}
+::-webkit-scrollbar {
+  display: none;
 }
 nstagram-menu {
   display: block;
@@ -780,6 +833,10 @@ nstagram-menu {
   font-size: $font-s-menu;
   letter-spacing: 1.5px;
 
+  * {
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+  }
 
   ul {
     text-align: center;
@@ -863,6 +920,11 @@ nstagram-header.hide-bar {
 nstagram-content.hide-bar {
   margin-top: -($menu-height + 10);
   padding-bottom: ($menu-height + 10);
+}
+
+nstagram-content {
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
 }
 .photo-like {
   position: absolute;
