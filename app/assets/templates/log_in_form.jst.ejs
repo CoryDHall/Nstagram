@@ -3,7 +3,7 @@
 <br>
 
 <label for="session_password">password</label>
-<input type="password" name="session[password]" id="session_password" placeholder="password" required autocomplete="current-password">
+<input type="password" name="session[password]" id="session_password" placeholder="password" required autocomplete="current-password" pattern="\S{8,}">
 <br>
 
-<button value="Log In" data-disable-with="Logging in…">Log In</button>
+<button value="Log In" data-disable-with="Logging in…" disabled>Log In</button>

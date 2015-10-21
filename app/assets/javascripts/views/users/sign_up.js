@@ -3,7 +3,8 @@ Nstagram.Views.SignUp = Backbone.View.extend({
   template: JST['users/user_form'],
   id: 'signup-form',
   events: {
-    "submit":"signUp"
+    "submit":"signUp",
+    "input":"advanceForm"
   },
   initialize: function () {
     this.user = new Nstagram.Models.User();
@@ -15,6 +16,26 @@ Nstagram.Views.SignUp = Backbone.View.extend({
     }));
     return this;
   },
+  advanceForm: function (e) {
+    // debugger
+    this.validatePassword();
+    if (e.target.validity.valid && $(e.target).nextAll("input, button")[0].disabled) {
+      $(e.target).nextAll("input, button").first().prop("disabled", false);
+    } else if (!e.target.validity.valid){
+      $(e.target).nextAll("button").prop("disabled", true);
+    }
+  },
+  validatePassword: function () {
+    var confirm = this.$('#user_password_confirmation')[0];
+    var pass2 = confirm.value;
+    var pass1 = this.$('#user_password')[0].value;
+    if(pass1!=pass2)
+    	confirm.setCustomValidity("Passwords Don't Match");
+    else
+    	confirm.setCustomValidity('');
+    //empty string means no validation error
+  },
+
   signUp: function (e) {
     e.preventDefault();
 
@@ -25,12 +46,14 @@ Nstagram.Views.SignUp = Backbone.View.extend({
     this.user.saveFormData(formData, {
       success: function (newUser) {
         if (newUser.escape('errors').length > 0) {
+          this.user.set(formData);
+          this.render();
           return;
         }
         Backbone.history.navigate('', {
           trigger: true
         })
-      }
+      }.bind(this)
     });
   }
 });

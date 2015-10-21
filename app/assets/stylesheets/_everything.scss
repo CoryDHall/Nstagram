@@ -1,6 +1,6 @@
 /*RESET*/
 
-html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, p, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4, nstagram-avatar, nstagram-header, nstagram-flash, nstagram-menu {
+html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, p, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4, nstagram-avatar, nstagram-header, nstagram-flash, nstagram-menu, fieldset {
   margin: 0;
   border: 0;
   padding: 0;
@@ -185,6 +185,51 @@ body > div {
 
   form.hidden-form {
     display: none;
+  }
+
+  form {
+    * {
+      -webkit-transition: all 0.5s, color 0 0.5s;
+      transition: all 0.5s, color 0 0.5s;
+      margin: 0 auto;
+      line-height: 1em;
+    }
+    fieldset {
+      display: none;
+    }
+    input:focus, :invalid {
+      min-width: 50%;
+    }
+    input, button:enabled {
+      height: $menu-height * 2;
+      font-size: $font-s-menu-big * 2;
+    }
+    :valid:focus {
+      outline: none;
+      box-shadow: ($site-width * 10) 0 0 $ng-create-action inset;
+    }
+    input:valid:not(:focus:not(:last-of-type)) {
+      outline: none;
+      box-shadow: ($site-width * 10) 0 0 $ng-blue inset;
+      font-weight: bold;
+    }
+    input:valid {
+      color: $ng-white;
+    }
+    button:enabled {
+      margin-top: $space-base;
+      background-color: $ng-create-action;
+    }
+    :disabled {
+      height: 0;
+      padding: 0;
+    }
+    input:disabled {
+      color: $ng-white;
+      opacity: 0.1;
+    }
+
+    margin-bottom: 1em;
   }
   nav {
     font-size: $font-s-menu;

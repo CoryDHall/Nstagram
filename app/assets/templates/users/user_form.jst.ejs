@@ -1,36 +1,37 @@
 <label for="user_username">Username</label>
-<input type="text" name="user[username]" id="user_username" placeholder="username" value="<%= user.escape("username") %>" required>
+<input type="text" name="user[username]" id="user_username" placeholder="choose a username" value="<%= user.escape("username") %>" required title="Pick a username! A username can be any combination of letters, numbers, dashes(-), and underscores(_)" pattern="[\w\-_]+">
 <br>
 
 <% if (user.isNew()) { %>
 <label for="user_email">Email</label>
-<input type="email" name="user[email]" id="user_email"  placeholder="email" value="<%= user.escape("email") %>" required>
+<input type="email" name="user[email]" id="user_email"  placeholder="what is your email?" value="<%= user.escape("email") %>" required disabled pattern="\w+([.+-][_]*\w+)*@(\w+[.-][_]*)*\w+\.\w+" >
 <br>
 <label for="user_password">Password</label>
-<input type="password" name="user[password]" id="user_password"  placeholder="password" required minlength="8">
+<input type="password" name="user[password]" id="user_password"  placeholder="choose a password" required minlength="8" disabled pattern="\S{8,}" >
 <br>
 
 <label for="user_password_confirmation">Password confirmation</label>
-<input type="password" name="user[password_confirmation]" id="user_password_confirmation"  placeholder="confirm password" required minlength="8">
+<input type="password" name="user[password_confirmation]" id="user_password_confirmation"  placeholder="please retype your password" required minlength="8" disabled >
 <br>
 <% } %>
 <label for="user_full_name">Full name</label>
-<input type="text" name="user[full_name]" id="user_full_name"  placeholder="Full Name" value="<%= user.escape("full_name") %>" required>
+<input type="text" name="user[full_name]" id="user_full_name"  placeholder="tell us your name" value="<%= user.escape("full_name") %>" required disabled >
 <br>
+<fieldset>
+  <label for="user_bio">Bio</label>
+  <input type="text" name="user[bio]" id="user_bio"  placeholder="bio" value="<%= user.escape("bio") %>">
+  <br>
 
-<label for="user_bio">Bio</label>
-<input type="text" name="user[bio]" id="user_bio"  placeholder="bio" value="<%= user.escape("bio") %>">
-<br>
+  <label for="user_website_url">Website url</label>
+  <input type="url" name="user[website_url]" id="user_website_url"  placeholder="website" value="<%= user.escape("website_url") %>">
+  <br>
 
-<label for="user_website_url">Website url</label>
-<input type="url" name="user[website_url]" id="user_website_url"  placeholder="website" value="<%= user.escape("website_url") %>">
-<br>
-
-<label for="user_profile_picture">Profile photo</label>
-<input type="file" name="user[profile_picture]" id="user_profile_picture"  placeholder="profile photo" >
-<br>
+  <label for="user_profile_picture">Profile photo</label>
+  <input type="file" name="user[profile_picture]" id="user_profile_picture"  placeholder="profile photo" >
+  <br>
+</fieldset>
 <% if (user.isNew()) { %>
-<button value="Sign Up" data-disable-with="Saving…">Sign Up</button>
+<button value="Sign Up" data-disable-with="Saving…" disabled>Sign Up</button>
 <% } else { %>
 <button value="Update" data-disable-with="Updating…">Update</button>
 <em>or</em><a href="#me">Cancel</a>
