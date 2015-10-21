@@ -189,8 +189,8 @@ body > div {
 
   form {
     * {
-      -webkit-transition: all 0.5s, color 0 0.5s;
-      transition: all 0.5s, color 0 0.5s;
+      -webkit-transition: color 0.2s 0.5s, background-color 0.2s 0.5s, all 0.5s;
+      transition: color 0.2s 0.5s, background-color 0.2s 0.5s, all 0.5s;
       margin: 0 auto;
       line-height: 1em;
     }
@@ -206,11 +206,13 @@ body > div {
     }
     :valid:focus {
       outline: none;
-      box-shadow: ($site-width * 10) 0 0 $ng-create-action inset;
+      box-shadow: 0 $menu-height 0 $ng-create-action inset;
+      background-color: $ng-create-action;
     }
     input:valid:not(:focus:not(:last-of-type)) {
       outline: none;
-      box-shadow: ($site-width * 10) 0 0 $ng-blue inset;
+      box-shadow: 0 $menu-height 0 $ng-blue inset;
+      background-color: $ng-blue;
       font-weight: bold;
     }
     input:valid {
@@ -431,7 +433,7 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     }
     h6::after {
       content: " x";
-      font-size: 200%;
+      font-size: 1em;
     }
 
     li.filter-item {
@@ -671,8 +673,8 @@ nstagram-profile {
   line-height: $font-s-2;
 
   * {
-    -webkit-transition: box-shadow 0.5s, color 0s;
-    transition: box-shadow 0.5s, color 0s;
+    -webkit-transition: box-shadow 0.5s, color 0.1 0.2s, background 0.1 0.2s;
+    transition: box-shadow 0.5s, color 0.1 0.2s, background 0.1 0.2s;
   }
 
   li {
@@ -693,6 +695,7 @@ nstagram-profile {
   .selected {
     font-weight: bold;
     color: $ng-white;
+    background: $ng-middle;
   }
 
   li.selected:first-child {
@@ -839,8 +842,8 @@ nstagram-thumbs-index.hidden, nstagram-full-size-index.hidden {
 }
 
 nstagram-thumbs-index.hiding * {
-  -webkit-transform: scale(0);
-  transform: scale(0);
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 
 nstagram-full-size-index.hiding * {
@@ -879,8 +882,8 @@ nstagram-menu {
   letter-spacing: 1.5px;
 
   * {
-    -webkit-transition: all 0.2s linear;
-    transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear, background 0 0.3s;
+    transition: all 0.2s linear, background 0 0.3s;
   }
 
   ul {

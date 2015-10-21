@@ -4,7 +4,8 @@ Nstagram.Views.SignUp = Backbone.View.extend({
   id: 'signup-form',
   events: {
     "submit":"signUp",
-    "input":"advanceForm"
+    "input":"advanceForm",
+    "keydown":"tabAdvance"
   },
   initialize: function () {
     this.user = new Nstagram.Models.User();
@@ -16,14 +17,23 @@ Nstagram.Views.SignUp = Backbone.View.extend({
     }));
     return this;
   },
+  tabAdvance: function (e) {
+    if (e.which == 9) {
+      if (!this.advanceForm(e)) {
+        e.preventDefault();
+      }
+    }
+  },
   advanceForm: function (e) {
     // debugger
     this.validatePassword();
     if (e.target.validity.valid && $(e.target).nextAll("input, button")[0].disabled) {
       $(e.target).nextAll("input, button").first().prop("disabled", false);
-    } else if (!e.target.validity.valid){
+    } else if (!e.target.validity.valid) {
       $(e.target).nextAll("button").prop("disabled", true);
-    }
+      return false;
+    } 
+    return true;
   },
   validatePassword: function () {
     var confirm = this.$('#user_password_confirmation')[0];
