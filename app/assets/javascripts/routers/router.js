@@ -60,12 +60,29 @@
       'users/:username/edit': 'editUserProfile',
       'users/:username/following': 'userFollowing',
       'users/:username/followers': 'userFollowers',
+      'users/:username/p/:photo_id': 'photoShow',
+      'users/:username/p/:photo_id/comments': 'photoComments',
       '*redirect': 'root',
     },
 
     menuSelect: function (linkClass) {
       $('.selected').removeClass('selected');
       $('.' + linkClass).not('.selected').addClass('selected');
+    },
+
+    photoShow: function (username, photo_id) {
+      var photos = new Collections.Photos({
+        username: username,
+        style: "full"
+      });
+      this.userSession(function (session) {
+        var photo = photos.getOrFetch(photo_id);
+        var showView = new Views.PhotoShow({
+          userSession: session,
+          model: photo
+        });
+        this._swapView(showView);
+      }.bind(this));
     },
 
     root: function () {
@@ -162,7 +179,7 @@
 
           this._swapView(profileView);
         }.bind(this),
-        failure: function () {
+        error: function () {
           Backbone.history.navigate('/users', {
             trigger: true
           });

@@ -16,9 +16,7 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
   },
 
   render: function () {
-    var content = this.template({
-      photos: this.collection,
-    });
+    var content = this.template();
     this.$el.html(content);
 
     this.collection.each(function (photo) {

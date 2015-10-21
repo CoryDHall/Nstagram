@@ -19,6 +19,7 @@ class Api::PhotosController < ApplicationController
   end
 
   def show
+    @style = :full
   end
 
   def create

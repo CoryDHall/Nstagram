@@ -1,6 +1,10 @@
 Nstagram.Models.Photo = Backbone.Model.extend({
   urlRoot: function () {
-    this._urlRoot = "api/users/:" + this.user.get("username")+ "/photos";
+    if (this.collection) {
+      this._urlRoot = this.collection.url;
+    } else {
+      this._urlRoot = "api/users/:" + this.user.get("username")+ "/photos";
+    }
     return this._urlRoot
   },
   initialize: function (options) {

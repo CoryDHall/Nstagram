@@ -1,59 +1,61 @@
-<% if (true) { %>
-  <nsta-photo-post-head>
+<% if (photo.escape("url")) { %>
+  <% if (true) { %>
+    <nsta-photo-post-head>
 
-  <p class="post-date"><em><%= photo.escape("posted") %> ago</em></p>
-  <a href="#users/<%= user.escape("username") %>" class="photo-head clearfix">
-    <h4>
-    <nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture_url") %>)">
-    </nstagram-avatar>
-    <%= user.escape("username") %></h4>
-  </a>
-  </nsta-photo-post-head>
-<% } %><nsta-photo class="clearfix">
-<img src="<%= photo.escape("url") %>" alt="<%= user.escape("username") %> posted this photo <%= photo.escape("posted") %> ago" />
-</nsta-photo>
-<ul class="photo-actions clearfix">
-  <li><button class="like-button">
-    <%= photo.get("is_current_user_liking") === true ? "unlike" : "like" %>
-  </button></li>
-  <% if (user.id === session.id) { %>
-  <li><button class="delete-button" value="Delete" data-disable-with="Deleting…">Delete</button></li>
-  <% } %>
-</ul>
-<p class="likes">
-  <% if (photo.get("likes")) { %>
-    <% if (photo.get("likes").count > 10) { %>
-    &#x1f493;
-      <%= photo.get("likes").count %> likes
-    <% } else if (photo.get("likes").count > 0) { %>
-      &#x1f493;
-      <% photo.likers.forEach(function(liker, idx) { %>
-        <a href="#users/<%= liker.username %>"><%= liker.username %> </a>
-        <%= idx + 1 === photo.likers.length ? " " : ", " %>
-      <% }) %>
+    <p class="post-date"><em><%= photo.escape("posted") %> ago</em></p>
+    <a href="#users/<%= user.escape("username") %>" class="photo-head clearfix">
+      <h4>
+      <nstagram-avatar class="clearfix" style="background-image: url(<%= user.escape("profile_picture_url") %>)">
+      </nstagram-avatar>
+      <%= user.escape("username") %></h4>
+    </a>
+    </nsta-photo-post-head>
+  <% } %><nsta-photo class="clearfix">
+  <img src="<%= photo.escape("url") %>" alt="<%= user.escape("username") %> posted this photo <%= photo.escape("posted") %> ago" />
+  </nsta-photo>
+  <ul class="photo-actions clearfix">
+    <li><button class="like-button">
+      <%= photo.get("is_current_user_liking") === true ? "unlike" : "like" %>
+    </button></li>
+    <% if (user.id === session.id) { %>
+    <li><button class="delete-button" value="Delete" data-disable-with="Deleting…">Delete</button></li>
     <% } %>
+  </ul>
+  <p class="likes">
+    <% if (photo.get("likes")) { %>
+      <% if (photo.get("likes").count > 10) { %>
+      &#x1f493;
+        <%= photo.get("likes").count %> likes
+      <% } else if (photo.get("likes").count > 0) { %>
+        &#x1f493;
+        <% photo.likers.forEach(function(liker, idx) { %>
+          <a href="#users/<%= liker.username %>"><%= liker.username %> </a>
+          <%= idx + 1 === photo.likers.length ? " " : ", " %>
+        <% }) %>
+      <% } %>
+    <% } %>
+  </p>
+  <% if (photo.escape("caption") !== "") { %>
+    <p class="caption">
+      <a href="#users/<%= user.escape("username") %>" class="comment-author"><%= user.escape("username") %></a>
+      <%= photo.escape("caption") %>
+    </p>
   <% } %>
-</p>
-<% if (photo.escape("caption") !== "") { %>
-  <p class="caption">
-    <a href="#users/<%= user.escape("username") %>" class="comment-author"><%= user.escape("username") %></a>
-    <%= photo.escape("caption") %>
+
+  <% photo.comments().each(function(comment, idx) { %>
+    <p class="comment">
+      <% if (photo.comments().length > 2 && idx === 0) { %>
+        ...
+      <% } else { %>
+        <a href="#users/<%= comment.escape("user") %>" class="comment-author"><%= comment.escape("user") %></a>
+        <%= comment.escape("body") %>
+      <% } %>
+    </p>
+  <% }) %>
+  <p class="comment">
+    <form class="new-comment-form">
+      <input type="text" name="comment[body]" value="" placeholder="Post a new comment" class="comment-input">
+      <button class="new-comment-button" disabled value="Post Comment" data-disable-with="Saving…">Post Comment</button>
+    </form>
   </p>
 <% } %>
-
-<% photo.comments().each(function(comment, idx) { %>
-  <p class="comment">
-    <% if (photo.comments().length > 2 && idx === 0) { %>
-      ...
-    <% } else { %>
-      <a href="#users/<%= comment.escape("user") %>" class="comment-author"><%= comment.escape("user") %></a>
-      <%= comment.escape("body") %>
-    <% } %>
-  </p>
-<% }) %>
-<p class="comment">
-  <form class="new-comment-form">
-    <input type="text" name="comment[body]" value="" placeholder="Post a new comment" class="comment-input">
-    <button class="new-comment-button" disabled value="Post Comment" data-disable-with="Saving…">Post Comment</button>
-  </form>
-</p>

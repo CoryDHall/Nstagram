@@ -1,5 +1,6 @@
 Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   tagName: 'li',
+  className: 'photo-view',
   template: JST['photos/index_item'],
 
   initialize: function (options) {
