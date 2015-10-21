@@ -70,7 +70,4 @@ Nstagram.Views.PhotosIndex = Backbone.CompositeView.extend({
     });
   }
 
-
-
-
 });

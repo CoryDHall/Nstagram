@@ -673,8 +673,8 @@ nstagram-profile {
   line-height: $font-s-2;
 
   * {
-    -webkit-transition: box-shadow 0.5s, color 0.1 0.2s, background 0.1 0.2s;
-    transition: box-shadow 0.5s, color 0.1 0.2s, background 0.1 0.2s;
+    -webkit-transition: box-shadow 0.5s, color 0.1s 0.2s, background 0.1s 0.2s;
+    transition: box-shadow 0.5s, color 0.1s 0.2s, background 0.1s 0.2s;
   }
 
   li {
@@ -706,6 +706,7 @@ nstagram-profile {
     box-shadow: ($site-width / 2) 0 0 $ng-middle inset;
   }
 }
+
 nstagram-thumbs-index {
   p.likes, p.caption, p.comment, ul.photo-actions, nsta-photo-post-head, form {
     display: none;

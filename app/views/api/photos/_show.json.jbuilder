@@ -20,7 +20,7 @@ if logged_in?
   json.current_like @likes.find_or_initialize_by photo: @photo
   json.current_like_username @current_user.username
 end
-
+json.style (@style || :thumb)
 if @style == :full
   json.likes do
     like_count = @photo.likes.count
