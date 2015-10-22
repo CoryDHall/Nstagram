@@ -1,9 +1,11 @@
 # nstagram
 
-[Link][live-link]
 
 [live-link]: http://nsta.corydantehall.com
 
+[![Stack Share](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](http://stackshare.io/CoryDHall/nstagram)
+
+#### [Live Link][live-link]
 ## Minimum Viable Product
 nstagram is a clone of Instagram built on Rails and Backbone. Users can:
 
