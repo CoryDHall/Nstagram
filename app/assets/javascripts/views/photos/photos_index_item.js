@@ -20,7 +20,11 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   },
 
   startingInput: function (e) {
-    this.$('.new-comment-button').prop("disabled", false);
+    if (e.target.value === "") {
+      this.$('.new-comment-button').prop("disabled", true);
+    } else {
+      this.$('.new-comment-button').prop("disabled", false);
+    }
   },
 
   saveComment: function (e) {
@@ -45,11 +49,15 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
     }
   },
 
-  render: function () {
-    var user = this.model.user || new Nstagram.Models.User({
+  getUser: function () {
+    return this.model.user || new Nstagram.Models.User({
       username: "you",
       profile_picture_url: ""
     });
+  },
+
+  render: function () {
+    var user = this.getUser();
     var content = this.template({
       photo: this.model,
       user: user,
@@ -58,7 +66,46 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
     });
     this.$el.html(content);
 
+
+
+    var comments = this.model.comments();
+    comments.each(function(comment, idx) {
+      if (idx === 2 && false) {
+        this.$('nsta-comments').prepend($('<p class="comment"></p>').text("•••"));
+      } else {
+        this.addSubview(
+          'nsta-comments',
+          new Nstagram.Views.CommentsIndexItem({
+            class: "comment",
+            body: comment.get('body'),
+            user: comment.get('user'),
+            photo_id: this.model.id
+          }),
+          true
+        );
+      }
+    }.bind(this));
+    // debugger
+    this.renderCaption();
+
     return this;
+  },
+
+  renderCaption: function () {
+    var body = this.model.get('caption');
+    if (body === "") {
+      return;
+    }
+    var user = this.getUser();
+    this.addSubview(
+      'nsta-caption',
+      new Nstagram.Views.CommentsIndexItem({
+        class: "caption",
+        body: body,
+        user: user.escape('username'),
+        photo_id: this.model.id
+      })
+    );
   },
 
   renderLater: function () {

@@ -41,27 +41,10 @@
       <% } %>
     <% } %>
   </p>
-  <% if (photo.escape("caption") !== "") { %>
-    <p class="caption">
-      <a href="#users/<%= user.escape("username") %>" class="comment-author"><%= user.escape("username") %></a>
-      <%= photo.escape("caption") %>
-    </p>
-  <% } %>
-
-  <% photo.comments().each(function(comment, idx) { %>
-    <p class="comment">
-      <% if (photo.comments().length > 2 && idx === 0) { %>
-        ...
-      <% } else { %>
-        <a href="#users/<%= comment.escape("user") %>" class="comment-author"><%= comment.escape("user") %></a>
-        <%= comment.escape("body") %>
-      <% } %>
-    </p>
-  <% }) %>
-  <p class="comment">
-    <form class="new-comment-form">
-      <input type="text" name="comment[body]" value="" placeholder="Post a new comment" class="comment-input">
-      <button class="new-comment-button" disabled value="Post Comment" data-disable-with="Saving…">Post Comment</button>
-    </form>
-  </p>
+  <nsta-caption></nsta-caption>
+  <nsta-comments></nsta-comments>
+  <form class="new-comment-form">
+    <input type="text" name="comment[body]" value="" placeholder="Post a new comment" class="comment-input">
+    <button class="new-comment-button" disabled value="Post Comment" data-disable-with="Saving…">Post Comment</button>
+  </form>
 <% } %>

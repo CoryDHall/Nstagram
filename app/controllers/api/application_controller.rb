@@ -1,7 +1,9 @@
 class Api::ApplicationController < ApplicationController
   def search
-    @user_results = PgSearch.multisearch(params[:query]).page(1)
-    @photo_results = Photo.has_hashtag(params[:query])
+    @u_scope = %w(all users).include? params[:scope]
+    @p_scope = %w(all photos).include? params[:scope]
+    @user_results = PgSearch.multisearch(params[:query]).page(1) if @u_scope
+    @photo_results = Photo.has_hashtag(params[:query]).includes(:user) if @p_scope
     render :search, format: :json
   end
 end

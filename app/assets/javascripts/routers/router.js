@@ -62,7 +62,43 @@
       'users/:username/followers': 'userFollowers',
       'users/:username/p/:photo_id': 'photoShow',
       'users/:username/p/:photo_id/comments': 'photoComments',
+      'search/:scope/:query': 'search',
       '*redirect': 'root',
+    },
+
+    search: function (scope, query) {
+      var qscope = {
+        'p': 'photos',
+        'u': 'users'
+      }[scope] || "all";
+      if (qscope === "photos") {
+        var photos = new Collections.PhotoSearch({
+          query: query
+        });
+        this.userSession(function (session) {
+          var searchView = new Views.PhotosIndex({
+            userSession: session,
+            collection: photos,
+            style: 'thumb',
+            profile: true
+          });
+          var putInPlace = function (coll, resp) {
+            var $thumbs = $('<nstagram-thumbs-index>');
+            searchView.$el.parent().append($thumbs);
+            searchView.$el.appendTo($thumbs);
+          };
+          searchView.listenTo(photos, "sync", putInPlace);
+          photos.fetch({
+            data: {
+              'scope': "photos"
+            },
+            success: function (collection, resp) {
+            },
+            reset: true
+          });
+          this._swapView(searchView);
+        }.bind(this));
+      }
     },
 
     menuSelect: function (linkClass) {

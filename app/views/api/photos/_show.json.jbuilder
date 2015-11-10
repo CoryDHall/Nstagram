@@ -34,6 +34,7 @@ if @style == :full
   json.caption @photo.caption.body
 
   @comments = @photo.last_two_comments
+  
   json.comments do
     json.partial! 'api/photos/comments'
   end

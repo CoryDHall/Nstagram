@@ -1,6 +1,6 @@
 Nstagram.Models.Photo = Backbone.Model.extend({
   urlRoot: function () {
-    if (this.collection) {
+    if (this.collection && this.collection.type !== "search") {
       this._urlRoot = this.collection.url;
     } else {
       this._urlRoot = "api/users/:" + this.user.get("username")+ "/photos";
@@ -69,7 +69,7 @@ Nstagram.Models.Photo = Backbone.Model.extend({
       photo_id: this.id
     });
     comment.set(options);
-    this.comments().add(comment);
+    this.comments().unshift(comment);
     return comment;
   }
 });

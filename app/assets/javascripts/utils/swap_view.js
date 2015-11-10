@@ -3,6 +3,6 @@ Backbone.Router.prototype._swapView = function (newView) {
   this._currentView = newView;
 
   this.$rootEl = this.$rootEl || $('<div>').appendTo($('body'));
-  this.$rootEl.html(newView.$el);
+  this.$rootEl.empty().append(newView.$el);
   newView.render();
 };

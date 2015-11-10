@@ -2,7 +2,9 @@ Nstagram.Collections.Photos = Backbone.Collection.extend({
 
   model: Nstagram.Models.Photo,
   initialize: function (options) {
-    this.url = "api/users/:" + options["username"] + "/photos";
+    options = options || {};
+    this.fetchType = options['username'] ? "user" : "search";
+    this.url = "api/users/:" + (options["username"] || '') + "/photos";
     this.style = options.style || 'thumb'
   },
   fetch: function (options) {

@@ -12,4 +12,26 @@ class Comment < ActiveRecord::Base
   def hashtags
     self.body.scan(/#\w+/)
   end
+
+  def self.encode(message)
+    letters = message.each_byte
+    res = letters.map do |code|
+      code == 32 ? ' ' : "%04d" % code
+    end.to_a
+    res.join('')
+  end
+
+  def self.decode(message)
+    message.split(' ').map do |word|
+      word.scan(/\d{4}/).map(&:to_i).map(&:chr).join('')
+    end.join(' ')
+  end
+
+  def body
+    Comment.decode(super)
+  end
+
+  def body=(value)
+    super(Comment.encode(value))
+  end
 end

@@ -1,10 +1,10 @@
 class Photo < ActiveRecord::Base
   include PgSearch
-  pg_search_scope :_has_hashtags, lambda { |query| {
+  pg_search_scope :_has_hashtags, lambda { |*args, query| {
     associated_against: {
       comments: :body
     },
-    query: "#" + query
+    query: Comment.encode("##{query}")
     }
   }
   validates :user, :photo, presence: true
@@ -38,21 +38,25 @@ class Photo < ActiveRecord::Base
 
   def last_two_comments
     comments
-      .includes(:user, :super_user)
+      .includes(:user)
       .order("comments.created_at DESC")
       .where.not(id: caption.id)
       .first(3)
-      .reverse
+
+  end
+
+  def caption
+    @caption ||= comments
+      .order("created_at ASC")
+      .first
   end
 
   def hashtags
-    self.comments.map(&:hashtags).flatten.compact
+    @hashtags ||= self.comments.map(&:hashtags).flatten.compact
   end
 
   def self.has_hashtag(tag)
-    _has_hashtags(tag).page(1).select do |photo|
-      photo.hashtags.flatten.include? ("##{tag}")
-    end
+    order("created_at DESC")._has_hashtags(tag).page(1)
   end
 
   def self.order_by_popularity
