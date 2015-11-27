@@ -89,8 +89,13 @@ class UserFactory
     def self.follow_random (user, users = nil)
       users ||= User.order_by_num_photos.to_a
 
-      try_only_n_times 10 do
+      try_only_n_times 5 do
         index = Math.sqrt(rand(users.count)).floor
+        user.follow users[index]
+      end
+
+      try_only_n_times 5 do
+        index = rand(users.count)
         user.follow users[index]
       end
 
@@ -105,6 +110,10 @@ class UserFactory
         user.like photos[index]
       end
 
+      try_only_n_times 5 do
+        index = rand(photos.count)
+        user.like photos[index]
+      end
       user
     end
 
@@ -114,8 +123,13 @@ class UserFactory
         "##{Faker::Commerce.product_name.gsub(/\W/, "")}"] +
         Faker::Hacker.say_something_smart.scan(/[\w\s^']+/)
 
-      try_only_n_times 2 do
+      try_only_n_times 1 do
         index = Math.sqrt(rand(photos.count)).floor
+        photos[index].comments.create(user: user, body: body.shuffle.join(" "))
+      end
+
+      try_only_n_times 2 do
+        index = rand(photos.count)
         photos[index].comments.create(user: user, body: body.shuffle.join(" "))
       end
 
