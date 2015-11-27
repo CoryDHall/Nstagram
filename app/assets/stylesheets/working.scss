@@ -26,6 +26,8 @@ $font-s-4: $font-s-base * 2.8;
 $font-s-menu: $menu-height * 0.4;
 $font-s-menu-big: $font-s-menu * 1.25;
 
+$modal: true;
+
 $ng-blue: hsl(206, 85%, 30%);
 $ng-highlight: hsl(30, 80%, 48%);
 $ng-follow: hsl(110, 60%, 41%);
@@ -42,6 +44,7 @@ $ng-flash-red: hsl(356, 60%, 40%);
 $ng-flash-yellow: hsl(56, 60%, 40%);
 $ng-flash-green: hsl(146, 60%, 40%);
 $ng-flash-blue: hsl(206, 60%, 40%);
+
 
 
 @import "everything";
@@ -81,6 +84,8 @@ only screen and (orientation: portrait) and (min-resolution: 2dppx) {
   $font-s-4: $font-s-base * 2.8;
   $font-s-menu: $menu-height * 0.4;
   $font-s-menu-big: $font-s-menu * 1.25;
+
+  $modal: false;
 
   $ng-blue: hsl(206, 85%, 30%);
   $ng-highlight: hsl(30, 80%, 48%);
@@ -136,6 +141,8 @@ only screen and (orientation: landscape) and (min-resolution: 2dppx) {
   $font-s-4: $font-s-base * 2.8;
   $font-s-menu: $menu-height * 0.4;
   $font-s-menu-big: $font-s-menu * 1.25;
+
+  $modal: false;
 
   $ng-blue: hsl(206, 85%, 30%);
   $ng-highlight: hsl(30, 80%, 48%);

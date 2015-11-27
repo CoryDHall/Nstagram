@@ -30,9 +30,9 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
   popErrors: function () {
     TweenMax.staggerTo(
       this.$('.opening'),
-      0.5,
+      0.0,
       { css: { className: "-=opening" } },
-      0.4,
+      0.2,
       this.closeErrors.bind(this)
     );
   },
@@ -40,15 +40,15 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
   closeErrors: function () {
     TweenMax.staggerFromTo(
       this.$('li').not('.closing, .closing-done'),
-      1,
+      0.2,
       {
         css: { className: "+=closing" }
       },
       {
         css: { className: "+=closing-done" },
-        delay: 3,
+        delay: 1.2,
       },
-      0.9,
+      0.4,
       function () {
         this.$('.closing-done').remove();
       }.bind(this)

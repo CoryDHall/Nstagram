@@ -1,7 +1,7 @@
 <nsta-flash-loaded>
 <% errors.each(function(error) { %>
   <li class="error-<%= error.escape("status") %> opening" data-error="<%= error.escape("reference") %>" data-time="<%= error.escape("time") %>">
-    <span><%= error.escape("reference") %> <%= error.escape("message") %></span>
+    <span><%= error.escape("message") %></span>
   </li>
 <% }); %>
 <div class=".progress-bar">

@@ -39,6 +39,27 @@ button {
 
 /*GLOBAL*/
 
+
+@mixin modal_banner {
+  @if $modal == true {
+    width: $site-width / 2;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 $space-0 $space-base transparentize($ng-dark, 0.4);
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  } @else {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-shadow: none;
+    top: auto;
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+  }
+}
+
 html, body {
   width: 100%;
   height: 100%;
@@ -153,15 +174,35 @@ body > div {
   }
 
   section.welcome {
-    width: 100%;
-    border-top: $space-0 solid $ng-white;
+
+    @include modal_banner;
+
+    @if $modal {
+      position: absolute;
+      right: 25%;
+      -webkit-transform: translate(50%, -50%);
+      transform: translate(50%, -50%);
+      border-top: 0;
+      background: transparentize($ng-white, 0.08);
+      padding: $space-2;
+      border-radius: $space-base;
+      box-shadow: none;
+    } @else {
+      border-top: $space-0 solid $ng-white;
+      position: relative;
+      padding: 0;
+      right: 0;
+      -webkit-transform: 0;
+      transform: 0;
+      border-radius: 0;
+    }
   }
 
   header.welcome {
     background: $ng-blue linear-gradient($ng-blue, transparentize($ng-blue, 0.5), rgba(0,0,0,0.8));
 
     color: $ng-white;
-    height: 53.125%; /*17/16*/
+    height: if($modal, 100%, 53.125%); /*17/16*/
     position: relative;
     text-shadow: 0 $space-null 0 transparentize($ng-dark
 , 0.25);
@@ -178,8 +219,8 @@ body > div {
 
   header.welcome vert-box {
     top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    -webkit-transform: translate(if($modal, -12.5%, 0%), -50%);
+    transform: translate(if($modal, -12.5%, 0%), -50%);
     height: 25%;
   }
 
@@ -230,8 +271,6 @@ body > div {
       color: $ng-white;
       opacity: 0.1;
     }
-
-    margin-bottom: 1em;
   }
   nav {
     font-size: $font-s-menu;
@@ -253,15 +292,23 @@ body > div {
       font-weight: bold;
       display: block;
       float: left;
-      width: 50%
+      width: 50%;
+      transition: all 0.1s;
     }
 
     a.signup-link {
     }
+
+    a:not(.hidden-form) {
+      -webkit-filter: drop-shadow(0 0 $space-0 transparentize($ng-white, 0.2));
+      filter: drop-shadow(0 0 $space-0 transparentize($ng-white, 0.2));
+      font-size: 1.5em;
+    }
+
     a:first-child:not(.hidden-form)::after {
       content: "";
       width: 0;
-      display: block;
+      display: if($modal, none, block);
       border: $space-3 solid transparent;
       border-bottom-color: $ng-white;
       margin: 0 auto -$space-base;
@@ -274,7 +321,7 @@ body > div {
     a:last-child:not(.hidden-form)::after {
       content: "";
       width: 0;
-      display: block;
+      display: if($modal, none, block);
       border: $space-3 solid transparent;
       border-bottom-color: $ng-white;
       margin: 0 auto -$space-base;
@@ -971,15 +1018,21 @@ nstagram-menu.hide-bar {
 }
 
 nstagram-menu.hide-bar {
-  bottom: -($menu-height + 10);
+  bottom: 0;
+  height: 0;
+  max-height: 0;
+  min-height: 0;
 }
 
 nstagram-header.hide-bar {
-  top: -($menu-height + 10);
+  top: 0;
+  height: 0;
+  max-height: 0;
+  min-height: 0;
 }
 nstagram-content.hide-bar {
-  margin-top: -($menu-height + 10);
-  padding-bottom: ($menu-height + 10);
+  margin: 0;
+  padding-bottom: 0;
 }
 
 nstagram-content {
@@ -1008,7 +1061,7 @@ nsta-photo {
 nstagram-flash {
   display: block;
   height: auto;
-  width: 100%;
+  @include modal_banner;
   box-sizing: border-box;
   position: relative;
   z-index: 100;
@@ -1016,23 +1069,22 @@ nstagram-flash {
 
   ul  {
     position: absolute;
-    width: 100%;
-    background: rgba(48, 48, 48, 0.9);
-    box-shadow: 0 $space-2 $space-4 rgba(0,0,0,0.75) inset;
+    @include modal_banner;
   }
   li {
     text-align: center;
-    width: 100%;
-    background: rgba(48, 48, 48, 0.9);
     color: $ng-white;
     padding: $space-4;
     box-sizing: border-box;
     font-size: $font-s-base;
-    border-bottom: $space-null solid rgba(0,0,0,0.5);
-    letter-spacing: 2px;
-    text-transform: lowercase;
+    border-bottom: $space-null solid transparentize($ng-white, 0.9);
+    letter-spacing: 1px;
+    font-weight: bold;
+    // text-transform: lowercase;
     overflow: hidden;
     position: relative;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
 
     span {
       -webkit-transform: scale(0.5);
@@ -1041,35 +1093,37 @@ nstagram-flash {
   }
 
   li:first-child {
-    margin-top: $menu-height;
+    // margin-top: $menu-height;
+  }
+  li:first-child.closing {
+    // margin-top: 0;
   }
   .closing {
-    background: rgba(0, 0, 0, 0.5);
   }
 
   .closing-done, .opening {
-    background: $ng-darker;
+    background: $ng-light;
     border: 0;
     height: 0;
     padding: 0;
     // top: $menu-height * -2;
-    font-size: $font-s-menu;
+    // font-size: $font-s-menu;
 
   }
   .closing-done {
-    color: $ng-darker;
+    color: $ng-light;
   }
   .opening {
 
   }
 
   .error-failure {
-    color: $ng-flash-red;
+    background: $ng-flash-red;
   }
   .error-success {
-    color: $ng-flash-green;
+    background: $ng-flash-green;
   }
   .error-notice {
-    color: $ng-flash-yellow;
+    background: $ng-flash-yellow;
   }
 }
