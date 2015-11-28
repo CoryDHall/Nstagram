@@ -38,20 +38,34 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
   },
 
   closeErrors: function () {
-    TweenMax.staggerFromTo(
-      this.$('li').not('.closing, .closing-done'),
-      0.2,
-      {
-        css: { className: "+=closing" }
-      },
-      {
-        css: { className: "+=closing-done" },
-        delay: 1.2,
-      },
-      0.4,
-      function () {
-        this.$('.closing-done').remove();
-      }.bind(this)
-    );
+    this.$('li').not('.closing, .closing-done').each(function (idx, el) {
+      var length = parseInt(el.attributes.getNamedItem("data-length").value);
+      TweenMax.fromTo(
+        el,
+        0.2,
+        {
+          css: { className: "+=closing" }
+        },
+        {
+          delay: length,
+          css: { className: "+=closing-done" },
+          onComplete: function () {
+            this.$('.closing-done').remove();
+          }.bind(this)
+        }
+      );
+    }.bind(this));
+    // TweenMax.staggerFromTo(
+    //   this.$('li').not('.closing, .closing-done'),
+    //   0.2,
+    //   {
+    //     css: { className: "+=closing" }
+    //   },
+    //   {
+    //     css: { className: "+=closing-done" },
+    //     delay: 1.2,
+    //   },
+    //   0.4,
+    // );
   }
 });

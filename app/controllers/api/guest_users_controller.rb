@@ -6,7 +6,7 @@ class Api::GuestUsersController < Api::UsersController
     @user.guest_user_data.create ip_address: request.remote_ip
 
     log_in @user if @user.save
-    @user.errors["welcome"] = "#{@user.username}, try following some users! -$Ssuccess"
+    @user.errors["welcome"] = "Welcome #{@user.username}, try following some users! -$Ssuccess"
     render :show
   end
 end

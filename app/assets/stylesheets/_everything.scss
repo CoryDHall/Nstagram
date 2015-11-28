@@ -334,7 +334,8 @@ body > div {
       transform: translate(50%, 25%);
     }
   }
-  :disabled {
+  :disabled, [disabled] {
+    cursor: default;
     background: $ng-middle;
     text-shadow: 0 $space-null 0 transparentize($ng-dark
 , 0.2);

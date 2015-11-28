@@ -1,6 +1,6 @@
 <nsta-flash-loaded>
 <% errors.each(function(error) { %>
-  <li class="error-<%= error.escape("status") %> opening" data-error="<%= error.escape("reference") %>" data-time="<%= error.escape("time") %>">
+  <li class="error-<%= error.escape("status") %> opening" data-error="<%= error.escape("reference") %>" data-time="<%= error.escape("time") %>" data-length="<%= error.escape("length") %>">
     <span><%= error.escape("message") %></span>
   </li>
 <% }); %>

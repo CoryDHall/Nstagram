@@ -169,7 +169,14 @@
 
         this.menuSelect("home-link");
 
-        if (session.user.get("num_following") === 0) {
+        if (session.user.get("num_following") === 0 && session.user.get("num_posts") === 0) {
+          Nstagram.FlashErrors.newErrors.add({
+            reference: "Feed",
+            status: "notice",
+            time: "now",
+            message: "There's nothing to show here :(, try following other users or uploading a photo!",
+            length: 5
+          });
           Backbone.history.navigate('/users', {
             trigger: true
           });

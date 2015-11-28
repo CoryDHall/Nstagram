@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
       this_error[:reference] = reference
       this_error[:message], this_error[:status] = message.split("-$STATUS: ")
       this_error[:status], this_error[:time] = this_error[:status].split("-$TIME: ")
+      this_error[:length] = 2
 
       _errors << this_error
     end
