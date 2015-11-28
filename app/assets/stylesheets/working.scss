@@ -77,7 +77,7 @@ only screen and (orientation: portrait) and (min-resolution: 2dppx) {
   $space-16: $space-base * 16;
   $space-20: $space-base * 20;
 
-  $font-s-base: $space-base * 4.8;
+  $font-s-base: $space-base * 4;
   $font-s-0: $font-s-base / 1.5;
   $font-s-2: $font-s-base * 1.25;
   $font-s-3: $font-s-base * 1.75;
@@ -134,7 +134,7 @@ only screen and (orientation: landscape) and (min-resolution: 2dppx) {
   $space-16: $space-base * 16;
   $space-20: $space-base * 20;
 
-  $font-s-base: $space-base * 4.8;
+  $font-s-base: $space-base * 4;
   $font-s-0: $font-s-base / 1.5;
   $font-s-2: $font-s-base * 1.25;
   $font-s-3: $font-s-base * 2;
