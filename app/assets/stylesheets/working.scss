@@ -142,7 +142,7 @@ only screen and (orientation: landscape) and (min-resolution: 2dppx) {
   $font-s-menu: $menu-height * 0.4;
   $font-s-menu-big: $font-s-menu * 1.25;
 
-  $modal: false;
+  $modal: true;
 
   $ng-blue: hsl(206, 85%, 30%);
   $ng-highlight: hsl(30, 80%, 48%);
