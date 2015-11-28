@@ -36,16 +36,15 @@ Nstagram.Models.Photo = Backbone.Model.extend({
   },
   like: function (options) {
     if (this._like) {
-      this.set("is_current_user_liking", true);
       this.likers.push({ username: this.escape("current_like_username") });
       this.attributes["likes"] = this.get("likes") || { count: 0 }
       this.get("likes").count += 1;
       this._like.save({}, options);
+      this.set("is_current_user_liking", true);
     }
   },
   unlike: function (options) {
     if (this._like) {
-      this.set("is_current_user_liking", false);
       this.likers = _.reject(this.likers, function (liker) {
         return liker.username == this.escape("current_like_username");
       }.bind(this));
@@ -56,6 +55,7 @@ Nstagram.Models.Photo = Backbone.Model.extend({
       this.get("likes").count -= 1;
       this.get("likes").count === 0 && this.unset("likes");
       this._like.destroy(options);
+      this.set("is_current_user_liking", false);
     }
   },
   comments: function (options) {

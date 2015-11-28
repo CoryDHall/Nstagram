@@ -6,8 +6,9 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   initialize: function (options) {
     this.userSession = options.userSession;
     this.profile = options.profile;
-    this.listenTo(this.model, 'sync change change:is_current_user_liking set', this.render);
-    this.listenTo(this.model._like, 'sync', this.renderLater);
+    this.listenTo(this.model, 'sync change set', this.render);
+    this.listenTo(this.model, 'change:is_current_user_liking', this.updateLikes);
+    this.listenTo(this.model._like, 'sync', this.updateLikes);
     this.listenTo(this.model.comments(), 'add remove fetch', this.render);
   },
 
@@ -91,6 +92,19 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
     return this;
   },
 
+  updateLikes: function () {
+    var user = this.getUser();
+    var content = this.template({
+      photo: this.model,
+      user: user,
+      profile: this.profile,
+      session: this.userSession
+    });
+    var $shell = $('<div>');
+    $shell.html(content);
+    this.$('.likes').html($shell.find('.likes').html());
+  },
+
   renderCaption: function () {
     var body = this.model.get('caption');
     if (body === "") {
@@ -110,7 +124,7 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
 
   renderLater: function () {
     setTimeout(function () {
-      this.model.trigger("sync");
+      this.model._like.trigger("sync");
     }.bind(this), 1000);
   },
 
@@ -149,7 +163,7 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   showHeart: function () {
     var $overlay = $('<div>').text("\uD83D\uDC96").addClass("photo-like opening");
     this.$('nsta-photo').append($overlay);
-    TweenMax.to($overlay, 1, { css: { className: "-=opening" }, yoyo: true, onReverseComplete: function () {
+    TweenMax.to($overlay, 1, { css: { className: "-=opening" }, yoyo: true, onComplete: function () {
         $overlay.remove();
       }
     });
@@ -158,7 +172,7 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   showHeartBreak: function () {
     var $overlay = $('<div>').text("\uD83D\uDC94").addClass("photo-like opening");
     this.$('nsta-photo').append($overlay);
-    TweenMax.to($overlay, 1, { css: { className: "-=opening" }, yoyo: true, onReverseComplete: function () {
+    TweenMax.to($overlay, 1, { css: { className: "-=opening" }, yoyo: true, onComplete: function () {
         $overlay.remove();
       }
     });
