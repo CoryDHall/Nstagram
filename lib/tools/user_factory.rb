@@ -123,7 +123,7 @@ class UserFactory
         "##{Faker::Commerce.product_name.gsub(/\W/, "")}"] +
         Faker::Hacker.say_something_smart.scan(/[\w\s^']+/)
 
-      try_only_n_times 1 do
+      try_only_n_times 2 do
         index = Math.sqrt(rand(photos.count)).floor
         photos[index].comments.create(user: user, body: body.shuffle.join(" "))
       end
