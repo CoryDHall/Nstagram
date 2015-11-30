@@ -366,14 +366,21 @@
       }
     },
 
-    _swapView: function (view) {
+    _swapView: function (view, callbacks) {
+      callbacks = callbacks || {};
+      callbacks.begin && callbacks.begin();
+      this._currentView && this._currentView.hide(function () {
+        this._currentView.remove();
+        callbacks.during && callbacks.during();
+      }.bind(this), 200);
+
       this.userSession(function (session) {
         if (session.user.isNew()) {
           this.hideBars();
         } else {
           this.showBars();
         }
-        Backbone.Router.prototype._swapView.call(this, view);
+        Backbone.Router.prototype._swapView.call(this, view, callbacks.after);
         this.$rootEl.trigger("scroll");
       }.bind(this))
     },

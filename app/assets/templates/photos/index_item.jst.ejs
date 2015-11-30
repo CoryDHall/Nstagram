@@ -1,4 +1,4 @@
-<% if (photo.escape("url")) { %>
+<% if (photo.escape("url") || true) { %>
   <% if (true) { %>
     <nsta-photo-post-head>
       <p class="post-date"><a href="#users/<%= user.escape("username") %>/p/<%= photo.id %>" class="photo-link"><em><%= photo.escape("posted") %> ago</em></a></p>
