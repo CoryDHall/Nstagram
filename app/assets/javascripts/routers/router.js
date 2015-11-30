@@ -67,6 +67,7 @@
     },
 
     search: function (scope, query) {
+      this.updateTitle("#" + query);
       var qscope = {
         'p': 'photos',
         'u': 'users'
@@ -113,6 +114,7 @@
       });
       this.userSession(function (session) {
         var photo = photos.getOrFetch(photo_id);
+        this.updateTitle(username + "'s photo");
         var showView = new Views.PhotoShow({
           userSession: session,
           model: photo
@@ -181,6 +183,7 @@
             trigger: true
           });
         } else {
+          this.updateTitle();
           var feedView = new Views.PhotosIndex({
             userSession: session,
             collection: new Collections.Feed()

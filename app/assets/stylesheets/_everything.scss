@@ -723,8 +723,8 @@ nstagram-profile {
   line-height: $font-s-2;
 
   * {
-    -webkit-transition: box-shadow 0.5s, color 0.1s 0.2s, background 0.1s 0.2s;
-    transition: box-shadow 0.5s, color 0.1s 0.2s, background 0.1s 0.2s;
+    -webkit-transition: box-shadow 0.25s linear, color 0.0s 0.125s, background 0.05s 0.25s;
+    transition: box-shadow 0.25s linear, color 0.0s 0.125s, background 0.05s 0.25s;
   }
 
   li {
@@ -884,17 +884,22 @@ nstagram-thumbs-index {
   }
 }
 
-nstagram-thumbs-index *, nstagram-full-size-index * {
+nstagram-thumbs-index > *, nstagram-full-size-index > * {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
 
-nstagram-thumbs-index * {
+nstagram-thumbs-index *, nstagram-full-size-index * {
+  -webkit-transition: filter 0.5s, -webkit-filter 0.5s;
+  transition: filter 0.5s, -webkit-filter 0.5s;
+}
+
+nstagram-thumbs-index > * {
   -webkit-transform-origin: top left;
   transform-origin: top left;
 }
 
-nstagram-full-size-index * {
+nstagram-full-size-index > * {
   -webkit-transform-origin: top right;
   transform-origin: top right;
 }
@@ -903,14 +908,16 @@ nstagram-thumbs-index.hidden, nstagram-full-size-index.hidden {
   display: none;
 }
 
-nstagram-thumbs-index.hiding * {
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
+nstagram-thumbs-index.hiding > * {
+  margin-top: 100%;
+  // -webkit-transform: translateX(-100%);
+  // transform: translateX(-100%);
 }
 
-nstagram-full-size-index.hiding * {
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
+nstagram-full-size-index.hiding > * {
+  margin-top: 100%;
+  // -webkit-transform: translateX(100%);
+  // transform: translateX(100%);
 }
 
 nsta-photo-post-head {

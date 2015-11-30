@@ -56,13 +56,14 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
     if ($(e.currentTarget).parent().hasClass("selected")) {
       return;
     }
+    this.$(".profile-nav li").toggleClass("selected");
     var swapIndex = this._otherIndex, tl = Nstagram.timeline;
     this._otherIndex = this._index;
     tl
     .set(this.$('nstagram-full-size-index'), { className: "+=hiding" })
-    .set(this.$('nstagram-thumbs-index'), { className: "-=hidden" })
-    .to(this.$('nstagram-full-size-index'), 0.5, { className: "+=hidden" }, "+=0.25")
-    .set(this.$('nstagram-thumbs-index'), { className: "-=hiding"});
+    .set(this.$('nstagram-thumbs-index'), { className: "-=hidden" }, "+=0.1")
+    .set(this.$('nstagram-full-size-index'), { className: "+=hidden" }, "+=0.2")
+    .set(this.$('nstagram-thumbs-index'), { className: "-=hiding"}, "+=0.25");
     this._index = swapIndex;
     this.page = 1;
     this._index.collection.initialize({
@@ -71,7 +72,6 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
     });
     this._index.collection.fetch({ reset: true });
     this._index.resetLoadMore(this.page);
-    this.$(".profile-nav li").toggleClass("selected");
   },
 
   showFull: function (e) {
@@ -80,15 +80,15 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
     if ($(e.currentTarget).parent().hasClass("selected")) {
       return;
     }
+    this.$(".profile-nav li").toggleClass("selected");
 
     var swapIndex = this._otherIndex, tl = Nstagram.timeline;
     this._otherIndex = this._index;
     tl
       .set(this.$('nstagram-thumbs-index'), { className: "+=hiding" })
-      .set(this.$('nstagram-full-size-index'), { className: "-=hidden" })
-      .to(this.$('nstagram-thumbs-index'), 0.5, { className: "+=hidden" }, "+=0.25")
-      .set(this.$('nstagram-full-size-index'), { className: "-=hiding" });
-    this.$(".profile-nav li").toggleClass("selected");
+      .set(this.$('nstagram-full-size-index'), { className: "-=hidden" }, "+=0.1")
+      .set(this.$('nstagram-thumbs-index'), { className: "+=hidden" }, "+=0.2")
+      .set(this.$('nstagram-full-size-index'), { className: "-=hiding" }, "+=0.25");
     if (swapIndex) {
       this.page = 1;
     } else {
