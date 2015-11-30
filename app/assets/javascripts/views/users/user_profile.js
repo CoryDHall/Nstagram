@@ -6,7 +6,7 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
   initialize: function (options) {
     this.userSession = options.userSession;
     this.listenTo(this.model, 'sync change', this.render);
-    this.listenTo(this.userSession, 'sync', this.render);
+    this.listenTo(this.userSession, 'reset', this.render);
     // this.listenTo(this.model.photos(), 'sync', this.render);
     this.page = 1;
   },
@@ -17,7 +17,12 @@ Nstagram.Views.UserProfile = Backbone.CompositeView.extend({
 
   events: {
     "click .thumbnail-link": "showThumbs",
+    "click .photos-link": "doNothing",
     "click .full-size-link": "showFull"
+  },
+
+  doNothing: function (e) {
+    e.preventDefault();
   },
 
 

@@ -23,6 +23,7 @@
       this.$footEl.html(this._menu.$el);
       this._menu.render();
       this._barsHidden = false;
+      this.hideBars();
 
       this._scrolling = false;
       this.$rootEl.on("scroll", function (e) {
@@ -85,10 +86,11 @@
           });
           var putInPlace = function (coll, resp) {
             var $thumbs = $('<nstagram-thumbs-index>');
-            searchView.$el.parent().append($thumbs);
+            // searchView.$el.parent().append($thumbs);
+            this.$rootEl.append($thumbs);
             searchView.$el.appendTo($thumbs);
-          };
-          searchView.listenTo(photos, "sync", putInPlace);
+          }.bind(this);
+          // searchView.listenTo(photos, "reset", putInPlace);
           photos.fetch({
             data: {
               'scope': "photos"
@@ -97,13 +99,15 @@
             },
             reset: true
           });
-          this._swapView(searchView);
+          this._swapView(searchView, {
+            after: putInPlace
+          });
         }.bind(this));
       }
     },
 
     menuSelect: function (linkClass) {
-      $('.selected').removeClass('selected');
+      this.$footEl.find('.selected').removeClass('selected');
       $('.' + linkClass).not('.selected').addClass('selected');
     },
 
@@ -237,20 +241,19 @@
       var users = new Collections.Following({
         follower: username
       });
-      var that = this;
       users.fetch({
         reset: true,
         success: function () {
-          that.userSession(function (session) {
-            var followingView = new Views.UsersIndex({
-              collection: users,
-              userSession: session
-            });
-
-            that._swapView(followingView);
-          });
         }
       });
+      var followingView = new Views.UsersIndex({
+        collection: users,
+        userSession: this.userSession()
+      });
+
+      this.updateTitle(username + " follows")
+
+      this.needsLogin(followingView);
     },
 
     userFollowers: function (username) {
@@ -266,7 +269,9 @@
         userSession: this.userSession()
       });
 
-      this._swapView(followersView);
+      this.updateTitle(username + "'s followers")
+
+      this.needsLogin(followersView);
     },
 
     editUserProfile: function (username) {
@@ -294,15 +299,30 @@
     userSession: function (callback) {
       this._userSession = this._userSession ||
         new Models.UserSession();
-      this._userSession.fetch({
-        success: callback,
-      });
+      if (this._userSession.updated && Date.now() - this._userSession.get("updated") < 100000) {
+        callback && callback(this._userSession);
+      } else {
+        this._userSession.fetch({
+          success: function (session) {
+            session.updated = Date.now();
+            callback && callback(session);
+          },
+        });
+      }
+
       return this._userSession;
     },
 
     needsLogin: function (view) {
       this.userSession(function (session) {
         if (session.isNew()) {
+          Nstagram.FlashErrors.newErrors.add({
+            reference: "Login",
+            status: "failure",
+            time: "now",
+            message: "Please Log In or Sign Up to view this page",
+            length: 3
+          });
           Backbone.history.navigate('', {
             trigger: true
           });
@@ -341,11 +361,11 @@
         session.destroy();
         session.clear();
         session.user.clear();
-        $('*').removeClass("selected").blur();
+        this.$footEl.find('*').removeClass("selected").blur();
         Backbone.history.navigate('', {
           trigger: true
         })
-      });
+      }.bind(this));
     },
 
     hideBars: function () {
