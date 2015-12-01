@@ -9,7 +9,9 @@ Nstagram.Views.PhotoNew = Backbone.CompositeView.extend({
     "click li.filter-item a": "chooseFilter",
     "change #photo-input": "showPhoto",
     "submit": "submit",
-    "resize window": "resize"
+    "resize window": "resize",
+    "click .form-caption": "closeFilters",
+    "click window": "closeFilters"
   },
 
   initialize: function (options) {
@@ -22,10 +24,21 @@ Nstagram.Views.PhotoNew = Backbone.CompositeView.extend({
     if (this.$('.filter-select.disabled').length == 1) {
       return;
     } else if (this.$('.filter-select.closed').length == 1) {
-      TweenMax.to(this.$('.filter-select.closed'), 0.125, { css: { className: "-=closed" } });
+      this.$('.filter-select.closed').removeClass('closed');
+      setTimeout(this.resize.bind(this), 200);
+      // TweenMax.to(this.$('.filter-select.closed'), 0.125, { css: { className: "-=closed" }, onComplete: this.resize.bind(this) });
       return
     }
-    TweenMax.to(this.$('.filter-select'), 0.5, { css: { className: "+=closed" } });
+    this.closeFilters();
+  },
+
+  closeFilters: function () {
+    if (this.$('.filter-select.disabled').length == 1) {
+      return;
+    }
+    this.$('.filter-select').scrollTop(0).addClass('closed');
+    setTimeout(this.resize.bind(this), 200);
+    // TweenMax.to(this.$('.filter-select'), 0.5, { css: { className: "+=closed" } , onComplete: this.resize.bind(this) });
   },
 
   chooseFilter: function (e) {
@@ -38,8 +51,10 @@ Nstagram.Views.PhotoNew = Backbone.CompositeView.extend({
 
   resize: function (e) {
     var $canvas = this.$('canvas');
-    var availableHeight = this.$el.parent().height() - this.$('button').height() - this.$('.form-caption').height();
-    var availableWidth = this.$el.parent().width();
+    var $filters = this.$('.filter-select'), $caption = this.$('.form-caption');
+    var isModal = getComputedStyle($filters[0]).getPropertyValue("position") === "absolute";
+    var availableHeight = this.$el.parent().height() - this.$('button').height() - $caption.height() * (2 + isModal) - getComputedStyle($caption[0]).getPropertyValue("marginTop") - $filters.height() * (!isModal);
+    var availableWidth = this.$el.parent().width() - $filters.width() * (isModal);
     var avRatio = availableWidth / availableHeight;
     if (availableWidth / this.aRatio <= availableHeight) {
       $canvas.width(availableWidth);
@@ -52,17 +67,25 @@ Nstagram.Views.PhotoNew = Backbone.CompositeView.extend({
 
   render: function () {
     this.$el.html(this.template());
-    Nstagram.FlashErrors.newErrors.add({
-      reference: "Upload",
-      status: "notice",
-      time: "now",
-      message: "Upload a photo by clicking in the black square",
-      length: 5
-    });
+    // Nstagram.FlashErrors.newErrors.add({
+    //   reference: "Upload",
+    //   status: "notice",
+    //   time: "now",
+    //   message: "Upload a photo by clicking in the black square",
+    //   length: 5
+    // });
     this.resize();
     var ctx = this.$('canvas')[0].getContext("2d");
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillStyle = "#fff";
+    ctx.textAlign = "center";
+    ctx.font = "100px sans-serif"
+    ctx.fillText(
+      "Tap or click here to select a photo",
+      ctx.canvas.width / 2,
+      ctx.canvas.height / 2
+    );
     return this;
   },
 
@@ -95,7 +118,7 @@ Nstagram.Views.PhotoNew = Backbone.CompositeView.extend({
       view.canvasToFile();
 
       view.$('button').prop("disabled", false);
-      view.resize();
+      setTimeout(view.resize.bind(this), 500);
     }.bind(this));
     if (photo) {
       reader.readAsDataURL(photo);
@@ -130,6 +153,7 @@ Nstagram.Views.PhotoNew = Backbone.CompositeView.extend({
     if (!$(e.target).is($('#photo-input'))) {
       e.preventDefault();
     }
+    this.closeFilters();
     this.$("#photo-input").click();
   },
 

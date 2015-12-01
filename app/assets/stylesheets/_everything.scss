@@ -429,6 +429,7 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     padding-bottom: $menu-height + 2;
     position: absolute;
     box-sizing: border-box;
+    max-height: $menu-height * 2;
   }
 
   button.fresh:disabled {
@@ -440,7 +441,7 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
   }
 
   .form-caption {
-    margin-top: $space-6;
+    // margin-top: $menu-height;
     color: $ng-white;
   }
 
@@ -456,18 +457,64 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     cursor: pointer;
   }
 
+  #photo-upload:not(.empty) {
+    cursor: default;
+    @if $modal {
+      left: 0;
+      -webkit-transform: translateX(0%);
+      transform: translateX(0%);
+      margin-left: $space-6;
+    } @else {
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      margin-left: 0;
+    }
+  }
+  div {
+    height: auto;
+    min-height: $menu-height * 2;
+    overflow: hidden;
+    position: if($modal, static, relative);
+    padding: 0 $space-0 $menu-height;
+  }
+
   .filter-select {
-    position: absolute;
-    bottom: $menu-height * 2;
-    min-width: 10%;
-    max-width: 50%;
+    // bottom: $menu-height * 2;
+    // min-width: 10%;
+    // max-width: 50%;
+    @include modal_banner;
+      right: 0;
+    @if $modal {
+      max-height: $menu-height * 8;
+      position: absolute;
+      width: auto;
+      padding: 0;
+      & {
+        min-width: 0;
+      }
+      &:not(.closed) {
+        min-width: 25%;
+      }
+      h6 {
+        padding: $space-null $space-base;
+      }
+    } @else {
+      max-height: $menu-height * 4;
+      position: relative;
+      padding: $space-0 0 0;
+      top: $menu-height;
+      h6 {
+        padding: $space-base $space-3;
+      }
+    }
     border: 1px solid rgba(255,255,255,0.7);
-    right: $menu-height;
-    background: $ng-darker;
+    // right: $menu-height;
+    background: transparentize($ng-darker, 0.2);
+    overflow: scroll;
     font-weight: bold;
     color: $ng-white;
     box-shadow: 0 $space-0 $space-4 $ng-darker;
-    padding: $space-0 0 0;
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
@@ -477,7 +524,6 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     h6 {
       margin: $space-null 0 $space-2;
       border: 0;
-      padding: $space-base $space-3;
       font-size: $font-s-base;
       cursor: all-scroll;
     }
@@ -515,9 +561,11 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
   }
 
   .filter-select.closed {
-    right: 0;
-    bottom: $menu-height * 1.5;
-    max-width: 10%;
+    // right: 0;
+    // bottom: $menu-height * 1.5;
+    // max-width: 10%;
+    max-height: $menu-height * 1.5;
+    overflow: hidden;
     h6 {
       cursor: pointer;
     }
@@ -532,11 +580,14 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     .filter-item.selected a {
       font-size: 0;
       padding: $space-null;
+      margin: 0;
     }
     li.filter-item:not(.selected) {
       visibility: collapse;
       height: 0;
       min-height: 0;
+      margin: 0;
+      padding: 0;
     }
   }
 }
