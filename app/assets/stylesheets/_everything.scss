@@ -442,6 +442,8 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
 
   .form-caption {
     // margin-top: $menu-height;
+    position: absolute;
+    bottom: $menu-height * 2;
     color: $ng-white;
   }
 
@@ -477,6 +479,30 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     overflow: hidden;
     position: if($modal, static, relative);
     padding: 0 $space-0 $menu-height;
+    box-sizing: border-box;
+  }
+
+  @if $modal {
+    .inline-container {
+      display: none;
+      height: 0;
+    }
+    .floater-container {
+      display: block;
+      height: inherit;
+    }
+  } @else {
+    .inline-container {
+      display: block;
+      height: auto;
+      width: inherit;
+    }
+    .floater-container {
+      display: none;
+      height: 0;
+      width: 0;
+    }
+
   }
 
   .filter-select {
@@ -486,15 +512,22 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     @include modal_banner;
       right: 0;
     @if $modal {
-      max-height: $menu-height * 8;
-      position: absolute;
-      width: auto;
       padding: 0;
+      max-height: $menu-height * 8;
       & {
         min-width: 0;
       }
       &:not(.closed) {
         min-width: 25%;
+      }
+      &.inline {
+        display: none;
+        height: 0;
+      }
+      &.floater {
+        position: absolute;
+        width: auto;
+        display: block;
       }
       h6 {
         padding: $space-null $space-base;
@@ -506,6 +539,14 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
       top: $menu-height;
       h6 {
         padding: $space-base $space-3;
+      }
+      &.inline {
+        display: block;
+        height: auto;
+      }
+      &.floater {
+        display: none;
+        width: 0 !important;
       }
     }
     border: 1px solid rgba(255,255,255,0.7);
@@ -526,6 +567,14 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
       border: 0;
       font-size: $font-s-base;
       cursor: all-scroll;
+
+      span.selected-filter {
+        display: inline;
+        float: right;
+        border: 0;
+        width: auto;
+        color: $ng-blue;
+      }
     }
     h6::after {
       content: " x";

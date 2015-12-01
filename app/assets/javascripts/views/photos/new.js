@@ -23,7 +23,7 @@ Nstagram.Views.PhotoNew = Backbone.CompositeView.extend({
   toggleFilters: function (e) {
     if (this.$('.filter-select.disabled').length == 1) {
       return;
-    } else if (this.$('.filter-select.closed').length == 1) {
+    } else if (this.$('.filter-select.closed').length >= 1) {
       this.$('.filter-select.closed').removeClass('closed');
       setTimeout(this.resize.bind(this), 200);
       // TweenMax.to(this.$('.filter-select.closed'), 0.125, { css: { className: "-=closed" }, onComplete: this.resize.bind(this) });
@@ -44,17 +44,18 @@ Nstagram.Views.PhotoNew = Backbone.CompositeView.extend({
   chooseFilter: function (e) {
     var $sel = $(e.currentTarget).parent();
     TweenMax.to(this.$('.filter-item.selected'), 0.4, { css: { className: "-=selected" } });
-    this.changeFilter(Nstagram.Filters[$sel.attr("data-filter")]);
+    var chosen = $sel.attr("data-filter");
+    this.$('.selected-filter').text(chosen);
+    this.changeFilter(Nstagram.Filters[chosen]);
     this.canvasToFile();
-    TweenMax.to($sel, 0.2, { css: { className: "+=selected" } });
+    TweenMax.to(this.$('[data-filter="' + chosen + '"]'), 0.2, { css: { className: "+=selected" } });
   },
 
   resize: function (e) {
     var $canvas = this.$('canvas');
     var $filters = this.$('.filter-select'), $caption = this.$('.form-caption');
-    var isModal = getComputedStyle($filters[0]).getPropertyValue("position") === "absolute";
-    var availableHeight = this.$el.parent().height() - this.$('button').height() - $caption.height() * (2 + isModal) - getComputedStyle($caption[0]).getPropertyValue("marginTop") - $filters.height() * (!isModal);
-    var availableWidth = this.$el.parent().width() - $filters.width() * (isModal);
+    var availableHeight = this.$el.parent().height() - this.$('button').height() - $caption.height() - this.$('.inline-container').height();
+    var availableWidth = this.$el.parent().width() - this.$('.floater-container nav').width();
     var avRatio = availableWidth / availableHeight;
     if (availableWidth / this.aRatio <= availableHeight) {
       $canvas.width(availableWidth);
@@ -152,8 +153,8 @@ Nstagram.Views.PhotoNew = Backbone.CompositeView.extend({
   pickPhoto: function (e) {
     if (!$(e.target).is($('#photo-input'))) {
       e.preventDefault();
+      this.closeFilters();
     }
-    this.closeFilters();
     this.$("#photo-input").click();
   },
 
