@@ -160,8 +160,12 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
     }
   },
 
+  _heart: $('<nsta-icon>').addClass('icon ion-heart'),
+  _heartBreak: $('<nsta-icon>').addClass('icon ion-heart-broken'),
+
+
   showHeart: function () {
-    var $overlay = $('<div>').text("\uD83D\uDC96").addClass("photo-like opening");
+    var $overlay = $('<div>').html(this._heart).addClass("photo-like opening");
     this.$('nsta-photo').append($overlay);
     TweenMax.to($overlay, 1, { css: { className: "-=opening" }, yoyo: true, onComplete: function () {
         $overlay.remove();
@@ -170,7 +174,7 @@ Nstagram.Views.PhotosIndexItem = Backbone.CompositeView.extend({
   },
 
   showHeartBreak: function () {
-    var $overlay = $('<div>').text("\uD83D\uDC94").addClass("photo-like opening");
+    var $overlay = $('<div>').html(this._heartBreak).addClass("photo-like unlike opening");
     this.$('nsta-photo').append($overlay);
     TweenMax.to($overlay, 1, { css: { className: "-=opening" }, yoyo: true, onComplete: function () {
         $overlay.remove();

@@ -1,6 +1,6 @@
 /*RESET*/
 
-html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, p, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4, nstagram-avatar, nstagram-header, nstagram-flash, nstagram-menu, fieldset {
+html, body, div, header, nstagram-content, nstagram-logo, tag-line, section, p, em, ul, li, input, button, a:link, a:visited, a:hover, a:active, nav, h4, nstagram-avatar, nstagram-header, nstagram-flash, nstagram-menu, fieldset, nsta-icon {
   margin: 0;
   border: 0;
   padding: 0;
@@ -81,6 +81,11 @@ nstagram-content {
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+nsta-icon.icon {
+  display: inline-block;
+  transform: scale(2) translateY(1%);
 }
 
 vert-box, top-box {
@@ -510,7 +515,8 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     // min-width: 10%;
     // max-width: 50%;
     @include modal_banner;
-      right: 0;
+    right: 0;
+    transition: height 0.5s, width 0.5s, max-width 0.5s, min-width 0.5s, min-height 0.2s, max-height 0.2s;
     @if $modal {
       padding: 0;
       max-height: $menu-height * 8;
@@ -549,9 +555,10 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
         width: 0 !important;
       }
     }
-    border: 1px solid rgba(255,255,255,0.7);
+
+    // border: 1px solid rgba(255,255,255,0.7);
     // right: $menu-height;
-    background: transparentize($ng-darker, 0.2);
+    background: transparentize($ng-dark, 0.8);
     overflow: scroll;
     font-weight: bold;
     color: $ng-white;
@@ -574,12 +581,22 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
         border: 0;
         width: auto;
         color: $ng-blue;
+        filter: contrast(150%) saturate(125%);
+      }
+
+      .ion-android-add-circle {
+        display: none;
+        width: auto;
+      }
+      .ion-minus-circled {
+        display: inline-block;
+        width: auto;
       }
     }
-    h6::after {
-      content: " x";
-      font-size: 1em;
-    }
+    // h6::after {
+    //   content: " x";
+    //   font-size: 1em;
+    // }
 
     li.filter-item {
       padding: 0;
@@ -617,15 +634,23 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
     overflow: hidden;
     h6 {
       cursor: pointer;
+
+      .ion-android-add-circle {
+        display: inline-block;
+      }
+      .ion-minus-circled {
+        display: none;
+      }
     }
-    h6::before {
-      content: "+ ";
-      font-size: 200%;
-    }
-    h6::after {
-      content: "";
-      font-size: 0;
-    }
+    // h6::before {
+    //   @extend .ion-android-add-circle;
+    //   // content: "+ ";
+    //   // font-size: 200%;
+    // }
+    // h6::after {
+    //   content: "";
+    //   font-size: 0;
+    // }
     .filter-item.selected a {
       font-size: 0;
       padding: $space-null;
@@ -838,7 +863,7 @@ nstagram-profile {
   a {
     width: 100%;
     display: block;
-    padding: $space-base 0 $space-2;
+    padding: $space-2 0;
   }
 
 
@@ -903,6 +928,10 @@ photos-index {
           font-weight: bold;
           color: $ng-blue;
         }
+        .ion-heart {
+          color: $ng-flash-red;
+          transform: none;
+        }
       }
 
       nstagram-avatar {
@@ -929,9 +958,14 @@ photos-index {
       li {
         float: left;
         padding: $space-base $space-2;
-        border: 1px solid $ng-middle;
-        border-radius: $space-base;
         margin-right: $space-4;
+        color: $ng-middle;
+        &:hover {
+          color: $ng-blue;
+        }
+      }
+      .ion-ios-heart {
+        color: $ng-flash-red;
       }
     }
   }
@@ -1157,11 +1191,27 @@ nstagram-content {
   width: 100%;
   -webkit-transform: translateY(50%);
   transform: translateY(50%);
+  color: transparentize($ng-flash-red, 0.2);
+  &.unlike {
+    -webkit-transform: translateY(150%) scale(1.5) rotateZ(135deg) skewY(45deg);
+    transform: translateY(150%) scale(1.5) rotateZ(135deg) skewY(45deg);
+    color: transparentize(mix($ng-flash-red, $ng-darker), 0.5);
+    opacity: 0;
+    -webkit-transition: -webkit-transform 0.8s 0.2s ease-in, opacity 0.3s 0.7s;
+    transition: transform 0.8s 0.2s ease-in, opacity 0.3s 0.7s;
+  }
 }
 .photo-like.opening {
   opacity: 0;
+  color: $ng-white;
   -webkit-transform: translateY(100%);
   transform: translateY(100%);
+  &.unlike {
+    color: mix($ng-flash-red, $ng-white);
+    -webkit-transform: translateY(50%) scale(0.5);
+    transform: translateY(50%) scale(0.5);
+    opacity: 0.9;
+  }
 }
 nsta-photo {
   display: block;

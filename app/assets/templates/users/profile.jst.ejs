@@ -19,7 +19,7 @@
   </div>
     <% if (user.id === userSession.id) { %>
     <p>
-      <a href="#users/<%= user.escape("username") %>/edit" class="edit-profile-link">Edit Your Profile</a>
+      <a href="#users/<%= user.escape("username") %>/edit" class="edit-profile-link">Edit Profile</a>
     </p>
     <% } else { %>
     <nstagram-follow-button>
@@ -39,8 +39,8 @@
 </header>
 <br>
 <ul class="profile-nav clearfix">
-  <li class="selected"><a href="#" class="thumbnail-link">[][][]</a></li>
-  <li><a href="#" class="full-size-link">[---]</a></li>
+  <li class="selected"><a href="#" class="thumbnail-link"><nsta-icon class="icon ion-grid"/></a></li>
+  <li><a href="#" class="full-size-link"><nsta-icon class="icon ion-navicon-round" /></a></li>
 </ul>
 <nstagram-thumbs-index></nstagram-thumbs-index>
 <nstagram-full-size-index></nstagram-full-size-index>

@@ -22,19 +22,19 @@
   </nsta-photo>
   <ul class="photo-actions clearfix">
     <li><button class="like-button">
-      <%= photo.get("is_current_user_liking") === true ? "unlike" : "like" %>
+      <nsta-icon class="icon ion-ios-heart<%= photo.get("is_current_user_liking") === true ? "" : "-outline" %>" ></nsta-icon>
     </button></li>
     <% if (user.id === session.id) { %>
-    <li><button class="delete-button" value="Delete" data-disable-with="Deleting…">Delete</button></li>
+    <li><button class="delete-button" value="Delete" data-disable-with="Deleting…"><nsta-icon class="icon ion-trash-a"></nsta-icon></button></li>
     <% } %>
   </ul>
   <p class="likes">
     <% if (photo.get("likes")) { %>
       <% if (photo.get("likes").count > 10) { %>
-      &#x1f493;
+      <nsta-icon class="icon ion-heart" /></nsta-icon>
         <%= photo.get("likes").count %> likes
       <% } else if (photo.get("likes").count > 0) { %>
-        &#x1f493;
+        <nsta-icon class="icon ion-heart" /></nsta-icon>
         <% photo.likers.forEach(function(liker, idx) { %>
           <a href="#users/<%= liker.username %>"><%= liker.username %> </a>
           <%= idx + 1 === photo.likers.length ? " " : ", " %>
