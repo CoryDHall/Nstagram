@@ -20,6 +20,7 @@
 //= require backbone
 //= require tweenmax
 //= require timelinemax
+//= require scrollto_plugin
 //= require nstagram
 //= require_tree ./utils
 //= require_tree ../templates

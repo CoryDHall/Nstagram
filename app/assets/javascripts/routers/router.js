@@ -11,6 +11,9 @@
 
       this.$headEl = $(options.headEl);
       this._head = new Views.Header();
+      this.$headEl.on("click", "nstagram-logo", function (e) {
+        TweenMax.to(this.$rootEl, 1 + this.$rootEl.scrollTop() / 5000, { scrollTo: { y: 0 } });
+      }.bind(this));
       this.$headEl.html(this._head.$el);
       this._head.render();
 
