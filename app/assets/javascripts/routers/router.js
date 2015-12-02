@@ -46,7 +46,12 @@
       this._currentView && this._currentView.hearAbout(e);
     },
 
-    updateTitle: function (pageTitle) {
+    updateTitle: function (pageTitle, darken) {
+      if (darken) {
+        this._head.goDark();
+      } else {
+        this._head.unDark();
+      }
       this._currentTitle = pageTitle ? pageTitle.toUpperCase() : "nstagram";
       $('title').text(this._currentTitle);
       this._head.changeTitle(this._currentTitle);
@@ -173,7 +178,7 @@
           userSession: session
         });
         this.menuSelect("upload-link");
-        this.updateTitle("Upload");
+        this.updateTitle("Upload", true);
 
         this.needsLogin(photoUploadView);
       }.bind(this));

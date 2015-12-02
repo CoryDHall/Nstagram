@@ -20,6 +20,17 @@ Nstagram.Views.Header = Backbone.CompositeView.extend({
 
   changeTitle: function (title) {
     this.$('nstagram-logo').text(title);
+    return this;
+  },
+
+  goDark: function () {
+    this.$el.parent().not('.dark-header').addClass('dark-header');
+    return this;
+  },
+
+  unDark: function () {
+    this.$el.parent().removeClass('dark-header');
+    return this;
   }
 
 });

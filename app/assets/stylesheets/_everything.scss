@@ -1152,6 +1152,13 @@ nstagram-header {
   top: 0;
   position: relative;
   z-index: 100;
+
+  transition: background .2s;
+
+  &.dark-header {
+    background: $ng-darker;
+    transition: background 1s;
+  }
 }
 
 nstagram-header.hide-bar,
@@ -1289,8 +1296,8 @@ nstagram-flash {
 }
 .hidden-view {
   opacity: 0;
-  -webkit-transform: translateY(10%);
-  transform: translateY(10%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
 }
 nstagram-content {
   > *, > * > * {
