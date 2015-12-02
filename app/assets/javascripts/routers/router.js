@@ -148,9 +148,15 @@
 
     welcome: function () {
       this.hideBars();
-      var welcomeView = new Views.Welcome();
 
-      this.needsNoLogin(welcomeView);
+      this.userSession(function (session) {
+        var welcomeView = new Views.Welcome({
+          session: session
+        });
+
+        this.needsNoLogin(welcomeView);
+      }.bind(this), true);
+
     },
 
     you: function () {
@@ -179,7 +185,7 @@
         this.menuSelect("home-link");
 
         if (session.user.get("num_following") === 0 && session.user.get("num_posts") === 0) {
-          Nstagram.FlashErrors.newErrors.add({
+          session.user.id && Nstagram.FlashErrors.newErrors.add({
             reference: "Feed",
             status: "notice",
             time: "now",
@@ -206,15 +212,17 @@
     },
 
     usersIndex: function () {
-      this.menuSelect("all-users-link");
-      this.updateTitle("Users");
+      this.userSession(function (session) {
+        this.menuSelect("all-users-link");
+        this.updateTitle("Users");
 
-      var userIndexView = new Views.UsersIndex({
-        collection: this.users(),
-        userSession: this.userSession()
-      });
+        var userIndexView = new Views.UsersIndex({
+          collection: this.users(),
+          userSession: session
+        });
 
-      this.needsLogin(userIndexView);
+        this.needsLogin(userIndexView);
+      }.bind(this));
     },
 
     userProfile: function (username) {
@@ -299,10 +307,12 @@
       return this._users;
     },
 
-    userSession: function (callback) {
+    userSession: function (callback, force) {
       this._userSession = this._userSession ||
         new Models.UserSession();
-      if (this._userSession.updated && Date.now() - this._userSession.get("updated") < 100000) {
+
+      force = force || false;
+      if (!force && this._userSession.updated && Date.now() - this._userSession.updated < 1000000) {
         callback && callback(this._userSession);
       } else {
         this._userSession.fetch({
@@ -344,7 +354,7 @@
         } else {
           this._swapView(view)
         }
-      }.bind(this));
+      }.bind(this), true);
     },
 
     needsOwnership: function (username, view) {
@@ -356,19 +366,25 @@
         } else {
           this._swapView(view)
         }
-      }.bind(this));
+      }.bind(this), true);
     },
 
     logout: function () {
-      this.userSession(function (session) {
-        session.destroy();
-        session.clear();
-        session.user.clear();
-        this.$footEl.find('*').removeClass("selected").blur();
-        Backbone.history.navigate('', {
-          trigger: true
-        })
-      }.bind(this));
+      this._currentView.stopListening();
+      this._currentView.hide(function () {
+        this._currentView.remove();
+
+        this.userSession(function (session) {
+          session.destroy();
+          session.clear();
+          session.user.clear();
+          this.$footEl.find('*').removeClass("selected").blur();
+          Backbone.history.navigate('', {
+            trigger: true
+          })
+        }.bind(this), true);
+
+      }.bind(this),200);
     },
 
     hideBars: function () {

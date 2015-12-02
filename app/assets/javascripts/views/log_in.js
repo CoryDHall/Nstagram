@@ -2,6 +2,9 @@ Nstagram.Views.LogIn = Backbone.View.extend({
   tagName: 'form',
   template: JST['log_in_form'],
   id: 'login-form',
+  initialize: function (options) {
+    this.session = options.session;
+  },
   events: {
     "submit":"logIn",
     "input":"enableButton"
@@ -24,7 +27,7 @@ Nstagram.Views.LogIn = Backbone.View.extend({
 
     var formData = this.$el.serializeJSON();
     this.$('#session_username, #session_password').prop("disabled", true);
-    var session = new Nstagram.Models.UserSession();
+    var session = this.session || new Nstagram.Models.UserSession();
     session.save(formData, {
       success: function () {
         Backbone.history.navigate('', {

@@ -1,13 +1,17 @@
 Nstagram.Models.Guest = Backbone.Model.extend({
   url: "/api/users/guest/new",
 
+  initialize: function (options) {
+    this.session = options.session;
+  },
+
   parse: function (resp) {
-    var session = new Nstagram.Models.UserSession();
+    // this.session = new Nstagram.Models.UserSession();
     // session.set(resp);
     // session.parse({
     //   password: "password"
     // });
-    session.fetch({
+    this.session.fetch({
       success: function () {
         Backbone.history.navigate('users', {
           trigger: true
