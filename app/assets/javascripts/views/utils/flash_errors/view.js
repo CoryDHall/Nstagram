@@ -4,7 +4,12 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
   template: JST['globals/flash'],
 
   initialize: function () {
+    this.tweens = {};
     this.listenTo(this.collection, 'add', this.render);
+  },
+
+  events: {
+    "click li": "close"
   },
 
   render: function () {
@@ -40,7 +45,7 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
   closeErrors: function () {
     this.$('li').not('.closing, .closing-done').each(function (idx, el) {
       var length = parseInt(el.attributes.getNamedItem("data-length").value);
-      TweenMax.fromTo(
+      this.tweens[el.attributes.getNamedItem("data-time").value] = TweenMax.fromTo(
         el,
         0.2,
         {
@@ -51,21 +56,22 @@ Nstagram.FlashErrors.View = Backbone.CompositeView.extend({
           css: { className: "+=closing-done" },
           onComplete: function () {
             this.$('.closing-done').remove();
+            delete this.tweens[el.attributes.getNamedItem("data-time").value];
           }.bind(this)
         }
       );
     }.bind(this));
-    // TweenMax.staggerFromTo(
-    //   this.$('li').not('.closing, .closing-done'),
-    //   0.2,
-    //   {
-    //     css: { className: "+=closing" }
-    //   },
-    //   {
-    //     css: { className: "+=closing-done" },
-    //     delay: 1.2,
-    //   },
-    //   0.4,
-    // );
+
+  },
+
+  close: function (e) {
+    var current = e.currentTarget.attributes.getNamedItem("data-time").value;
+    var tween = this.tweens[current];
+    tween.kill();
+    $(this.tweens[current].target).addClass("closing-done");
+    setTimeout(function () {
+      $(tween.target).remove();
+    }, 200);
+    delete this.tweens[current];
   }
 });

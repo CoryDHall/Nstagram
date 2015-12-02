@@ -68,10 +68,11 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
   },
 
   disableForms: function (e) {
-    this.$('.welcome form *, .twitter-button').attr({
+    var props = {
       disabled: true,
       href: "javascript:void(0)"
-    });
+    };
+    this.$('.welcome form *, .twitter-button').not($(e.currentTarget).find('button')).prop(props).attr(props);
   },
 
   guestLogin: function (e) {
