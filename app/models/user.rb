@@ -12,10 +12,6 @@ class User < ActiveRecord::Base
     with: /(\S+)/
   }, allow_blank: true
 
-  # validates :username, format: {
-  #   with: /([\w_-]+)/
-  # }
-
   validate :username_is_valid
 
   validate :username_is_case_insensitive_unique
@@ -63,6 +59,9 @@ class User < ActiveRecord::Base
     dependent: :destroy
 
   has_many :guest_user_data
+
+  has_many :comments,
+    dependent: :destroy
 
   paginates_per 24
 
@@ -154,6 +153,15 @@ class User < ActiveRecord::Base
     .joins("LEFT OUTER JOIN photos AS photos_0 ON photos_0.user_id = users.id")
     .select("users.* ")
     .order("COUNT(photos_0.user_id) DESC")
+  end
+
+  def self.with_no_photos
+    self
+    .joins("LEFT OUTER JOIN photos ON photos.user_id = users.id")
+    .group(:id)
+    .joins("LEFT OUTER JOIN photos AS photos_0 ON photos_0.user_id = users.id")
+    .select("users.* ")
+    .having("COUNT(photos_0.user_id) = '0'")
   end
 
   def username_is_case_insensitive_unique
