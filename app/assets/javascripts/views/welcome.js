@@ -24,7 +24,7 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
       .addClass('hidden-form');
 
     TweenPlugin.activate("colorProps");
-    setInterval(this.shiftBGColor.bind(this), 100 / 12);
+    setTimeout(this.shiftBGColor.bind(this), 0);
     return this;
   },
   shiftBGColor: function () {
@@ -42,6 +42,7 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
       }
     };
     this.welcome.update();
+    requestAnimationFrame(this.shiftBGColor.bind(this));
   },
 
   toggleSignUpLogIn: function (e) {
