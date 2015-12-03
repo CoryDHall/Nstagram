@@ -341,9 +341,7 @@
             message: "Please Log In or Sign Up to view this page",
             length: 3
           });
-          Backbone.history.navigate('', {
-            trigger: true
-          });
+          Backbone.history.toRoot();
         } else {
           this._swapView(view)
         }
@@ -353,9 +351,7 @@
     needsNoLogin: function (view) {
       this.userSession(function (session) {
         if (!session.isNew()) {
-          Backbone.history.navigate('', {
-            trigger: true
-          });
+          Backbone.history.toRoot();
         } else {
           this._swapView(view)
         }
@@ -365,9 +361,7 @@
     needsOwnership: function (username, view) {
       this.userSession(function (session) {
         if (session.user.escape("username") !== username) {
-          Backbone.history.navigate('', {
-            trigger: true
-          });
+          Backbone.history.toRoot();
         } else {
           this._swapView(view)
         }
@@ -384,9 +378,7 @@
           session.clear();
           session.user.clear();
           this.$footEl.find('*').removeClass("selected").blur();
-          Backbone.history.navigate('', {
-            trigger: true
-          })
+          Backbone.history.toRoot();
         }.bind(this), true);
 
       }.bind(this),200);

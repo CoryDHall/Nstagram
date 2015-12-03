@@ -32,7 +32,7 @@ Nstagram.Views.SignUp = Backbone.View.extend({
     } else if (!e.target.validity.valid) {
       $(e.target).nextAll("button").prop("disabled", true);
       return false;
-    } 
+    }
     return true;
   },
   validatePassword: function () {
@@ -57,12 +57,10 @@ Nstagram.Views.SignUp = Backbone.View.extend({
       success: function (newUser) {
         if (newUser.escape('errors').length > 0) {
           this.user.set(formData);
-          this.render();
+          Backbone.history.toRoot();
           return;
         }
-        Backbone.history.navigate('', {
-          trigger: true
-        })
+        Backbone.history.toRoot();
       }.bind(this)
     });
   }

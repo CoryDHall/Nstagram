@@ -30,11 +30,9 @@ Nstagram.Views.LogIn = Backbone.View.extend({
     var session = this.session || new Nstagram.Models.UserSession();
     session.save(formData, {
       success: function () {
-        Backbone.history.navigate('', {
-          trigger: true
-        });
+        Backbone.history.toRoot();
       }, error: function () {
-        this.render();
+        Backbone.history.toRoot();
       }.bind(this)
     });
   }
