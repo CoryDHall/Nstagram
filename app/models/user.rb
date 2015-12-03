@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   include PgSearch
   multisearchable against: [:username, :full_name],
     using: :trigram
-    
+
   validates :username, :password, :email, :full_name, presence: true
   validates :password, length: { minimum: 8, allow_nil: true }, confirmation: true
   validates :email, format: {
@@ -12,9 +12,11 @@ class User < ActiveRecord::Base
     with: /(\S+)/
   }, allow_blank: true
 
-  validates :username, format: {
-    with: /[\w_-]+/
-  }
+  # validates :username, format: {
+  #   with: /([\w_-]+)/
+  # }
+
+  validate :username_is_valid
 
   validate :username_is_case_insensitive_unique
 
@@ -160,6 +162,12 @@ class User < ActiveRecord::Base
         user != self
       end
       errors.add(:username, "'@#{self.username}' is already taken!")
+    end
+  end
+
+  def username_is_valid
+    if self.username[/[\w_-]+/] != self.username
+      errors.add(:username, "#{self.username} is an invalid username")
     end
   end
 end
