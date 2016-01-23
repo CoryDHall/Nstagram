@@ -96,15 +96,30 @@ class User < ActiveRecord::Base
   end
 
   def num_followers
-    self.followers.count
+    num = $redis.hget("num_followers", id)
+    if num.nil?
+      num = self.followers.count
+      $redis.hset("num_followers", id, num)
+    end
+    num.to_i
   end
 
   def num_following
-    self.following.count
+    num = $redis.hget("num_following", id)
+    if num.nil?
+      num = self.following.count
+      $redis.hset("num_following", id, num)
+    end
+    num.to_i
   end
 
   def num_posts
-    self.photos.count
+    num = $redis.hget("num_photos", id)
+    if num.nil?
+      num = self.photos.count
+      $redis.hset("num_photos", id, num)
+    end
+    num.to_i
   end
 
   def full_feed
@@ -146,6 +161,23 @@ class User < ActiveRecord::Base
     user
   end
 
+  def update_score
+    score = (1.0 + num_posts * 0.2) * (1.0 + 0.1 * num_followers) - num_following
+    $redis.zadd("user_scores", score, id)
+  end
+
+  def update_redis
+    $redis.hdel("num_following", id)
+    $redis.hdel("num_followers", id)
+    $redis.hdel("num_photos", id)
+    update_score
+  end
+
+  def save(*args)
+    update_redis
+    super(*args)
+  end
+
   def self.order_by_num_photos
     self
     .joins("LEFT OUTER JOIN photos ON photos.user_id = users.id")
@@ -153,6 +185,14 @@ class User < ActiveRecord::Base
     .joins("LEFT OUTER JOIN photos AS photos_0 ON photos_0.user_id = users.id")
     .select("users.* ")
     .order("COUNT(photos_0.user_id) DESC")
+  end
+
+  def self.order_by_score
+    order = $redis.zrevrange("user_scores", 0, -1)
+
+    self
+      .where(id: order)
+      .order_by_ids(order)
   end
 
   def self.with_no_photos
@@ -177,5 +217,15 @@ class User < ActiveRecord::Base
     if self.username[/[\w_-]+/] != self.username
       errors.add(:username, "#{self.username} is an invalid username")
     end
+  end
+
+  def self.order_by_ids(ids)
+    return self if ids.empty?
+    order_by = ["case"]
+    ids.each_with_index.map do |id, index|
+      order_by << "WHEN id='#{id}' THEN #{index}"
+    end
+    order_by << "end"
+    order(order_by.join(" "))
   end
 end

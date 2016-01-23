@@ -15,10 +15,12 @@ Nstagram.Views.Welcome = Backbone.CompositeView.extend({
 
     this.$el.html(content);
     this.addSubview('section.welcome', new Nstagram.Views.LogIn({
-      session: this.session
+      session: this.session,
+      parentView: this,
     }), true);
     this.addSubview('section.welcome', new Nstagram.Views.SignUp({
-      session: this.session
+      session: this.session,
+      parentView: this,
     }), true);
     this.$('#signup-form, .signup-link')
       .addClass('hidden-form');

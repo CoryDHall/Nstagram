@@ -4,6 +4,7 @@ Nstagram.Views.LogIn = Backbone.View.extend({
   id: 'login-form',
   initialize: function (options) {
     this.session = options.session;
+    this.parentView = options.parentView
   },
   events: {
     "submit":"logIn",

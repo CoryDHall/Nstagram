@@ -7,7 +7,8 @@ Nstagram.Views.SignUp = Backbone.View.extend({
     "input":"advanceForm",
     "keydown":"tabAdvance"
   },
-  initialize: function () {
+  initialize: function (options) {
+    this.parentView = options.parentView
     this.user = new Nstagram.Models.User();
     this.listenTo(this.user, "sync", this.render)
   },

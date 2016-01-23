@@ -40,7 +40,7 @@ class Photo < ActiveRecord::Base
     comments
       .includes(:user)
       .order("comments.created_at DESC")
-      .where.not(id: caption.id)
+      .where.not(id: caption_id)
       .first(3)
 
   end
@@ -49,6 +49,59 @@ class Photo < ActiveRecord::Base
     @caption ||= comments
       .order("created_at ASC")
       .first
+  end
+
+  def caption_id
+    cap = $redis.hget("photo_caption_ids", id)
+    if cap.nil?
+      cap = caption.id
+      $redis.hset("photo_caption_ids", id, cap)
+    end
+    cap
+  end
+
+  def caption_body
+    cap = $redis.hget("photo_captions", id)
+    if cap.nil?
+      cap = self.caption.body
+      $redis.hset("photo_captions", id, cap)
+    end
+    cap
+  end
+
+  def num_likes
+    num = $redis.hget("num_likes", id)
+    if num.nil?
+      num = self.likes.count
+      $redis.hset("num_likes", id, num)
+    end
+    num.to_i
+  end
+
+  def like_list
+    list = $redis.hget("photo_likers", id)
+    if list.nil?
+      list = self.likers.select(:username)
+      $redis.hset("photo_likers", id, list.to_json)
+    else
+      list = JSON.parse(list)
+    end
+    list
+  end
+
+  def self.clear_likes_cache_for(id)
+    $redis.hdel("num_likes", id)
+    $redis.hdel("photo_likers", id)
+  end
+
+  def self.clear_comments_cache_for(id)
+    $redis.hdel("photo_captions", id)
+  end
+
+  def save(*args)
+    Photo.clear_likes_cache_for id
+    Photo.clear_comments_cache_for id
+    super(*args)
   end
 
   def hashtags
@@ -76,6 +129,7 @@ class Photo < ActiveRecord::Base
   end
 
   def commit_caption
+    caption_body
     self.caption.save;
   end
 end

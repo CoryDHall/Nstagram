@@ -213,7 +213,7 @@
 
           this.needsLogin(feedView);
         }
-      }.bind(this));
+      }.bind(this), true);
     },
 
     usersIndex: function () {

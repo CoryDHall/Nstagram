@@ -23,18 +23,18 @@ end
 json.style (@style || :thumb)
 if @style == :full
   json.likes do
-    like_count = @photo.likes.count
+    like_count = @photo.num_likes
     json.count like_count
     if like_count.between?(1,11)
       json.users do
-        json.array! @photo.likers, :username
+        json.array! @photo.like_list
       end
     end
   end
-  json.caption @photo.caption.body
+  json.caption @photo.caption_body
 
   @comments = @photo.last_two_comments
-  
+
   json.comments do
     json.partial! 'api/photos/comments'
   end

@@ -2,14 +2,10 @@ class Api::UsersController < UsersController
   after_action :send_users_errors, only: [:index, :followers, :following]
   after_action :send_user_errors, only: [:create, :update, :profile, :follow, :unfollow]
   after_action :send_follow_errors, only: [:profile, :is_following, :follow, :unfollow]
+  after_action :ensure_store_data, only: [:follow, :unfollow]
 
   def index
-    @users = !@login_status ? nil : User
-      .joins("LEFT OUTER JOIN photos ON photos.user_id = users.id")
-      .group(:id)
-      .joins("LEFT OUTER JOIN photos AS photos_0 ON photos_0.user_id = users.id")
-      .select("users.* ")
-      .order("COUNT(photos_0.user_id) DESC")
+    @users = !@login_status ? nil : User.order_by_score
       .includes(:photos)
       .page(params["page"] || 1)
   end
@@ -101,6 +97,11 @@ class Api::UsersController < UsersController
       @photos = Photo.none
     end
     render 'api/photos/index'
+  end
+
+  def ensure_store_data
+    current_user.update_redis
+    @user.update_redis
   end
 
   def send_photos_errors

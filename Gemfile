@@ -41,6 +41,8 @@ gem 'omniauth-twitter'
 
 gem 'pg_search'
 
+gem 'redis'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
