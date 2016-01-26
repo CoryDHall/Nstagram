@@ -142,6 +142,7 @@ nstagram-avatar {
   background-color: $ng-slight;
   background-size: cover;
   background-position: center;
+  box-shadow: 0 0 2px $ng-dark;
 
   sub {
     display: block;
