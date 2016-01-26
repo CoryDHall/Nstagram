@@ -77,6 +77,15 @@ class Photo < ActiveRecord::Base
     num.to_i
   end
 
+  def num_comments
+    num = $redis.hget("num_comments", id)
+    if num.nil?
+      num = self.comments.count
+      $redis.hset("num_comments", id, num)
+    end
+    num.to_i
+  end
+
   def like_list
     list = $redis.hget("photo_likers", id)
     if list.nil?
@@ -88,6 +97,12 @@ class Photo < ActiveRecord::Base
     list
   end
 
+  def popularity
+    score = (1.0 + num_likes + num_comments * 0.1)
+    $redis.zadd("photo_popularity", score, id)
+    score
+  end
+
   def self.clear_likes_cache_for(id)
     $redis.hdel("num_likes", id)
     $redis.hdel("photo_likers", id)
@@ -95,6 +110,7 @@ class Photo < ActiveRecord::Base
 
   def self.clear_comments_cache_for(id)
     $redis.hdel("photo_captions", id)
+    $redis.hdel("photo_comments", id)
   end
 
   def save(*args)
@@ -108,7 +124,7 @@ class Photo < ActiveRecord::Base
   end
 
   def self.has_hashtag(tag)
-    order("created_at DESC")._has_hashtags(tag).page(1)
+    _has_hashtags(tag).page(1)
   end
 
   def self.order_by_popularity
@@ -121,6 +137,14 @@ class Photo < ActiveRecord::Base
       .order("COUNT(photos.id) DESC")
   end
 
+  def self.order_by_popularity_score
+    order = $redis.zrevrange("photo_popularity", 0, -1)
+    p order
+    self
+      .where(id: order)
+      .order_by_ids(order)
+  end
+
   paginates_per 6
 
   def ensure_caption
@@ -128,7 +152,17 @@ class Photo < ActiveRecord::Base
   end
 
   def commit_caption
+    self.caption.save
     caption_body
-    self.caption.save;
+  end
+
+  def self.order_by_ids(ids)
+    return self if ids.empty?
+    order_by = ["case"]
+    ids.each_with_index.map do |id, index|
+      order_by << "WHEN id='#{id}' THEN #{index}"
+    end
+    order_by << "end"
+    order(order_by.join(" "))
   end
 end

@@ -8,6 +8,7 @@ json.user do
     json.profile_picture_url asset_path(@photo.user.profile_picture.url(:square))
   end
 end
+json.popularity @photo.popularity
 json.posted distance_of_time_in_words_to_now @photo.created_at
 json.url asset_path(@photo.photo.url(@style || :thumb))
 
