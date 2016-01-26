@@ -25,6 +25,7 @@ class Api::PhotosController < ApplicationController
   def create
     @photo = current_user.photos.create(photo_params)
     @photo.caption.update(body: params[:photo][:caption][:body])
+    current_user.update_redis
 
     render json: {}, status: 200
   end
