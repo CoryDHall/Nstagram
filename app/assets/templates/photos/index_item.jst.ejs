@@ -14,8 +14,7 @@
     <% if (photo.escape("style") === "thumb") { %>
       <a href="#users/<%= user.escape("username") %>/p/<%= photo.id %>" class="photo-link">
     <% } %>
-    <img src="<%= photo.escape("url") %>" alt="<%= user.escape("username") %> posted this photo <%= photo.escape("posted") %> ago" height="300" width="300" />
-    <!-- <%= photo.escape("style") !== "thumb" ? "height=\"300\"" : "" %> -->
+    <img src="<%= photo.escape("url") %>" alt="<%= user.escape("username") %> posted this photo <%= photo.escape("posted") %> ago" <%= photo.escape("style") !== "thumb" ? "height=\"1200px\" width=\"1200px\"" : "height=\"300px\" width=\"300px\"" %> />
     <% if (photo.escape("style") === "thumb") { %>
       </a>
     <% } %>

@@ -34,4 +34,8 @@ class Comment < ActiveRecord::Base
   def body=(value)
     super(Comment.encode(value))
   end
+
+  def authorname
+    user.username
+  end
 end

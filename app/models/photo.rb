@@ -42,7 +42,6 @@ class Photo < ActiveRecord::Base
       .order("comments.created_at DESC")
       .where.not(id: caption_id)
       .first(3)
-
   end
 
   def caption
