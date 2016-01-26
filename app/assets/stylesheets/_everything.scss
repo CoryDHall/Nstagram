@@ -642,15 +642,6 @@ a.twitter-button:link, a.twitter-button:visited, a.twitter-button:hover, a.twitt
         display: none;
       }
     }
-    // h6::before {
-    //   @extend .ion-android-add-circle;
-    //   // content: "+ ";
-    //   // font-size: 200%;
-    // }
-    // h6::after {
-    //   content: "";
-    //   font-size: 0;
-    // }
     .filter-item.selected a {
       font-size: 0;
       padding: $space-null;
@@ -692,13 +683,45 @@ button.logout:hover {
   text-shadow: 0 0 $space-2 $ng-white;
 }
 users-index {
+  max-width: $site-width;
+  margin: 0 auto;
+  ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
   li {
-    border-bottom: $space-null solid $ng-light;
-    height: 2 * $menu-height;
-    width: 100%;
     box-sizing: border-box;
     white-space: nowrap;
     position: relative;
+    flex: auto;
+
+    @if $modal {
+      height: auto;
+      width: 30%;
+      margin: $space-2;
+      padding-top: $space-2;
+      border-bottom: none;
+      box-shadow: 0 $space-2 $space-2 transparentize($ng-dark, 0.95);
+
+      &:hover {
+        background-color: hsla(206, 15%, 80%, 0.5);
+        box-shadow: 0 $space-2 $space-2 transparentize($ng-dark, 0.7);
+      }
+      text-align: center;
+    } @else {
+      padding-top: inherit;
+      height: 2 * $menu-height;
+      width: 100%;
+      margin: 0;
+      border-bottom: $space-null solid $ng-light;
+      box-shadow: none;
+      text-align: inherit;
+      &:hover {
+        background-color: hsla(206, 15%, 80%, 0.5);
+        box-shadow: none;
+      }
+    }
 
     a:link,
     a:visited,
@@ -711,30 +734,57 @@ users-index {
       box-sizing: border-box;
 
       nstagram-avatar {
-        width: $menu-height * 1.8;
-        height: $menu-height * 1.8;
-        margin: $menu-height * 0.1;
-        display: inline-block;
+        @if $modal {
+          display: block;
+          width: $menu-height * 4;
+          height: $menu-height * 4;
+          margin: $menu-height * 0.1 auto;
+        } @else {
+          display: inline-block;
+          width: $menu-height * 1.8;
+          height: $menu-height * 1.8;
+          margin: $menu-height * 0.1;
+        }
       }
     }
     h4 {
       font-size: $font-s-base;
       line-height: $font-s-base;
-      padding: (($menu-height * 2) - $font-s-base) / 2;
-      padding-left: $space-2;
-      display: inline-block;
-      position: absolute;
+      @if $modal {
+        padding: $space-0;
+        display: block;
+        position: relative;
+        margin-bottom: $space-4;
+      } @else {
+        padding: (($menu-height * 2) - $font-s-base) / 2;
+        padding-left: $space-2;
+        margin-bottom: inherit;
+        position: absolute;
+        display: inline-block;
+      }
     }
   }
-  li:hover {
-    background-color: hsla(206, 15%, 80%, 0.5);
-  }
   nstagram-follow-button {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    -webkit-transform: translateY(-50%) translateX(-$space-base);
-    transform: translateY(-50%) translateX(-$space-base);
+    @if $modal {
+      position: relative;
+      right: auto;
+      top: auto;
+      bottom: auto;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+      margin: 0 auto;
+      button {
+        margin: 0 auto;
+      }
+    } @else {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      bottom: auto;
+      margin: inherit;
+      -webkit-transform: translateY(-50%) translateX(-$space-base);
+      transform: translateY(-50%) translateX(-$space-base);
+    }
   }
 }
 nstagram-profile {
