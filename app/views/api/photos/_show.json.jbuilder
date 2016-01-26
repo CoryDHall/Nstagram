@@ -21,7 +21,7 @@ if logged_in?
   json.is_current_user_liking is_liking
   json.current_like do
     if is_liking
-      json.extract! @likes.select { |like| like.photo_id == @photo.id }.first
+      json.extract! @likes.select { |like| like.photo_id == @photo.id }.first, :id, :photo_id, :user_id
     else
       json.photo_id = @photo.id
       json.user_id = @current_user.id

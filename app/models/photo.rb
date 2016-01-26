@@ -111,6 +111,7 @@ class Photo < ActiveRecord::Base
   def self.clear_comments_cache_for(id)
     $redis.hdel("photo_captions", id)
     $redis.hdel("photo_comments", id)
+    $redis.hdel("num_comments", id)
   end
 
   def save(*args)

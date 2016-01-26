@@ -73,6 +73,7 @@ class Api::PhotosController < ApplicationController
     else
       status = 402
     end
+    Photo.clear_comments_cache_for @photo.id
     render json: comment, status: status
   end
 
@@ -86,6 +87,7 @@ class Api::PhotosController < ApplicationController
     else
       status = 402
     end
+    Photo.clear_comments_cache_for @photo.id
     render json: {}, status: status
   end
 
