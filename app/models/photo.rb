@@ -129,6 +129,24 @@ class Photo < ActiveRecord::Base
     _has_hashtags(tag)
   end
 
+  def self.find_by_hashtag(tag)
+    query = $redis.get("hashtag_query_#{Comment.encode(tag)}")
+    if query.nil?
+      query = self
+        .order_by_popularity_score
+        .has_hashtag(tag)
+        .ids
+      $redis.set("hashtag_query_#{Comment.encode(tag)}", query.to_json)
+      $redis.expire("hashtag_query_#{Comment.encode(tag)}", 60)
+    else
+      query = JSON.parse query
+    end
+
+    self
+      .where(id: query)
+      .order_by_ids(query)
+  end
+
   def self.order_by_popularity
     self
       .joins("LEFT OUTER JOIN comments ON comments.photo_id = photos.id")
@@ -141,7 +159,7 @@ class Photo < ActiveRecord::Base
 
   def self.order_by_popularity_score
     order = $redis.zrevrange("photo_popularity", 0, -1)
-    
+
     self
       .where(id: order)
       .order_by_ids(order)
