@@ -97,14 +97,9 @@
             // searchView.$el.parent().append($thumbs);
             this.$rootEl.append($thumbs);
             searchView.$el.appendTo($thumbs);
+            $thumbs.trigger("scroll");
           }.bind(this);
-          // searchView.listenTo(photos, "reset", putInPlace);
           photos.fetch({
-            data: {
-              'scope': "photos"
-            },
-            success: function (collection, resp) {
-            },
             reset: true
           });
           this._swapView(searchView, {

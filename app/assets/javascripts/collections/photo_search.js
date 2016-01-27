@@ -7,6 +7,9 @@ Nstagram.Collections.PhotoSearch = Backbone.Collection.extend({
     this.style = "thumb"
   },
   fetch: function (options) {
+    options = options || {};
+    options.data = options.data || {};
+    options.data['scope'] = "photos";
     return Nstagram.Collections.Photos.prototype.fetch.call(this, options);
   },
 

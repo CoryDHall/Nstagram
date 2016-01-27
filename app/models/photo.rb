@@ -8,7 +8,7 @@ class Photo < ActiveRecord::Base
     }
   }
   validates :user, :photo, presence: true
-  before_save :ensure_caption
+  before_save :ensure_caption, :clear_cache
   after_save :commit_caption
 
   belongs_to :user
@@ -64,6 +64,7 @@ class Photo < ActiveRecord::Base
     if cap.nil?
       cap = self.caption.body
       $redis.hset("photo_captions", id, cap)
+      $redis.expire("photo_captions", 600)
     end
     cap
   end
@@ -110,14 +111,14 @@ class Photo < ActiveRecord::Base
 
   def self.clear_comments_cache_for(id)
     $redis.hdel("photo_captions", id)
+    $redis.hdel("photo_caption_ids", id)
     $redis.hdel("photo_comments", id)
     $redis.hdel("num_comments", id)
   end
 
-  def save(*args)
+  def clear_cache
     Photo.clear_likes_cache_for id
     Photo.clear_comments_cache_for id
-    super(*args)
   end
 
   def hashtags
@@ -125,7 +126,7 @@ class Photo < ActiveRecord::Base
   end
 
   def self.has_hashtag(tag)
-    _has_hashtags(tag).page(1)
+    _has_hashtags(tag)
   end
 
   def self.order_by_popularity
@@ -140,7 +141,7 @@ class Photo < ActiveRecord::Base
 
   def self.order_by_popularity_score
     order = $redis.zrevrange("photo_popularity", 0, -1)
-    p order
+    
     self
       .where(id: order)
       .order_by_ids(order)
@@ -153,8 +154,8 @@ class Photo < ActiveRecord::Base
   end
 
   def commit_caption
+    Photo.clear_comments_cache_for self.id
     self.caption.save
-    caption_body
   end
 
   def self.order_by_ids(ids)
